@@ -1,20 +1,22 @@
-package info.androidhive.slidingmenu;
+package info.androidhive.audlandroid;
 
+import info.androidhive.audlandroid.R;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeFragment extends Fragment {
+public class WhatsHotFragment extends Fragment {
 	
-	public HomeFragment(){}
+	public WhatsHotFragment(){}
+	
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_whats_hot, container, false);
          
         return rootView;
     }

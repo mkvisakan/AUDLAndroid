@@ -1,7 +1,7 @@
-package info.androidhive.slidingmenu.adapter;
+package info.androidhive.audlandroid.adapter;
 
-import info.androidhive.slidingmenu.R;
-import info.androidhive.slidingmenu.model.NavDrawerItem;
+import info.androidhive.audlandroid.model.NavDrawerItem;
+import info.androidhive.audlandroid.R;
 
 import java.util.ArrayList;
 

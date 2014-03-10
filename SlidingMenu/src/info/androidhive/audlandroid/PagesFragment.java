@@ -1,5 +1,6 @@
-package info.androidhive.slidingmenu;
+package info.androidhive.audlandroid;
 
+import info.androidhive.audlandroid.R;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
