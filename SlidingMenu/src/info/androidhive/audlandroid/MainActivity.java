@@ -71,6 +71,8 @@ public class MainActivity extends Activity {
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		// What's hot, We  will add a counter here
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+		// teams
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
 		
 
 		// Recycle the typed array
@@ -182,6 +184,8 @@ public class MainActivity extends Activity {
 		case 5:
 			fragment = new WhatsHotFragment();
 			break;
+		case 6:
+			fragment = new TeamsFragment();
 
 		default:
 			break;

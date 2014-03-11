@@ -21,20 +21,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-public class HomeFragment extends Fragment {
+public class TeamsFragment extends Fragment {
 	
-	public HomeFragment(){}
+	public TeamsFragment(){}
 	
-	
+	TextView textMsg, textPrompt;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
+		View rootView = inflater.inflate(R.layout.fragment_teams, container, false);
+		
+		//textMsg = (TextView)getView().findViewById(R.id.textView1);
+		textMsg = (TextView)rootView.findViewById(R.id.textView1);
+		textMsg.setText("Loading Teams...");
+
 		new HttpRequestTask().execute("http://192.168.72.235:4000/teams");
         
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        
          
         return rootView;
     }
@@ -93,6 +100,7 @@ public class HomeFragment extends Fragment {
 		
 		
 		protected void onPostExecute(String result) {
+			textMsg.setText(result);
 			Log.i("HomeFragment", result);
 	    }
 		

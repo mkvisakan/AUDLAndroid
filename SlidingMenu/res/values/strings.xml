@@ -15,6 +15,7 @@
         <item >Communities</item>
         <item >Pages</item>
         <item >What\'s Hot</item>
+        <item >Teams</item>
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->
@@ -26,6 +27,7 @@
         <item>@drawable/ic_communities</item>
         <item>@drawable/ic_pages</item>
         <item>@drawable/ic_whats_hot</item>
+        <item>@drawable/ic_teams</item>
     </array>
     
     <!-- Content Description -->
