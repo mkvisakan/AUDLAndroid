@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Slider Menu</string>
+    <string name="app_name">AUDL</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="drawer_open">Slider Menu Opened</string>
-    <string name="drawer_close">Slider Menu Closed</string>
+    <string name="drawer_open">AUDL Menu Opened</string>
+    <string name="drawer_close">AUDL Menu Closed</string>
     
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item >Home</item>
-        <item >Find People</item>
-        <item >Photos</item>
-        <item >Communities</item>
-        <item >Pages</item>
-        <item >What\'s Hot</item>
+        <item >News</item>
         <item >Teams</item>
+        <item >Now</item>
+        <item >Standings</item>
+        <item >Scores</item>
+        <item >Schedule</item>
+        <item >Videos</item>
+        <item >Statistics</item>
+        <item >Settings</item>
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_home</item>
-        <item>@drawable/ic_people</item>
-        <item>@drawable/ic_photos</item>
-        <item>@drawable/ic_communities</item>
         <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_whats_hot</item>
-        <item>@drawable/ic_teams</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_pages</item>
     </array>
     
     <!-- Content Description -->

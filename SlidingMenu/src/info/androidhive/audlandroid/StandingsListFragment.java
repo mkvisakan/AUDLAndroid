@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class PagesFragment extends Fragment {
+public class StandingsListFragment extends Fragment {
 	
-	public PagesFragment(){}
+	public StandingsListFragment(){}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

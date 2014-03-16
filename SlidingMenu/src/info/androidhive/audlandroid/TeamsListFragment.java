@@ -23,9 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TeamsFragment extends Fragment {
+public class TeamsListFragment extends Fragment {
 	
-	public TeamsFragment(){}
+	public TeamsListFragment(){}
 	
 	TextView textMsg, textPrompt;
 	

@@ -61,18 +61,24 @@ public class MainActivity extends Activity {
 		// adding nav drawer items to array
 		// Home
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-		// Find People
+		// News
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-		// Photos
+		// Teams
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
-		// Pages
+		// Now
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+		// Standings
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
-		// teams
+		// Scores
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+		// Schedule
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
+		// Videos
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+		// Stats
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
+		// Settings
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[9], navMenuIcons.getResourceId(9, -1)));
 		
 
 		// Recycle the typed array
@@ -170,22 +176,32 @@ public class MainActivity extends Activity {
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			fragment = new FindPeopleFragment();
+			fragment = new NewsListFragment();
 			break;
 		case 2:
-			fragment = new PhotosFragment();
+			fragment = new TeamsListFragment();
 			break;
 		case 3:
-			fragment = new CommunityFragment();
+			fragment = new NowFragment();
 			break;
 		case 4:
-			fragment = new PagesFragment();
+			fragment = new StandingsListFragment();
 			break;
 		case 5:
-			fragment = new WhatsHotFragment();
+			fragment = new ScoresListFragment();
 			break;
 		case 6:
-			fragment = new TeamsFragment();
+			fragment = new ScheduleListFragment();
+			break;
+		case 7:
+			fragment = new VideosListFragment();
+			break;
+		case 8:
+			fragment = new StatsFragment();
+			break;
+		case 9:
+			fragment = new SettingsFragment();
+			break;
 
 		default:
 			break;
