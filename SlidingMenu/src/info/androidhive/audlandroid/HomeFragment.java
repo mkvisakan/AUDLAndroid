@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
-		new HttpRequestTask().execute("http://192.168.72.235:4000/teams");
+		//new HttpRequestTask().execute("http://192.168.72.235:4000/teams");
         
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
          
