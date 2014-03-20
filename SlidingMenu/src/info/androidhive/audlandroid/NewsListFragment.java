@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class NewsListFragment extends Fragment {
 	
@@ -41,7 +42,10 @@ public class NewsListFragment extends Fragment {
             Bundle savedInstanceState) {
 		
 		
-        View rootView = inflater.inflate(R.layout.new_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        
+        TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
+        txtView.setText("League News");
         
         final ListView listview = (ListView) rootView.findViewById(R.id.listview);
         

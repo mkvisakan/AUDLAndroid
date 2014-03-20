@@ -1,109 +1,102 @@
 package info.androidhive.audlandroid;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import info.androidhive.audlandroid.R;
+import info.androidhive.audlandroid.model.TeamsListItem;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.DefaultClientConnection;
+
+import org.json.JSONArray;
 
 import android.app.Fragment;
-import android.os.AsyncTask;
+import android.content.Context;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class TeamsListFragment extends Fragment {
 	
 	public TeamsListFragment(){}
 	
-	TextView textMsg, textPrompt;
+	public ArrayList<TeamsListItem> parseJSON(JSONArray jsonResult){
+		ArrayList<TeamsListItem> teamsList = new ArrayList<TeamsListItem>();
+		try {
+			for (int i=0; i<jsonResult.length(); i++){
+				teamsList.add(new TeamsListItem(jsonResult.getJSONArray(i).getString(0), jsonResult.getJSONArray(i).getString(1)));
+			}
+		} catch (Exception e) {
+			Log.e("NewsListFragment", "Error when trying to create news objects from json : " + e.toString());
+		}
+		return teamsList;
+	}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
-		View rootView = inflater.inflate(R.layout.fragment_teams, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 		
-		//textMsg = (TextView)getView().findViewById(R.id.textView1);
-		textMsg = (TextView)rootView.findViewById(R.id.textView1);
-		textMsg.setText("Loading Teams...");
+		TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
+        txtView.setText("AUDL Teams");
+		
+		final ListView listview = (ListView) rootView.findViewById(R.id.listview);
+		
+		AUDLHttpRequest httpRequester = new AUDLHttpRequest();
+        httpRequester.execute("http://68.190.167.114:4000/Teams");
+        JSONArray jsonResult = null;
+        String response = null;
 
-		new HttpRequestTask().execute("http://192.168.72.235:4000/teams");
+        try{
+        	response = httpRequester.get();
+            jsonResult = new JSONArray(response);
+        } catch (Exception e) {
+        	Log.e("TeamsListFragment", "Response: " + response + ". Error creating json " + e.toString());
+        }
+		
+        ArrayList<TeamsListItem> teamsList = parseJSON(jsonResult);
+
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < teamsList.size(); ++i) {
+          list.add(teamsList.get(i).getTeamName());
+        }
         
+        final TeamsListAdapter adapter = new TeamsListAdapter(this.getActivity(), android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
+
         
          
         return rootView;
     }
 	
-	private class HttpRequestTask extends AsyncTask<String, Void, String>{
-		
-		private String convertStreamToString(InputStream is) {
-		    /*
-		     * To convert the InputStream to String we use the BufferedReader.readLine()
-		     * method. We iterate until the BufferedReader return null which means
-		     * there's no more data to read. Each line will appended to a StringBuilder
-		     * and returned as String.
-		     */
-		    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		    StringBuilder sb = new StringBuilder();
+	private class TeamsListAdapter extends ArrayAdapter<String> {
 
-		    String line = null;
-		    try {
-		        while ((line = reader.readLine()) != null) {
-		            sb.append(line + "\n");
-		        }
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    } finally {
-		        try {
-		            is.close();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		    }
-		    return sb.toString();
-		}
-		
-		@Override
-		protected String doInBackground(String... url){
-			String result =  null;
-	        HttpClient httpClient = new DefaultHttpClient();
-			
-			//HttpGet httpget = new HttpGet("http://192.168.72.232:4000/teams");
-	        HttpGet httpget = new HttpGet(url[0]);
-			
-			HttpResponse response;
-		    try {
-		    	response = httpClient.execute(httpget);
-		        HttpEntity entity = response.getEntity();
-		        InputStream instream = entity.getContent();
-	            result= convertStreamToString(instream);
-	            // now you have the string representation of the HTML request
-	            instream.close();
-		        Log.i("HomeFragment", result);
-		    } catch (Exception e) {
-		    	Log.i("HomeFragment", "Error fetching data " + e.toString());
-		    }
-		    return result;
-		}
-		
-		
-		protected void onPostExecute(String result) {
-			textMsg.setText(result);
-			Log.i("HomeFragment", result);
+	    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+	    public TeamsListAdapter(Context context, int textViewResourceId, List<String> objects) {
+	      super(context, textViewResourceId, objects);
+	      for (int i = 0; i < objects.size(); ++i) {
+	        mIdMap.put(objects.get(i), i);
+	      }
 	    }
-		
-	}
 
+	    @Override
+	    public long getItemId(int position) {
+	      String item = getItem(position);
+	      return mIdMap.get(item);
+	    }
+
+	    @Override
+	    public boolean hasStableIds() {
+	      return true;
+	    }
+	  }
 }
