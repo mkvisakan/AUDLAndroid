@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import info.androidhive.audlandroid.R;
+import info.androidhive.audlandroid.adapter.TabsPagerAdapter;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,7 +15,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.DefaultClientConnection;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.app.ActionBar;
+import android.app.ActionBar.TabListener;
+import android.app.FragmentTransaction;
+import android.app.ActionBar.Tab;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +32,11 @@ public class HomeFragment extends Fragment {
 	
 	public HomeFragment(){}
 	
-	
+	private ViewPager viewPager;
+    private TabsPagerAdapter mAdapter;
+    private ActionBar actionBar;
+    
+    private String[] tabs = { "News", "Teams"};
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,67 +45,41 @@ public class HomeFragment extends Fragment {
 		//new HttpRequestTask().execute("http://192.168.72.235:4000/teams");
         
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        
+        // Initilization
+        viewPager = (ViewPager) rootView.findViewById(R.id.pager);
+        actionBar = this.getActivity().getActionBar();
+        mAdapter = new TabsPagerAdapter(this.getActivity().getSupportFragmentManager());
+ 
+        viewPager.setAdapter(mAdapter);
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);        
+ 
+        // Adding Tabs
+        for (String tab_name : tabs) {
+            actionBar.addTab(actionBar.newTab().setText(tab_name)
+                    .setTabListener(new TabListener() {
+						
+						@Override
+						public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void onTabSelected(Tab tab, FragmentTransaction ft) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void onTabReselected(Tab tab, FragmentTransaction ft) {
+							// TODO Auto-generated method stub
+							
+						}
+					}));
+        }
          
         return rootView;
     }
-	
-	private class HttpRequestTask extends AsyncTask<String, Void, String>{
-		
-		private String convertStreamToString(InputStream is) {
-		    /*
-		     * To convert the InputStream to String we use the BufferedReader.readLine()
-		     * method. We iterate until the BufferedReader return null which means
-		     * there's no more data to read. Each line will appended to a StringBuilder
-		     * and returned as String.
-		     */
-		    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		    StringBuilder sb = new StringBuilder();
-
-		    String line = null;
-		    try {
-		        while ((line = reader.readLine()) != null) {
-		            sb.append(line + "\n");
-		        }
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    } finally {
-		        try {
-		            is.close();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		    }
-		    return sb.toString();
-		}
-		
-		@Override
-		protected String doInBackground(String... url){
-			String result =  null;
-	        HttpClient httpClient = new DefaultHttpClient();
-			
-			//HttpGet httpget = new HttpGet("http://192.168.72.232:4000/teams");
-	        HttpGet httpget = new HttpGet(url[0]);
-			
-			HttpResponse response;
-		    try {
-		    	response = httpClient.execute(httpget);
-		        HttpEntity entity = response.getEntity();
-		        InputStream instream = entity.getContent();
-	            result= convertStreamToString(instream);
-	            // now you have the string representation of the HTML request
-	            instream.close();
-		        Log.i("HomeFragment", result);
-		    } catch (Exception e) {
-		    	Log.i("HomeFragment", "Error fetching data " + e.toString());
-		    }
-		    return result;
-		}
-		
-		
-		protected void onPostExecute(String result) {
-			Log.i("HomeFragment", result);
-	    }
-		
-	}
-
 }

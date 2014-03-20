@@ -11,7 +11,7 @@ import info.androidhive.audlandroid.model.TeamsListItem;
 
 import org.json.JSONArray;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 
 import android.os.Bundle;

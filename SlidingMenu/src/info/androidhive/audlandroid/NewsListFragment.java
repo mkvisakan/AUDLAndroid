@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.AUDLHttpRequest;
 import info.androidhive.audlandroid.model.NewsListItem;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
