@@ -5,6 +5,7 @@ import info.androidhive.audlandroid.TeamsListFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
  
 public class TabsPagerAdapter extends FragmentPagerAdapter {
  
@@ -30,7 +31,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 3;
+        return 2;
     }
  
 }
