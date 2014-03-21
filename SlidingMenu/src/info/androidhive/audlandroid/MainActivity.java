@@ -6,6 +6,7 @@ import info.androidhive.audlandroid.R;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -129,6 +130,8 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
+			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+			getActionBar().removeAllTabs();
 			// display view for selected nav drawer item
 			displayView(position);
 		}
@@ -170,6 +173,7 @@ public class MainActivity extends FragmentActivity {
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
 	private void displayView(int position) {
+		this.invalidateOptionsMenu();
 		// update the main content by replacing fragments
 		Fragment fragment = null;
 		switch (position) {

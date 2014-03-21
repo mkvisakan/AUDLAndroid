@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment {
         mAdapter = new TabsPagerAdapter(this.getActivity().getSupportFragmentManager());
  
         viewPager.setAdapter(mAdapter);
-        actionBar.setHomeButtonEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);        
  
         // Adding Tabs
