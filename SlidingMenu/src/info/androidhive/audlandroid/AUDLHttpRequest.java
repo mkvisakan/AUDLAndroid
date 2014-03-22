@@ -62,7 +62,7 @@ public class AUDLHttpRequest extends AsyncTask<String, Void, String>{
             // now you have the string representation of the HTML request
             instream.close();
 	    } catch (Exception e) {
-	    	Log.i("AUDLHttpRequest", "Error fetching data " + e.toString());
+	    	Log.e("AUDLHttpRequest", "Error fetching data " + e.toString());
 	    }
 	    return stringResult;
 	}

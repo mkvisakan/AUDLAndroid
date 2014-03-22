@@ -51,7 +51,8 @@ public class TeamsListFragment extends Fragment {
 		final ListView listview = (ListView) rootView.findViewById(R.id.listview);
 		
 		AUDLHttpRequest httpRequester = new AUDLHttpRequest();
-        httpRequester.execute("http://68.190.167.114:4000/Teams");
+        //httpRequester.execute("http://68.190.167.114:4000/Teams");
+        httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Teams");
         JSONArray jsonResult = null;
         String response = null;
 
