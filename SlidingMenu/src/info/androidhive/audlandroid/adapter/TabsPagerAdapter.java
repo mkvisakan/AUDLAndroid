@@ -12,7 +12,15 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
- 
+    @Override
+    public CharSequence getPageTitle(int position) {
+    	if(position == 0){
+    		return "News";
+    	}
+    	else{
+    		return "Teams";
+    	}
+    }
     @Override
     public Fragment getItem(int index) {
  
