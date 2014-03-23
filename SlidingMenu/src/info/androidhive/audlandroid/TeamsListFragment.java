@@ -7,11 +7,13 @@ import java.util.List;
 
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.model.TeamsListItem;
+import info.androidhive.audlandroid.utils.ImageLoader;
 
 
 import org.json.JSONArray;
 
 import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.content.Context;
 
 import android.os.Bundle;
@@ -20,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -70,13 +74,57 @@ public class TeamsListFragment extends Fragment {
           list.add(teamsList.get(i).getTeamName());
         }
         
-        final TeamsListAdapter adapter = new TeamsListAdapter(this.getActivity(), android.R.layout.simple_list_item_1, list);
+        //final TeamsListAdapter adapter = new TeamsListAdapter(this.getActivity(), android.R.layout.simple_list_item_1, list);
+        final TeamsListBaseAdapter adapter = new TeamsListBaseAdapter(this.getActivity(), teamsList);
+        
         listview.setAdapter(adapter);
 
         
          
         return rootView;
     }
+	
+	public class TeamsListBaseAdapter extends BaseAdapter {
+		private Activity activity;
+	    private ArrayList<TeamsListItem> data;
+	    private LayoutInflater inflater=null;
+	    public ImageLoader imageLoader;
+	    
+	    public TeamsListBaseAdapter(Activity a, ArrayList<TeamsListItem> d) {
+	        activity = a;
+	        data=d;
+	        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        imageLoader=new ImageLoader(activity.getApplicationContext());
+	    }
+	    
+	    public int getCount() {
+	        return data.size();
+	    }
+	 
+	    public Object getItem(int position) {
+	        return position;
+	    }
+	 
+	    public long getItemId(int position) {
+	        return position;
+	    }
+	    
+	    public View getView(int position, View convertView, ViewGroup parent) {
+	        View vi=convertView;
+	        if(convertView==null)
+	            vi = inflater.inflate(R.layout.team_item, null);
+	 
+	        TextView title = (TextView)vi.findViewById(R.id.team_name); // title
+	        ImageView thumb_image=(ImageView)vi.findViewById(R.id.team_icon); // thumb image
+	 
+	        TeamsListItem team = data.get(position);
+	 
+	        // Setting all values in listview
+	        title.setText(team.getTeamName());
+	        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + team.getTeamId(), thumb_image);
+	        return vi;
+	    }
+	}
 	
 	private class TeamsListAdapter extends ArrayAdapter<String> {
 
