@@ -2,7 +2,9 @@ package info.androidhive.audlandroid;
 
 import info.androidhive.audlandroid.adapter.NavDrawerListAdapter;
 import info.androidhive.audlandroid.model.NavDrawerItem;
+import info.androidhive.audlandroid.model.TeamsListItem;
 import info.androidhive.audlandroid.R;
+import info.androidhive.audlandroid.TeamsListFragment.OnTeamSelectedListener;
 
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -23,7 +26,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnTeamSelectedListener{
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -40,6 +43,24 @@ public class MainActivity extends FragmentActivity {
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+	
+	public void onTeamSelected(TeamsListItem team){
+		TeamsInfoFragment teamFrag = new TeamsInfoFragment();
+		Bundle args = new Bundle();
+		args.putString("TEAM_ID", team.getTeamId());
+		args.putString("TEAM_NAME", team.getTeamName());
+		teamFrag.setArguments(args);
+        
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.frame_container, teamFrag);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

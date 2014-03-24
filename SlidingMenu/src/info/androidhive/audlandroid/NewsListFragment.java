@@ -11,6 +11,7 @@ import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.AUDLHttpRequest;
 import info.androidhive.audlandroid.model.NewsListItem;
 import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 public class NewsListFragment extends Fragment {
 	
 	ArrayList<NewsListItem> newsList;
+	JSONArray jsonResult = null;
+    String response = null;
 	
 	public NewsListFragment(){}
 	
@@ -42,6 +45,43 @@ public class NewsListFragment extends Fragment {
 		return newsList;
 	}
 	
+	
+	public void startAsyncTask(final ListView listview, final Activity activity){
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+			@Override
+			public void onTaskDone(String response) {
+		        try{
+		            jsonResult = new JSONArray(response);
+		        } catch (Exception e) {
+		        	Log.e("NewsListFragment", "Response: " + response + ". Error creating json " + e.toString());
+		        }
+		        
+		        newsList = parseJSON(jsonResult);
+
+		        final ArrayList<String> list = new ArrayList<String>();
+		        for (int i = 0; i < newsList.size(); ++i) {
+		          list.add(newsList.get(i).getNewsHeadline());
+		        }
+		        
+		        final NewsListAdapter adapter = new NewsListAdapter(activity, android.R.layout.simple_list_item_1, list);
+		        listview.setAdapter(adapter);
+		        
+		        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+		            @Override
+		            public void onItemClick(AdapterView<?> parent, final View view,
+		                int position, long id) {
+		              Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsList.get(position).getNewsURL()));
+		              startActivity(myIntent);
+		            }
+
+		          });
+			}
+		});
+        //httpRequester.execute("http://68.190.167.114:4000/News");
+        httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/News");
+	}
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -54,40 +94,7 @@ public class NewsListFragment extends Fragment {
         
         final ListView listview = (ListView) rootView.findViewById(R.id.listview);
         
-        AUDLHttpRequest httpRequester = new AUDLHttpRequest();
-        //httpRequester.execute("http://68.190.167.114:4000/News");
-        httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/News");
-        JSONArray jsonResult = null;
-        String response = null;
-        
-        try{
-        	response = httpRequester.get();
-            jsonResult = new JSONArray(response);
-        } catch (Exception e) {
-        	Log.e("NewsListFragment", "Response: " + response + ". Error creating json " + e.toString());
-        }
-        
-        newsList = parseJSON(jsonResult);
-
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < newsList.size(); ++i) {
-          list.add(newsList.get(i).getNewsHeadline());
-        }
-        
-        final NewsListAdapter adapter = new NewsListAdapter(this.getActivity(), android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
-        
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                int position, long id) {
-              Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsList.get(position).getNewsURL()));
-              startActivity(myIntent);
-            }
-
-          });
-         	
+        startAsyncTask(listview, getActivity());         	
         return rootView;
     }
 	

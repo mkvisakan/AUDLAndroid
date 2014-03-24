@@ -1,5 +1,6 @@
 package info.androidhive.audlandroid;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +17,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class AUDLHttpRequest extends AsyncTask<String, Void, String>{
-	
+	private FragmentCallback mCallback;
 	private String stringResult = null;
+	
+	public AUDLHttpRequest(FragmentCallback fragCallback){
+		this.mCallback = fragCallback;
+	}
 	
 	
 	private String convertStreamToString(InputStream is) {
@@ -68,6 +73,7 @@ public class AUDLHttpRequest extends AsyncTask<String, Void, String>{
 	}
 	
 	protected void onPostExecute(String result) {
+		mCallback.onTaskDone(result);
 		Log.i("AUDLHttpRequest", result);
     }
 	
