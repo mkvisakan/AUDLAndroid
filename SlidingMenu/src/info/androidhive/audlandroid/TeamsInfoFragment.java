@@ -28,7 +28,7 @@ public class TeamsInfoFragment extends Fragment {
     JSONArray jsonResult = null;
     String response = null;
     
-    private String[] tabs = { "Players", "Schedule" };
+    private String[] tabs = { "Players", "Schedule", "Stats" };
     
     public void parseJSON(JSONArray jsonResult){
 		try {
@@ -46,6 +46,31 @@ public class TeamsInfoFragment extends Fragment {
 				team.addSchedule(scheduleList.getJSONArray(i).getString(2), scheduleList.getJSONArray(i).getString(0), scheduleList.getJSONArray(i).getString(1));
 			}
 			//add stats
+			JSONArray goalsList = statsList.getJSONArray(1).getJSONArray(1);
+			for (int i=1; i<=goalsList.length(); i++){
+				team.addGoals(goalsList.getJSONArray(i).getString(0), goalsList.getJSONArray(i).getString(1));
+			}
+			JSONArray assistsList = statsList.getJSONArray(2).getJSONArray(1);
+			for (int i=1; i<=assistsList.length(); i++){
+				team.addAssists(assistsList.getJSONArray(i).getString(0), assistsList.getJSONArray(i).getString(1));
+			}
+			JSONArray dropsList = statsList.getJSONArray(3).getJSONArray(1);
+			for (int i=1; i<=dropsList.length(); i++){
+				team.addDrops(dropsList.getJSONArray(i).getString(0), dropsList.getJSONArray(i).getString(1));
+			}
+			JSONArray throwAwaysList = statsList.getJSONArray(4).getJSONArray(1);
+			for (int i=1; i<=throwAwaysList.length(); i++){
+				team.addThrowAways(throwAwaysList.getJSONArray(i).getString(0), throwAwaysList.getJSONArray(i).getString(1));
+			}
+			JSONArray pmcList = statsList.getJSONArray(5).getJSONArray(1);
+			for (int i=1; i<=pmcList.length(); i++){
+				team.addPMC(pmcList.getJSONArray(i).getString(0), pmcList.getJSONArray(i).getString(1));
+			}
+			JSONArray dsList = statsList.getJSONArray(1).getJSONArray(1);
+			for (int i=1; i<=dsList.length(); i++){
+				team.addDs(dsList.getJSONArray(i).getString(0), dsList.getJSONArray(i).getString(1));
+			}
+			
 		} catch (Exception e) {
 			Log.e("TeamsInfoFragment", "Error when trying to create info objects from json : " + e.toString());
 			e.printStackTrace();
