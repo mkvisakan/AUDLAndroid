@@ -9,6 +9,7 @@ import org.json.JSONArray;
 
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.AUDLHttpRequest;
+import info.androidhive.audlandroid.adapter.NewsListAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.NewsListItem;
 import android.support.v4.app.Fragment;
@@ -98,28 +99,5 @@ public class NewsListFragment extends Fragment {
         startAsyncTask(listview, getActivity());         	
         return rootView;
     }
-	
-	private class NewsListAdapter extends ArrayAdapter<String> {
-
-	    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-	    public NewsListAdapter(Context context, int textViewResourceId, List<String> objects) {
-	      super(context, textViewResourceId, objects);
-	      for (int i = 0; i < objects.size(); ++i) {
-	        mIdMap.put(objects.get(i), i);
-	      }
-	    }
-
-	    @Override
-	    public long getItemId(int position) {
-	      String item = getItem(position);
-	      return mIdMap.get(item);
-	    }
-
-	    @Override
-	    public boolean hasStableIds() {
-	      return true;
-	    }
-	  }
 }
 
