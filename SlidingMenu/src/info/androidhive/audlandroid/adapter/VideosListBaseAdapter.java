@@ -2,6 +2,7 @@ package info.androidhive.audlandroid.adapter;
 
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.model.TeamsListItem;
+import info.androidhive.audlandroid.model.VideosListItem;
 import info.androidhive.audlandroid.utils.ImageLoader;
 
 import java.util.ArrayList;
@@ -15,13 +16,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class TeamsListBaseAdapter extends BaseAdapter {
+public class VideosListBaseAdapter extends BaseAdapter {
 	private Activity activity;
-    private ArrayList<TeamsListItem> data;
+    private ArrayList<VideosListItem> data;
     private LayoutInflater inflater=null;
     public ImageLoader imageLoader;
     
-    public TeamsListBaseAdapter(Activity a, ArrayList<TeamsListItem> d) {
+    public VideosListBaseAdapter(Activity a, ArrayList<VideosListItem> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,11 +49,11 @@ public class TeamsListBaseAdapter extends BaseAdapter {
         TextView title = (TextView)vi.findViewById(R.id.name); // title
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.icon); // thumb image
  
-        TeamsListItem team = data.get(position);
+        VideosListItem video = data.get(position);
  
         // Setting all values in listview
-        title.setText(team.getTeamName());
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + team.getTeamId(), thumb_image);
+        title.setText(video.getVideoName());
+        imageLoader.DisplayImage(video.getVideoThumnbnail(), thumb_image);
         return vi;
     }
 }

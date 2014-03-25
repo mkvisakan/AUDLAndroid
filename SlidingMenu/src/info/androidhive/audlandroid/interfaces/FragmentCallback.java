@@ -1,4 +1,4 @@
-package info.androidhive.audlandroid;
+package info.androidhive.audlandroid.interfaces;
 
 public interface FragmentCallback {
 	public void onTaskDone(String response);
