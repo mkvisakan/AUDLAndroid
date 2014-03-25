@@ -36,13 +36,14 @@ public class TeamsScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
+		String team_name = getArguments().getString("TEAM_NAME");
 		ArrayList<String> sched_teams = getArguments().getStringArrayList("SCHED_TEAMS");
 		ArrayList<String> sched_datetimes = getArguments().getStringArrayList("SCHED_DATETIMES");
 		
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 		
 		TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
-        txtView.setText("AUDL Teams");
+        txtView.setText(team_name + " Schedule");
         
         ArrayList<String> listVal = new ArrayList<String>();
         for (int i=0; i<sched_teams.size(); i++){

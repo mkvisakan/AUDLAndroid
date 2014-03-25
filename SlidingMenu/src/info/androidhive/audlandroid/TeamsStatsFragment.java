@@ -36,6 +36,7 @@ public class TeamsStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
+		String team_name = getArguments().getString("TEAM_NAME");
 		ArrayList<String> goalPlayers = getArguments().getStringArrayList("GOAL_PLAYERS");
 		ArrayList<String> goals = getArguments().getStringArrayList("GOALS");
 		ArrayList<String> assistPlayers = getArguments().getStringArrayList("ASSIST_PLAYERS");
@@ -49,10 +50,12 @@ public class TeamsStatsFragment extends Fragment {
 		ArrayList<String> dsPlayers = getArguments().getStringArrayList("DS_PLAYERS");
 		ArrayList<String> ds = getArguments().getStringArrayList("DS");
 		
+		Log.i("TeamStatsInfo", "assists : " + assistPlayers);
+		
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 		
 		TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
-        txtView.setText("Team Stats");
+        txtView.setText(team_name + " Stats");
         
         ArrayList<String> listVal = new ArrayList<String>();
         for (int i=0; i<goalPlayers.size(); i++){

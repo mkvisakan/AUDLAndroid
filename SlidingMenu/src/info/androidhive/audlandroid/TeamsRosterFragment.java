@@ -36,13 +36,14 @@ public class TeamsRosterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
+		String team_name = getArguments().getString("TEAM_NAME");
 		ArrayList<String> player_ids = getArguments().getStringArrayList("PLAYER_IDS");
 		ArrayList<String> player_names = getArguments().getStringArrayList("PLAYER_NAMES");
 		
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 		
 		TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
-        txtView.setText("AUDL Teams");
+        txtView.setText(team_name + " Players");
         
         ArrayList<String> listVal = new ArrayList<String>();
         for (int i=0; i<player_names.size(); i++){

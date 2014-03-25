@@ -42,6 +42,7 @@ public class TeamInfoTabsPagerAdapter extends FragmentStatePagerAdapter {
             // Roster fragment activity
         	TeamsRosterFragment rosterFrag = new TeamsRosterFragment();
         	Bundle args = new Bundle();
+        	args.putString("TEAM_NAME", team.getTeamName());
         	args.putStringArrayList("PLAYER_NAMES", team.getPlayerNames());
         	args.putStringArrayList("PLAYER_IDS", team.getPlayerIds());
         	rosterFrag.setArguments(args);
@@ -50,6 +51,7 @@ public class TeamInfoTabsPagerAdapter extends FragmentStatePagerAdapter {
         	// Schedule fragment
         	TeamsScheduleFragment schedFrag = new TeamsScheduleFragment();
         	Bundle schedArgs = new Bundle();
+        	schedArgs.putString("TEAM_NAME", team.getTeamName());
         	schedArgs.putStringArrayList("SCHED_TEAMS",	team.getSchedTeams());
         	schedArgs.putStringArrayList("SCHED_DATETIMES",	team.getSchedDateTimes());
         	schedFrag.setArguments(schedArgs);
@@ -58,6 +60,7 @@ public class TeamInfoTabsPagerAdapter extends FragmentStatePagerAdapter {
         	//Stats fragment
         	TeamsStatsFragment statsFrag = new TeamsStatsFragment();
         	Bundle statsArgs = new Bundle();
+        	statsArgs.putString("TEAM_NAME", team.getTeamName());
         	statsArgs.putStringArrayList("GOAL_PLAYERS", team.getGoalPlayers());
         	statsArgs.putStringArrayList("GOALS", team.getGoals());
         	statsArgs.putStringArrayList("ASSIST_PLAYERS", team.getAssistPlayers());
