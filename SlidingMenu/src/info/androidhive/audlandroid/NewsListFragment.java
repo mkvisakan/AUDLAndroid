@@ -38,7 +38,7 @@ public class NewsListFragment extends Fragment {
 	public ArrayList<NewsListItem> parseJSON(JSONArray jsonResult){
 		ArrayList<NewsListItem> newsList = new ArrayList<NewsListItem>();
 		try {
-			for (int i=0; i<jsonResult.length(); i++){
+			for (int i=1; i<jsonResult.length(); i++){
 				newsList.add(new NewsListItem(jsonResult.getJSONArray(i).getString(0), jsonResult.getJSONArray(i).getString(1)));
 			}
 		} catch (Exception e) {

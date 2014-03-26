@@ -24,11 +24,7 @@
     <TextView
         android:id="@+id/name"
         android:layout_width="fill_parent"
-<<<<<<< HEAD
-        android:layout_height="wrap_content"
-=======
         android:layout_height="fill_parent"
->>>>>>> efa342d1880402dbffd63a33db71d8dd9b1788a8
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
         android:textColor="#040404"
