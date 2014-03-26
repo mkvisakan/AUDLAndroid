@@ -36,7 +36,7 @@ public class ScheduleDivisionFragment extends Fragment {
 			for (int i=0; i<jsonResult.length(); i++){
 				if(jsonResult.getJSONArray(i).getString(0).equals(divisionName)){
 					for(int j = 0; j < jsonResult.getJSONArray(i).getJSONArray(1).length(); j++){
-						schedList.add(new ScheduleListItem(jsonResult.getJSONArray(i).getString(0), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(0), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(1), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(2), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(3)));
+						schedList.add(new ScheduleListItem(jsonResult.getJSONArray(i).getString(0), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(0), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(1), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(2), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(3), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(4), jsonResult.getJSONArray(i).getJSONArray(1).getJSONArray(j).getString(5)));
 					}
 				}
 			}

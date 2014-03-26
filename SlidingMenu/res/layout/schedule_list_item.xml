@@ -19,14 +19,31 @@
             android:layout_height="50dip"/>
  
     </LinearLayout>
+    
+    <!--  ListRow Left sided Thumbnail image for Home Team -->
+    <LinearLayout android:id="@+id/awayTeamThumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dip">
+ 
+        <ImageView
+            android:id="@+id/awayTeamIcon"
+            android:layout_width="50dip"
+            android:layout_height="50dip"/>
+ 
+    </LinearLayout>
  
     <!-- Schedule Entry Text-->
     <TextView
         android:id="@+id/scheduleEntryText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_alignTop="@id/homeTeamThumbnail"
+        android:layout_toRightOf="@id/homeTeamThumbnail"
+        android:layout_toLeftOf ="@id/awayTeamThumbnail"
+        android:gravity="center_horizontal"
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="15dip"
