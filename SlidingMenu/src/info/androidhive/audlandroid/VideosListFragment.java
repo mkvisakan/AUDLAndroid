@@ -34,7 +34,7 @@ public class VideosListFragment extends Fragment {
 	public ArrayList<VideosListItem> parseJSON(JSONArray jsonResult){
 		ArrayList<VideosListItem> videosList = new ArrayList<VideosListItem>();
 		try {
-			for (int i=1; i<jsonResult.length(); i++){
+			for (int i=0; i<jsonResult.length(); i++){
 				videosList.add(new VideosListItem(jsonResult.getJSONArray(i).getString(0), jsonResult.getJSONArray(i).getString(1), jsonResult.getJSONArray(i).getString(2)));
 			}
 		} catch (Exception e) {
