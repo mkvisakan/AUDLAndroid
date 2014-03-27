@@ -17,8 +17,11 @@ The application can be checked out to an eclipse IDE with ADT plugin installed. 
 
 The emulator used for testing is https://cloud.genymotion.com/page/launchpad/download/. This seems to be faster than the default emulator
 
+```
 Further instructions on building and running using eclipse : http://developer.android.com/tools/building/building-eclipse.html
+```
 
-
+```
 Further instructions on building and running using command line :
 http://developer.android.com/tools/building/building-cmdline.html
+```
