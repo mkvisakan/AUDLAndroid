@@ -39,7 +39,7 @@ public class SettingsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, final View view,
                 int position, long id) {
             	Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("mailto:arjunsesh@gmail.com"));
+                intent.setData(Uri.parse("mailto:audlappdevteam@gmail.com"));
                 startActivity(intent);
             }
     });
