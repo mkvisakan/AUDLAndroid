@@ -9,7 +9,7 @@ import org.json.JSONArray;
 
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.AUDLHttpRequest;
-import info.androidhive.audlandroid.adapter.NewsListAdapter;
+import info.androidhive.audlandroid.adapter.NewsListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.NewsListItem;
 import android.support.v4.app.Fragment;
@@ -65,7 +65,7 @@ public class NewsListFragment extends Fragment {
 		          list.add(newsList.get(i).getNewsHeadline());
 		        }
 		        
-		        final NewsListAdapter adapter = new NewsListAdapter(activity, android.R.layout.simple_list_item_1, list);
+		        final NewsListBaseAdapter adapter = new NewsListBaseAdapter(activity, newsList);
 		        listview.setAdapter(adapter);
 		        
 		        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
