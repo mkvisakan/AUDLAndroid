@@ -4,7 +4,7 @@ AUDLAndroid
 Android application for AUDL
 
 
-Building and Running th application
+Building and Running the application
 ===================================
 
 The application can be checkout out to an eclipse IDE with ADT plugin installed. The application can be built and run using the default emulator or using any device.
