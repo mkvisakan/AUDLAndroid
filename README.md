@@ -25,6 +25,7 @@ Download and install:
 
 >3) Create a new virtual device
 >>1) Use the default emulator (or)
+
 >>2) Download the genymotion emulator from https://cloud.genymotion.com/page/launchpad/download/. This seems to be faster than the default emulator in the ADT bundle.
 
 3) Run the application using eclipse
