@@ -37,6 +37,8 @@ Git Repository Link:
 git clone https://github.com/mkvisakan/AUDLAndroid.git
 ```
 
+Detailed Instructions :
+-------------------------
 
 Further instructions on building and running using eclipse : 
 http://developer.android.com/tools/building/building-eclipse.html
