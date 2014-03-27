@@ -31,6 +31,10 @@ public class TeamsInfoFragment extends Fragment {
     
     private String[] tabs = { "Players", "Schedule", "Stats" };
     
+    public TeamsListItem getTeam(){
+    	return team;
+    }
+    
     public void parseJSON(JSONArray jsonResult){
 		try {
 			JSONArray playersList = jsonResult.getJSONArray(0);
@@ -67,7 +71,7 @@ public class TeamsInfoFragment extends Fragment {
 			for (int i=0; i<pmcList.length(); i++){
 				team.addPMC(pmcList.getJSONArray(i).getString(0), pmcList.getJSONArray(i).getString(1));
 			}
-			JSONArray dsList = statsList.getJSONArray(1).getJSONArray(1);
+			JSONArray dsList = statsList.getJSONArray(6).getJSONArray(1);
 			for (int i=0; i<dsList.length(); i++){
 				team.addDs(dsList.getJSONArray(i).getString(0), dsList.getJSONArray(i).getString(1));
 			}
