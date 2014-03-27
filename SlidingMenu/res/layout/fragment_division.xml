@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/standingsLayout"
+	android:shrinkColumns="*"
+	android:stretchColumns="*" >
+	
+     <TableRow
+          android:layout_height="wrap_content"
+          android:layout_width="fill_parent"
+          android:gravity="center_horizontal">
+    	 <TextView
+        	  android:layout_width="match_parent" android:layout_height="wrap_content"
+          	  android:text="@string/labelName" android:background="#b0b0b0"
+         	  android:textColor="#000"/>
+    	 <TextView
+        	  android:layout_width="match_parent" android:layout_height="wrap_content"
+          	  android:text="@string/labelWins" android:background="#b0b0b0"
+         	  android:textColor="#000"/>
+    	 <TextView
+        	  android:layout_width="match_parent" android:layout_height="wrap_content"
+          	  android:text="@string/labelLosses" android:background="#b0b0b0"
+         	  android:textColor="#000"/>
+	</TableRow>
+         
+</TableLayout>
