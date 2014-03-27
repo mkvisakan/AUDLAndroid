@@ -47,7 +47,7 @@ public class ScheduleListBaseAdapter extends BaseAdapter {
  
         TextView title = (TextView)sch.findViewById(R.id.scheduleEntryText); // title
         ImageView homeTeamImage=(ImageView)sch.findViewById(R.id.homeTeamIcon); // home team image
-        ImageView awayTeamImage=(ImageView)sch.findViewById(R.id.awayTeamIcon); // home team image
+        ImageView awayTeamImage=(ImageView)sch.findViewById(R.id.awayTeamIcon); // away team image
         
         ScheduleListItem scheduleEntry = data.get(position);
  

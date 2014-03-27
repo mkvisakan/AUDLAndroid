@@ -223,7 +223,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 			fragment = new VideosListFragment();
 			break;
 		case 8:
-			fragment = new StatsFragment();
+			fragment = new StatsListFragment();
 			break;
 		case 9:
 			fragment = new SettingsFragment();

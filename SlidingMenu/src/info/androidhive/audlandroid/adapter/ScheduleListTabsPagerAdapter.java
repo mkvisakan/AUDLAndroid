@@ -1,8 +1,6 @@
 package info.androidhive.audlandroid.adapter;
  
-import info.androidhive.audlandroid.NewsListFragment;
 import info.androidhive.audlandroid.ScheduleDivisionFragment;
-import info.androidhive.audlandroid.TeamsListFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
