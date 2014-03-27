@@ -11,6 +11,7 @@ Requirements:
 -----------------------
 >1) Setup ADT bundle with eclipse
 >>1) Further instructions in http://developer.android.com/sdk/installing/bundle.html
+
 >2) Git installed (you can do the following stuff without git but I'm not going to show how).
 
 The application can be checked out to an eclipse IDE with ADT plugin installed. The application can be built and run using the default emulator or using any device.
