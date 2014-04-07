@@ -52,8 +52,11 @@ public class TeamInfoTabsPagerAdapter extends FragmentStatePagerAdapter {
         	TeamsScheduleFragment schedFrag = new TeamsScheduleFragment();
         	Bundle schedArgs = new Bundle();
         	schedArgs.putString("TEAM_NAME", team.getTeamName());
+        	schedArgs.putString("TEAM_ID", team.getTeamId());
         	schedArgs.putStringArrayList("SCHED_TEAMS",	team.getSchedTeams());
-        	schedArgs.putStringArrayList("SCHED_DATETIMES",	team.getSchedDateTimes());
+        	schedArgs.putStringArrayList("SCHED_TEAMIDS", team.getSchedTeamIds());
+        	schedArgs.putStringArrayList("SCHED_DATES",	team.getSchedDates());
+        	schedArgs.putStringArrayList("SCHED_TIMES", team.getSchedTimes());
         	schedFrag.setArguments(schedArgs);
         	return schedFrag;
         case 2:

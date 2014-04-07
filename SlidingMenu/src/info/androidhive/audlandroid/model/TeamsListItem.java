@@ -9,7 +9,9 @@ public class TeamsListItem {
 	private ArrayList<String> player_names;
 	private ArrayList<String> player_ids;
 	private ArrayList<String> schedTeams;
-	private ArrayList<String> schedDateTimes;
+	private ArrayList<String> schedTeamIds;
+	private ArrayList<String> schedDates;
+	private ArrayList<String> schedTimes;
 	private ArrayList<String> goalsPlayers;
 	private ArrayList<String> goals;
 	private ArrayList<String> assistPlayers;
@@ -29,7 +31,9 @@ public class TeamsListItem {
 		this.player_names = new ArrayList<String>();
 		this.player_ids = new ArrayList<String>();
 		this.schedTeams = new ArrayList<String>();
-		this.schedDateTimes = new ArrayList<String>();
+		this.schedDates = new ArrayList<String>();
+		this.schedTimes = new ArrayList<String>();
+		this.schedTeamIds = new ArrayList<String>();
 		this.goalsPlayers = new ArrayList<String>();
 		this.goals = new ArrayList<String>();
 		this.assistPlayers = new ArrayList<String>();
@@ -73,17 +77,27 @@ public class TeamsListItem {
 		return player_names;
 	}
 	
-	public void addSchedule(String team, String date, String time){
+	public void addSchedule(String team, String teamId, String date, String time){
 		schedTeams.add(team);
-		schedDateTimes.add(date + " " + time);
+		schedDates.add(date);
+		schedTimes.add(time);
+		schedTeamIds.add(teamId);
 	}
 	
 	public ArrayList<String> getSchedTeams(){
 		return schedTeams;
 	}
 	
-	public ArrayList<String> getSchedDateTimes(){
-		return schedDateTimes;
+	public ArrayList<String> getSchedDates(){
+		return schedDates;
+	}
+	
+	public ArrayList<String> getSchedTimes(){
+		return schedTimes;
+	}
+	
+	public ArrayList<String> getSchedTeamIds(){
+		return schedTeamIds;
 	}
 
 	public void addGoals(String player, String goalsCount){

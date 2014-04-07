@@ -7,16 +7,20 @@ import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.adapter.TeamInfoTabsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.TeamsListItem;
+import info.androidhive.audlandroid.utils.ImageLoader;
+
 import org.json.JSONArray;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 public class TeamsInfoFragment extends Fragment {
@@ -48,7 +52,7 @@ public class TeamsInfoFragment extends Fragment {
 			Log.i("TeamsInfoFragment", "adding schedule...");
 			//add schedule
 			for (int i=2; i<scheduleList.length(); i++){
-				team.addSchedule(scheduleList.getJSONArray(i).getString(2), scheduleList.getJSONArray(i).getString(0), scheduleList.getJSONArray(i).getString(1));
+				team.addSchedule(scheduleList.getJSONArray(i).getString(2), scheduleList.getJSONArray(i).getString(3), scheduleList.getJSONArray(i).getString(0), scheduleList.getJSONArray(i).getString(1));
 			}
 			//add stats
 			JSONArray goalsList = statsList.getJSONArray(1).getJSONArray(1);
@@ -98,6 +102,10 @@ public class TeamsInfoFragment extends Fragment {
 		        } catch (Exception e) {
 		        	Log.e("TeamsInfoFragment", "Response: " + response + ". Error creating json " + e.toString());
 		        }
+		        
+		        //header
+		        ActionBar act = getActivity().getActionBar();
+		        act.setTitle(team.getTeamName());
 		        
 		        // Initilization
 		        viewPager = (ViewPager) rootView.findViewById(R.id.pager);
