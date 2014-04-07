@@ -6,6 +6,7 @@ import java.util.List;
 
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.adapter.ListAdapter;
+import info.androidhive.audlandroid.adapter.TeamRosterBaseAdapter;
 import info.androidhive.audlandroid.adapter.TeamsListBaseAdapter;
 import info.androidhive.audlandroid.model.TeamsListItem;
 import info.androidhive.audlandroid.utils.ImageLoader;
@@ -52,7 +53,8 @@ public class TeamsRosterFragment extends Fragment {
 		
 		final ListView listview = (ListView) rootView.findViewById(R.id.listview);
         
-        final ListAdapter adapter = new ListAdapter(this.getActivity(), android.R.layout.simple_list_item_1, listVal);        
+        //final ListAdapter adapter = new ListAdapter(this.getActivity(), android.R.layout.simple_list_item_1, listVal);
+		final TeamRosterBaseAdapter adapter = new TeamRosterBaseAdapter(getActivity(), player_ids, player_names);
         listview.setAdapter(adapter);
 
         return rootView;

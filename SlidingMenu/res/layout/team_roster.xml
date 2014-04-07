@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+
+    <LinearLayout
+        android:id="@+id/id_con"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="10dip"
+        android:background="#A6A6A6"
+        android:padding="3dip" 
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/player_id"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:shadowColor="#333333"
+            android:shadowDx="2.0"
+            android:shadowDy="2.0"
+            android:shadowRadius="3.0"
+            android:text="1"
+            android:textColor="#00002E"
+            android:textSize="22dip"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/player_name"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@+id/id_con"
+        android:layout_centerVertical="@+id/id_con"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+ 
+     
+</RelativeLayout>
