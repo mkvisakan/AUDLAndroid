@@ -45,16 +45,16 @@ public class NewsListBaseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)
-            vi = inflater.inflate(R.layout.thumbnail_text_item, null);
+            vi = inflater.inflate(R.layout.news_list_item, null);
  
         TextView title = (TextView)vi.findViewById(R.id.name); // title
-        ImageView thumb_image=(ImageView)vi.findViewById(R.id.icon); // thumb image
+        TextView datetime = (TextView)vi.findViewById(R.id.datetime); // datetime
  
         NewsListItem news = data.get(position);
  
         // Setting all values in listview
         title.setText(news.getNewsHeadline());
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/224002", thumb_image);
+        datetime.setText(news.getDatetime());
         return vi;
     }
 }

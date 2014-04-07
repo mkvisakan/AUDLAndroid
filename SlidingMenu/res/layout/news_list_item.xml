@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="48dp" 
-    android:background="@drawable/list_selector">
-
-
-    <TextView
-        android:id="@+id/news_header"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@color/list_item_title"
-        android:gravity="center_vertical"
-        android:paddingRight="40dp"/>
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip">
+ 
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:src="@drawable/news_icon"/>
+ 
+    </LinearLayout>
+ 
+    <!-- Title Of Team-->
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
     
+    <TextView
+        android:id="@+id/datetime"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_below="@+id/name"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="10dip"/>
+    
+ 
+     
 </RelativeLayout>

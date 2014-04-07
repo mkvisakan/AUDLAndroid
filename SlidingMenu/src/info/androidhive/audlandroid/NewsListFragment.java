@@ -39,7 +39,7 @@ public class NewsListFragment extends Fragment {
 		ArrayList<NewsListItem> newsList = new ArrayList<NewsListItem>();
 		try {
 			for (int i=1; i<jsonResult.length(); i++){
-				newsList.add(new NewsListItem(jsonResult.getJSONArray(i).getString(0), jsonResult.getJSONArray(i).getString(1)));
+				newsList.add(new NewsListItem(jsonResult.getJSONArray(i).getString(0), jsonResult.getJSONArray(i).getString(1), jsonResult.getJSONArray(i).getString(2)));
 			}
 		} catch (Exception e) {
 			Log.e("NewsListFragment", "Error when trying to create news objects from json : " + e.toString());
