@@ -39,8 +39,10 @@ public class TeamsInfoFragment extends Fragment {
     	return team;
     }
     
-    public void parseJSON(JSONArray jsonResult){
+    public TeamsListItem parseJSON(JSONArray jsonResult, String team_name, String team_id){
+    	TeamsListItem team = null;
 		try {
+			team = new TeamsListItem(team_name, team_id);
 			JSONArray playersList = jsonResult.getJSONArray(0);
 			JSONArray scheduleList = jsonResult.getJSONArray(1);
 			JSONArray statsList = jsonResult.getJSONArray(2);
@@ -84,13 +86,12 @@ public class TeamsInfoFragment extends Fragment {
 			Log.e("TeamsInfoFragment", "Error when trying to create info objects from json : " + e.toString());
 			e.printStackTrace();
 		}
+		return team;
 	}
     
     public void startAsyncTask(final View rootView, final TeamsInfoFragment frag){
-		String team_id = getArguments().getString("TEAM_ID");
-		String team_name = getArguments().getString("TEAM_NAME");
-		team = new TeamsListItem(team_name, team_id);
-		Log.i("TeamsInfoFragment", "Fetching Details about team : " + team.getTeamName());
+		final String team_id = getArguments().getString("TEAM_ID");
+		final String team_name = getArguments().getString("TEAM_NAME");
 		
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
 			@Override
@@ -98,7 +99,7 @@ public class TeamsInfoFragment extends Fragment {
 		        Log.i("TeamsInfoFragment", "response : " + response);
 		        try{
 		            jsonResult = new JSONArray(response);
-		            parseJSON(jsonResult);
+		            team = parseJSON(jsonResult, team_name, team_id);
 		        } catch (Exception e) {
 		        	Log.e("TeamsInfoFragment", "Response: " + response + ". Error creating json " + e.toString());
 		        }
@@ -133,7 +134,7 @@ public class TeamsInfoFragment extends Fragment {
 				
 			}
 		});
-		httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Teams/" + team.getTeamId());
+		httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Teams/" + team_id);
     }
 	
 	@Override
