@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
  
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
  
@@ -19,18 +22,24 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<String>> _listDataChild;
+    private HashMap<String, List<String>> _listDataVal;
  
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
-            HashMap<String, List<String>> listChildData) {
+            HashMap<String, List<String>> listChildData, HashMap<String, List<String>> listDataVal) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+        this._listDataVal = listDataVal;
     }
  
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
                 .get(childPosititon);
+    }
+    
+    public Object getChildVal(int groupPosition, int childPosition) {
+    	return this._listDataVal.get(this._listDataHeader.get(groupPosition)).get(childPosition);
     }
  
     @Override
@@ -43,6 +52,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             boolean isLastChild, View convertView, ViewGroup parent) {
  
         final String childText = (String) getChild(groupPosition, childPosition);
+        final String childVal = (String) getChildVal(groupPosition, childPosition);
  
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -52,8 +62,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
  
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.lblListItem);
+        TextView txtListVal = (TextView) convertView
+                .findViewById(R.id.lblListItemVal);
+        
  
         txtListChild.setText(childText);
+        txtListVal.setText(childVal);
         return convertView;
     }
  

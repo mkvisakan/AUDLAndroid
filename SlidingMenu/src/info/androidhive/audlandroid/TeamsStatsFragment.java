@@ -57,7 +57,8 @@ public class TeamsStatsFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.team_stats_expandable, container, false);
 		
 		ArrayList<String> listDataHeader = new ArrayList<String>();
-		HashMap<String, List<String>> listDataChild = new HashMap<String, List<String>>();
+		HashMap<String, List<String>> listDataPlayers = new HashMap<String, List<String>>();
+		HashMap<String, List<String>> listDataVal = new HashMap<String, List<String>>();
 		
 		listDataHeader.add("Goals");
 		listDataHeader.add("Assists");
@@ -66,6 +67,22 @@ public class TeamsStatsFragment extends Fragment {
 		listDataHeader.add("+/- Counts");
 		listDataHeader.add("D's");
 		
+		listDataPlayers.put(listDataHeader.get(0), goalPlayers);
+        listDataPlayers.put(listDataHeader.get(1), assistPlayers);
+        listDataPlayers.put(listDataHeader.get(2), dropPlayers);
+        listDataPlayers.put(listDataHeader.get(3), throwAwayPlayers);
+        listDataPlayers.put(listDataHeader.get(4), pmcPlayers);
+        listDataPlayers.put(listDataHeader.get(5), dsPlayers);
+        
+        listDataVal.put(listDataHeader.get(0), goals);
+        listDataVal.put(listDataHeader.get(1), assists);
+        listDataVal.put(listDataHeader.get(2), drops);
+        listDataVal.put(listDataHeader.get(3), throwAways);
+        listDataVal.put(listDataHeader.get(4), pmc);
+        listDataVal.put(listDataHeader.get(5), ds);
+		
+		
+		/**
 		List<String> goalsData = new ArrayList<String>();
 		for (int i=0; i<goalPlayers.size(); i++){
 			goalsData.add(goalPlayers.get(i)+ " : " + goals.get(i));
@@ -102,8 +119,9 @@ public class TeamsStatsFragment extends Fragment {
         listDataChild.put(listDataHeader.get(3), throwAwayData);
         listDataChild.put(listDataHeader.get(4), pmcData);
         listDataChild.put(listDataHeader.get(5), dsData);
-        
-        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getActivity().getApplicationContext(), listDataHeader, listDataChild);
+        **/
+		
+        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getActivity().getApplicationContext(), listDataHeader, listDataPlayers, listDataVal);
         
         ExpandableListView expListView = (ExpandableListView) rootView.findViewById(R.id.lvExp);
         // setting list adapter
