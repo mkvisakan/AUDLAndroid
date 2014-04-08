@@ -4,9 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import info.androidhive.audlandroid.R;
+import info.androidhive.audlandroid.adapter.NewsListBaseAdapter;
+import info.androidhive.audlandroid.adapter.ScheduleListBaseAdapter;
 import info.androidhive.audlandroid.adapter.TabsPagerAdapter;
+import info.androidhive.audlandroid.adapter.VideosListBaseAdapter;
+import info.androidhive.audlandroid.interfaces.FragmentCallback;
+import info.androidhive.audlandroid.model.NewsListItem;
+import info.androidhive.audlandroid.model.ScheduleListItem;
+import info.androidhive.audlandroid.model.VideosListItem;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,61 +22,130 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.DefaultClientConnection;
+import org.json.JSONArray;
+import org.json.JSONException;
 
+import android.R.color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.app.ActionBar;
 import android.app.ActionBar.TabListener;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
+	private JSONArray jsonResult;
 	
 	public HomeFragment(){}
 	
-	private ViewPager viewPager;
-    private TabsPagerAdapter mAdapter;
-    
-    private String[] tabs = { "News", "Teams"};
+	public JSONArray getTopNItems(JSONArray inputArray, int N) throws JSONException{
+		JSONArray jsonRes =new JSONArray();
+		for (int i=0; i<inputArray.length() && i < N; i++){
+			jsonRes.put(inputArray.get(i));
+		}
+		return jsonRes;
+	}
+	
+	public void startAsyncTask(final View rootView, final Activity activity){
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+			@Override
+			public void onTaskDone(String response) {
+				try{
+		            jsonResult = new JSONArray(response);
+		        } catch (Exception e) {
+		        	Log.e("HomeFragment", "Response: " + response + ". Error creating json " + e.toString());
+		        }
+				
+				ArrayList<ScheduleListItem> schedList = new ArrayList<ScheduleListItem>();
+				try {
+					NewsListFragment newsFrag = new NewsListFragment();
+					final ArrayList<NewsListItem> newsList = newsFrag.parseJSON(getTopNItems(jsonResult.getJSONArray(0), 3));
+					VideosListFragment vidFrag = new VideosListFragment();
+					final ArrayList<VideosListItem> videosList = vidFrag.parseJSON(getTopNItems(jsonResult.getJSONArray(1), 2));
+					ScheduleDivisionFragment schedFrag = new ScheduleDivisionFragment();
+					ArrayList<ScheduleListItem> midSchedList = schedFrag.parseJSON(jsonResult.getJSONArray(2), "Midwestern");
+					schedList.add(midSchedList.get(0));
+					ArrayList<ScheduleListItem> eastSchedList = schedFrag.parseJSON(jsonResult.getJSONArray(2), "Eastern");
+					schedList.add(eastSchedList.get(0));
+					ListView news_listview = (ListView)rootView.findViewById(R.id.news_listview);
+					
+					final NewsListBaseAdapter newsAdapter = new NewsListBaseAdapter(activity, newsList);
+			        news_listview.setAdapter(newsAdapter);
+			        
+			        news_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			            @Override
+			            public void onItemClick(AdapterView<?> parent, final View view,
+			                int position, long id) {
+			              Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsList.get(position).getNewsURL()));
+			              startActivity(myIntent);
+			            }
+			          });
+			        
+			        TextView newsTxtView = (TextView) rootView.findViewById(R.id.news_list_header);
+			        newsTxtView.setText("Top News");
+			        newsTxtView.setBackgroundColor(Color.LTGRAY);
+			        newsTxtView.setTypeface(null, Typeface.BOLD_ITALIC);
+			        
+			        ListView videos_listview = (ListView)rootView.findViewById(R.id.videos_listview);
+					
+					final VideosListBaseAdapter videosAdapter = new VideosListBaseAdapter(activity, videosList);
+			        videos_listview.setAdapter(videosAdapter);
+			        
+			        videos_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			            @Override
+			            public void onItemClick(AdapterView<?> parent, final View view,
+			                int position, long id) {
+			            	Intent intent = new Intent(Intent.ACTION_VIEW);
+			                intent.setData(Uri.parse(videosList.get(position).getVideoURL()));
+			                startActivity(intent);
+			            }
+			          });
+			        
+			        TextView vidTxtView = (TextView) rootView.findViewById(R.id.videos_list_header);
+			        vidTxtView.setText("Recent Videos");
+			        vidTxtView.setBackgroundColor(Color.LTGRAY);
+			        vidTxtView.setTypeface(null, Typeface.BOLD_ITALIC);
+			        
+			        ListView sched_listview = (ListView)rootView.findViewById(R.id.sched_listview);
+			        final ScheduleListBaseAdapter schedAdapter = new ScheduleListBaseAdapter(activity, schedList);        
+			        sched_listview.setAdapter(schedAdapter);
+			        
+			        TextView schedTxtView = (TextView) rootView.findViewById(R.id.sched_list_header);
+			        schedTxtView.setText("Upcoming matches");
+			        schedTxtView.setBackgroundColor(Color.LTGRAY);
+			        schedTxtView.setTypeface(null, Typeface.BOLD_ITALIC);
+				} catch (Exception e) {
+					Log.e("HomeFragment", "Error extracting results ! " + e.toString());
+				}
+				
+				
+			}
+		});
+		httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Home");
+	}
+	
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
-		//new HttpRequestTask().execute("http://192.168.72.235:4000/teams");
+		View rootView = inflater.inflate(R.layout.home_section, container, false);
         
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        
-        // Initilization
-        viewPager = (ViewPager) rootView.findViewById(R.id.pager);
-        mAdapter = new TabsPagerAdapter(this.getActivity().getSupportFragmentManager());
- 
-        viewPager.setAdapter(mAdapter);
-        
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-        	 
-            @Override
-            public void onPageSelected(int position) {
-                // on changing the page
-                // make respected tab selected
-               // actionBar.setSelectedNavigationItem(position);
-            }
-         
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-         
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-         
-        return rootView;
+        startAsyncTask(rootView, getActivity());         	
+        return rootView;    
     }
 }
