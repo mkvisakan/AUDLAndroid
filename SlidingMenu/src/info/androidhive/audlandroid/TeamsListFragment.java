@@ -109,6 +109,8 @@ public class TeamsListFragment extends Fragment {
 		
 		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 		
+		getActivity().getActionBar().setTitle("Teams");
+		
 		TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
         txtView.setText("AUDL Teams");
 		

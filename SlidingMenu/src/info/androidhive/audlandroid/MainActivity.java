@@ -160,7 +160,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -172,8 +172,8 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		}
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-		case R.id.action_settings:
-			return true;
+		//case R.id.action_settings:
+		//	return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -186,7 +186,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+		//menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -235,6 +235,12 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 
 		if (fragment != null) {
 			FragmentManager fragmentManager = getSupportFragmentManager();
+			
+			//clear the backstack
+			for (int i=0; i< fragmentManager.getBackStackEntryCount(); i++){
+				fragmentManager.popBackStack();
+			}
+			
 			fragmentManager.beginTransaction()
 					.replace(R.id.frame_container, fragment).commit();
 
