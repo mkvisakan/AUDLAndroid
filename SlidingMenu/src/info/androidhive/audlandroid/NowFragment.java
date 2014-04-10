@@ -52,14 +52,9 @@ public class NowFragment extends Fragment {
 						Twitter twits = jsonToTwitter(response);
 
 						// send the tweets to the adapter for rendering
-<<<<<<< HEAD
+
 						final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
 				        listview.setAdapter(adapter);
-=======
-						NowListBaseAdapter adapter = new NowListBaseAdapter(getActivity(), twits);
-
-						listview.setAdapter(adapter);
->>>>>>> 962260583fa91249fd352b33dad5027a28a3d37e
 					}
 				});
 		// httpRequester.execute("http://68.190.167.114:4000/News");
