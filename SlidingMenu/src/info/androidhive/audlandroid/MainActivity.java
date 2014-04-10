@@ -3,6 +3,7 @@ package info.androidhive.audlandroid;
 import info.androidhive.audlandroid.adapter.NavDrawerListAdapter;
 import info.androidhive.audlandroid.model.NavDrawerItem;
 import info.androidhive.audlandroid.model.TeamsListItem;
+import info.androidhive.audlandroid.utils.ConnectionDetector;
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.TeamsListFragment.OnTeamSelectedListener;
 
@@ -10,10 +11,12 @@ import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -25,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements OnTeamSelectedListener{
 	private DrawerLayout mDrawerLayout;
@@ -44,7 +48,28 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	
+	
+	public void internetError(){
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle("Internet Connection Error");
+		alertDialog.setMessage("Not Connected to Internet. Please reconnect and try again !!!");
+		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	System.exit(0);
+            }
+        });
+		alertDialog.show();
+	}
+	
 	public void onTeamSelected(TeamsListItem team){
+		ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+		boolean isInternetConnected = cd.isConnectingToInternet();
+		
+		if (!isInternetConnected) {
+			internetError();
+			return;
+		}
+		
 		TeamsInfoFragment teamFrag = new TeamsInfoFragment();
 		Bundle args = new Bundle();
 		args.putString("TEAM_ID", team.getTeamId());
@@ -194,6 +219,14 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
 	private void displayView(int position) {
+		ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+		boolean isInternetConnected = cd.isConnectingToInternet();
+		
+		if (!isInternetConnected) {
+			internetError();
+			return;
+		}
+		
 		this.invalidateOptionsMenu();
 		// update the main content by replacing fragments
 		Fragment fragment = null;
