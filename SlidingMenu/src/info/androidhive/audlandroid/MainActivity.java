@@ -3,6 +3,7 @@ package info.androidhive.audlandroid;
 import info.androidhive.audlandroid.adapter.NavDrawerListAdapter;
 import info.androidhive.audlandroid.model.NavDrawerItem;
 import info.androidhive.audlandroid.model.TeamsListItem;
+import info.androidhive.audlandroid.utils.ConnectionDetector;
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.TeamsListFragment.OnTeamSelectedListener;
 
@@ -24,11 +25,14 @@ import org.apache.http.message.BasicNameValuePair;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
@@ -44,6 +48,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.*;
@@ -52,24 +57,48 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+
+	// nav drawer title
+	private CharSequence mDrawerTitle;
+
+	// used to store app title
+	private CharSequence mTitle;
 	private GoogleCloudMessaging gcm;
 	private String TAG="info.androidhive.audlandroid.MainActivity";
 	private String SENDER_ID = "447710219727";
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	private final static String REG_ID = "registrationID";
 	private String regId;
-	// nav drawer title
-	private CharSequence mDrawerTitle;
 	private Context context;
-	// used to store app title
-	private CharSequence mTitle;
 	// slide menu items
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
+
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	
+	
+	public void internetError(){
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle("Internet Connection Error");
+		alertDialog.setMessage("Not Connected to Internet. Please reconnect and try again !!!");
+		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	System.exit(0);
+            }
+        });
+		alertDialog.show();
+	}
+	
 	public void onTeamSelected(TeamsListItem team){
+		ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+		boolean isInternetConnected = cd.isConnectingToInternet();
+		
+		if (!isInternetConnected) {
+			internetError();
+			return;
+		}
+		
 		TeamsInfoFragment teamFrag = new TeamsInfoFragment();
 		Bundle args = new Bundle();
 		args.putString("TEAM_ID", team.getTeamId());
@@ -91,7 +120,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
@@ -100,18 +129,18 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		// nav drawer icons from resources
 		navMenuIcons = getResources()
 				.obtainTypedArray(R.array.nav_drawer_icons);
-		
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
 		navDrawerItems = new ArrayList<NavDrawerItem>();
 		/*if(checkPlayServices()){
-			context = getApplicationContext();
-			gcm = GoogleCloudMessaging.getInstance(this);
-			regId = getRegistrationId(context);
-			if(regId.compareTo("") == 0){
-				registerInBackground();
-			}
+		context = getApplicationContext();
+		gcm = GoogleCloudMessaging.getInstance(this);
+		regId = getRegistrationId(context);
+		if(regId.compareTo("") == 0){
+			registerInBackground();
+		}
 		}
 		else{
 			finish();
@@ -177,7 +206,6 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 			displayView(0);
 		}
 	}
-	
 	private void registerInBackground() {
 		new RegisterTask().execute(null,null,null);
 	}
@@ -278,7 +306,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -290,8 +318,8 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		}
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-		case R.id.action_settings:
-			return true;
+		//case R.id.action_settings:
+		//	return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -304,7 +332,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+		//menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -312,6 +340,14 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
 	private void displayView(int position) {
+		ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+		boolean isInternetConnected = cd.isConnectingToInternet();
+		
+		if (!isInternetConnected) {
+			internetError();
+			return;
+		}
+		
 		this.invalidateOptionsMenu();
 		// update the main content by replacing fragments
 		Fragment fragment = null;
@@ -353,6 +389,12 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 
 		if (fragment != null) {
 			FragmentManager fragmentManager = getSupportFragmentManager();
+			
+			//clear the backstack
+			for (int i=0; i< fragmentManager.getBackStackEntryCount(); i++){
+				fragmentManager.popBackStack();
+			}
+			
 			fragmentManager.beginTransaction()
 					.replace(R.id.frame_container, fragment).commit();
 

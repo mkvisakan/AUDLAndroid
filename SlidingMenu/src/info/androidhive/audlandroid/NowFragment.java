@@ -1,5 +1,6 @@
 package info.androidhive.audlandroid;
 
+import info.androidhive.audlandroid.adapter.NowListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.Tweet;
 import info.androidhive.audlandroid.model.Twitter;
@@ -53,9 +54,7 @@ public class NowFragment extends Fragment {
 						Twitter twits = jsonToTwitter(response);
 
 						// send the tweets to the adapter for rendering
-						ArrayAdapter<Tweet> adapter = new ArrayAdapter<Tweet>(
-								getActivity(),
-								android.R.layout.simple_list_item_1, twits);
+						NowListBaseAdapter adapter = new NowListBaseAdapter(getActivity(), twits);
 
 						listview.setAdapter(adapter);
 					}
