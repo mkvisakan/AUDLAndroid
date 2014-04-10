@@ -1,44 +1,25 @@
 package info.androidhive.audlandroid;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
-import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.adapter.NewsListBaseAdapter;
 import info.androidhive.audlandroid.adapter.ScheduleListBaseAdapter;
-import info.androidhive.audlandroid.adapter.TabsPagerAdapter;
 import info.androidhive.audlandroid.adapter.VideosListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.NewsListItem;
 import info.androidhive.audlandroid.model.ScheduleListItem;
 import info.androidhive.audlandroid.model.VideosListItem;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.DefaultClientConnection;
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.R.color;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.app.ActionBar;
-import android.app.ActionBar.TabListener;
 import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.app.ActionBar.Tab;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,11 +57,11 @@ public class HomeFragment extends Fragment {
 					final ArrayList<NewsListItem> newsList = newsFrag.parseJSON(getTopNItems(jsonResult.getJSONArray(0), 3));
 					VideosListFragment vidFrag = new VideosListFragment();
 					final ArrayList<VideosListItem> videosList = vidFrag.parseJSON(getTopNItems(jsonResult.getJSONArray(1), 2));
-					ScheduleDivisionFragment schedFrag = new ScheduleDivisionFragment();
-					ArrayList<ScheduleListItem> midSchedList = schedFrag.parseJSON(jsonResult.getJSONArray(2), "Midwestern");
-					schedList.add(midSchedList.get(0));
-					ArrayList<ScheduleListItem> eastSchedList = schedFrag.parseJSON(jsonResult.getJSONArray(2), "Eastern");
-					schedList.add(eastSchedList.get(0));
+					//ScheduleDivisionFragment schedFrag = new ScheduleDivisionFragment();
+					//ArrayList<ScheduleListItem> midSchedList = schedFrag.parseJSON(jsonResult.getJSONArray(2), "Midwestern");
+					//schedList.add(midSchedList.get(0));
+					//ArrayList<ScheduleListItem> eastSchedList = schedFrag.parseJSON(jsonResult.getJSONArray(2), "Eastern");
+					//schedList.add(eastSchedList.get(0));
 					ListView news_listview = (ListView)rootView.findViewById(R.id.news_listview);
 					
 					final NewsListBaseAdapter newsAdapter = new NewsListBaseAdapter(activity, newsList);

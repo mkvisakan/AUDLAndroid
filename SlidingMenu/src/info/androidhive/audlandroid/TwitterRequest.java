@@ -40,7 +40,6 @@ import com.google.gson.Gson;
 			this.mCallback = fragCallback;
 		}
 		
-
 		@Override
 		protected String doInBackground(String... screenNames) {
 			String result = null;
@@ -128,7 +127,7 @@ import com.google.gson.Gson;
 				if (auth != null && auth.token_type.equals("bearer")) {
 
 					// Step 3: Authenticate API requests with bearer token
-					HttpGet httpGet = new HttpGet(TwitterStreamURL + screenName);
+					HttpGet httpGet = new HttpGet(TwitterStreamURL + screenName + "&count=20");
 
 					// construct a normal HTTPS request and include an Authorization
 					// header with the value of Bearer <>
