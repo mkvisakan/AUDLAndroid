@@ -43,16 +43,17 @@ public class StatsListBaseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View stat =convertView;
         if(convertView==null)
-            stat = inflater.inflate(R.layout.thumbnail_text_item, null);
+            stat = inflater.inflate(R.layout.stats_list_item, null);
  
-        TextView title = (TextView)stat.findViewById(R.id.name); // title
+        TextView name = (TextView)stat.findViewById(R.id.name); // title
+        TextView statVal = (TextView)stat.findViewById(R.id.statVal);
         ImageView playerTeamImage =(ImageView)stat.findViewById(R.id.icon); // Player's Team Icon
         
         StatsListItem statistic = data.get(position);
  
         // Setting all values in listview
-        title.setText(statistic.getPlayerName() + " - " + statistic.getStatValue());
-        
+        name.setText(statistic.getPlayerName());
+        statVal.setText(statistic.getStatValue());
         
         imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + statistic.getPlayerTeamID(), playerTeamImage);
         
