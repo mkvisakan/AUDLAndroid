@@ -9,6 +9,7 @@ import info.androidhive.audlandroid.model.ScheduleListItem;
 import info.androidhive.audlandroid.model.VideosListItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,11 +58,11 @@ public class HomeFragment extends Fragment {
 					final ArrayList<NewsListItem> newsList = newsFrag.parseJSON(getTopNItems(jsonResult.getJSONArray(0), 3));
 					VideosListFragment vidFrag = new VideosListFragment();
 					final ArrayList<VideosListItem> videosList = vidFrag.parseJSON(getTopNItems(jsonResult.getJSONArray(1), 2));
-					//ScheduleDivisionFragment schedFrag = new ScheduleDivisionFragment();
-					//ArrayList<ScheduleListItem> midSchedList = schedFrag.parseJSON(jsonResult.getJSONArray(2), "Midwestern");
-					//schedList.add(midSchedList.get(0));
-					//ArrayList<ScheduleListItem> eastSchedList = schedFrag.parseJSON(jsonResult.getJSONArray(2), "Eastern");
-					//schedList.add(eastSchedList.get(0));
+					ScheduleListFragment schedFrag = new ScheduleListFragment();
+					HashMap<String, ArrayList<ScheduleListItem>> schedMap = schedFrag.parseJSON(jsonResult.getJSONArray(2));
+					for (String key : schedMap.keySet()){
+						schedList.add(schedMap.get(key).get(0));
+					}
 					ListView news_listview = (ListView)rootView.findViewById(R.id.news_listview);
 					
 					final NewsListBaseAdapter newsAdapter = new NewsListBaseAdapter(activity, newsList);
