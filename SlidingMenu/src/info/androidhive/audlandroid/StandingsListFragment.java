@@ -8,7 +8,6 @@ import org.json.JSONException;
 
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.adapter.StandingsDivisionsPagerAdapter;
-import info.androidhive.audlandroid.adapter.TabsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.TeamRecordItem;
 import android.support.v4.app.Fragment;

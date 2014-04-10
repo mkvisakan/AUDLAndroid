@@ -23,16 +23,4 @@ public class NewsListItem {
 	public String getDatetime() {
 		return this.datetimeString;
 	}
-	
-	public void setDatetime(String datetime) {
-		this.datetimeString = datetime;
-	}
-	
-	public void setNewsHeadline(String headline){
-		this.newsHeadline = headline;
-	}
-	
-	public void setNewsURL(String URL){
-		this.newsURL = URL;
-	}
 }

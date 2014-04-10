@@ -13,21 +13,15 @@ public class TeamRecordItem {
 	public String getTeamName() {
 		return teamName;
 	}
-	public void setTeamName(String teamName) {
-		this.teamName = teamName;
-	}
+	
 	public String getWins() {
 		return wins;
 	}
-	public void setWins(String wins) {
-		this.wins = wins;
-	}
+	
 	public String getLosses() {
 		return losses;
 	}
-	public void setLosses(String losses) {
-		this.losses = losses;
-	}
+	
 	public String toString(){
 		return teamName + " " + wins + " " + losses;
 	}

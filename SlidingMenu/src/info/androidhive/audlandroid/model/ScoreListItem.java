@@ -28,15 +28,11 @@ public class ScoreListItem {
 	public String getHomeTeamID() {
 		return homeTeamID;
 	}
-	public void setHomeTeamID(String homeTeamID) {
-		this.homeTeamID = homeTeamID;
-	}
+	
 	public String getAwayTeam() {
 		return awayTeam;
 	}
-	public void setAwayTeam(String awayTeam) {
-		this.awayTeam = awayTeam;
-	}
+	
 	public String getAwayTeamID() {
 		return awayTeamID;
 	}
@@ -46,21 +42,15 @@ public class ScoreListItem {
 	public String getDate() {
 		return date;
 	}
-	public void setDate(String date) {
-		this.date = date;
-	}
+	
 	public String getTime() {
 		return time;
 	}
-	public void setTime(String time) {
-		this.time = time;
-	}
+	
 	public String getScore() {
 		return score;
 	}
-	public void setScore(String score) {
-		this.score = score;
-	}
+	
 	public boolean equals(ScoreListItem scoreItem){
 		if(awayTeam.compareTo(scoreItem.getAwayTeam())==0 &&
 				homeTeam.compareTo(scoreItem.getHomeTeam())==0 &&

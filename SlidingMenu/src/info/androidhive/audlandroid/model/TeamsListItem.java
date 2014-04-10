@@ -56,13 +56,6 @@ public class TeamsListItem {
 		return this.teamId;
 	}
 	
-	public void setTeamName(String name){
-		this.teamName = name;
-	}
-	
-	public void setNewsURL(String id){
-		this.teamId = id;
-	}
 	
 	public void addPlayer(String player_name, String player_id){
 		player_names.add(player_name);
