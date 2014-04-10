@@ -49,9 +49,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.*;
+//import com.google.android.gms.common.ConnectionResult;
+//import com.google.android.gms.common.GooglePlayServicesUtil;
+//import com.google.android.gms.gcm.*;
 
 public class MainActivity extends FragmentActivity implements OnTeamSelectedListener{
 	private DrawerLayout mDrawerLayout;
@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 
 	// used to store app title
 	private CharSequence mTitle;
-	private GoogleCloudMessaging gcm;
+	//private GoogleCloudMessaging gcm;
 	private String TAG="info.androidhive.audlandroid.MainActivity";
 	private String SENDER_ID = "447710219727";
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -206,7 +206,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 			displayView(0);
 		}
 	}
-	private void registerInBackground() {
+	/*private void registerInBackground() {
 		new RegisterTask().execute(null,null,null);
 	}
 
@@ -288,7 +288,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		catch(IOException e){
 			Log.i(TAG,"IO Exception");
 		}
-	}
+	}*/
 	/**
 	 * Slide menu item click listener
 	 * */

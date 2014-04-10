@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="3dip"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="5dip">
  
         <ImageView
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:padding="3dip"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="5dip">
  
         <ImageView
@@ -40,10 +42,8 @@
         android:id="@+id/scheduleEntryText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/homeTeamThumbnail"
-        android:layout_toRightOf="@id/homeTeamThumbnail"
-        android:layout_toLeftOf ="@id/awayTeamThumbnail"
-        android:gravity="center_horizontal"
+        
+        android:gravity="center"
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="15dip"

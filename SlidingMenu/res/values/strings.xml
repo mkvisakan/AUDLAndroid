@@ -41,5 +41,37 @@
     
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
-
+	
+    <!-- FAQ Questions -->
+    <string-array name="faqQuestions">
+        <item >Where can I see news and the recent AUDL Headlines</item>
+        <item >Where can I find out more about a specific team that I like</item>
+        <item >If I want to see what the AUDL is saying at this instant, where do I go</item>
+        <item >Can I watch games on the AUDL Mobile App</item>
+        <item >I like to see a little bit of everything, is there a place for me</item>
+        <item >I’m a stats fan. Where can I go to find out who the best players are</item>
+        <item >I want to see where the teams stand at this point in the season, where do I go</item>
+        <item >I missed out on a few games in the last couple weeks. Where can I go to see who won and who lost</item>
+        <item >I\&apos;m interested in finding out who the best player is on a particular team. Is there a way to do this</item>
+        <item >I don\&apos;t know anything about Ultimate. Is there a place for me to go</item>
+        <item >I hate this mobile app, who can I talk to about this abomination</item>
+        <item >I love this mobile app, who can I talk to about this heavenly piece of software</item>
+    </string-array>
+    
+    <!-- FAQ Answers -->
+    <string-array name="faqAnswers">
+        <item >Where can I see news and the recent AUDL Headlines</item>
+        <item >Where can I find out more about a specific team that I like</item>
+        <item >If I want to see what the AUDL is saying at this instant, where do I go</item>
+        <item >Can I watch games on the AUDL Mobile App</item>
+        <item >I like to see a little bit of everything, is there a place for me</item>
+        <item >I\&apos;m a stats fan. Where can I go to find out who the best players are</item>
+        <item >I want to see where the teams stand at this point in the season, where do I go</item>
+        <item >I missed out on a few games in the last couple weeks. Where can I go to see who won and who lost</item>
+        <item >I\&apos;m interested in finding out who the best player is on a particular team. Is there a way to do this</item>
+        <item >I don\&apos;t know anything about Ultimate. Is there a place for me to go</item>
+        <item >I hate this mobile app, who can I talk to about this abomination</item>
+        <item >I love this mobile app, who can I talk to about this heavenly piece of software</item>
+    </string-array>
+    
 </resources>
