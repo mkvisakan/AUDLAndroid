@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import info.androidhive.audlandroid.R;
-import info.androidhive.audlandroid.adapter.DivisionsPagerAdapter;
 import info.androidhive.audlandroid.adapter.ScoreDivisionsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.ScoreListItem;
@@ -25,7 +24,8 @@ public class ScoresListFragment extends Fragment {
 	public ScoresListFragment(){}
 	public ViewPager viewPager;
 	public ScoreDivisionsPagerAdapter mAdapter;
-	
+	private ArrayList<String> divisionNames;
+	private ArrayList<ArrayList<ScoreListItem>> leagueScores;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -35,9 +35,9 @@ public class ScoresListFragment extends Fragment {
         return rootView;
     }
 	
-	private void parseJSON(JSONArray array){
-		ArrayList<String> divisionNames = new ArrayList<String>();
-		ArrayList<ArrayList<ScoreListItem>> leagueScores = new ArrayList<ArrayList<ScoreListItem>>(); 
+	public ArrayList<ArrayList<ScoreListItem>> parseJSON(JSONArray array){
+		divisionNames = new ArrayList<String>();
+		leagueScores = new ArrayList<ArrayList<ScoreListItem>>(); 
 		for(int i=0;i<array.length();i++){
 			ArrayList<ScoreListItem> divisionScores = new ArrayList<ScoreListItem>();
 			try {
@@ -53,32 +53,8 @@ public class ScoresListFragment extends Fragment {
 			} catch (JSONException e) {
 				Log.i(TAG,"JSON Exception");
 			}
-			viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
-			mAdapter = new ScoreDivisionsPagerAdapter(this.getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
-			 
-		        viewPager.setAdapter(mAdapter);
-		        
-		        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-		        	 
-		            @Override
-		            public void onPageSelected(int position) {
-		                // on changing the page
-		                // make respected tab selected
-		               // actionBar.setSelectedNavigationItem(position);
-		            }
-		         
-		            @Override
-		            public void onPageScrolled(int arg0, float arg1, int arg2) {
-		            	
-		            }
-		         
-		            @Override
-		            public void onPageScrollStateChanged(int arg0) {
-		            
-		            }
-		        });
-
 		}
+		return leagueScores;
 	}
 	private void startAsyncTask(FragmentActivity activity){
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback(){
@@ -91,6 +67,28 @@ public class ScoresListFragment extends Fragment {
 					e.printStackTrace();
 				}
 				parseJSON(JSONResult);
+				viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
+				mAdapter = new ScoreDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
+				 
+			        viewPager.setAdapter(mAdapter);
+			        
+			        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			        	 
+			            @Override
+			            public void onPageSelected(int position) {
+			              
+			            }
+			         
+			            @Override
+			            public void onPageScrolled(int arg0, float arg1, int arg2) {
+			            	
+			            }
+			         
+			            @Override
+			            public void onPageScrollStateChanged(int arg0) {
+			            
+			            }
+			        });
 			}
 		});
 		httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Scores");

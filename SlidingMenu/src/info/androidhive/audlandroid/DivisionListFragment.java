@@ -8,7 +8,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -20,44 +23,49 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class DivisionListFragment extends Fragment{
-	private JSONArray divisionArray;
-	private ArrayList<TeamRecordItem> divisionRecords;
+	private ArrayList<String> divisionTeamNames;
+	private ArrayList<String> divisionTeamWins;
+	private ArrayList<String> divisionTeamLosses;
 	public DivisionListFragment(){}
 	
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		Bundle bundle = this.getArguments();
-		try {
-			divisionArray = new JSONArray(bundle.getString("DivisionArray"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		divisionTeamNames = bundle.getStringArrayList("divisionTeamNames");
+		divisionTeamWins = bundle.getStringArrayList("divisionTeamWins");
+		divisionTeamLosses = bundle.getStringArrayList("divisionTeamLosses");
 		View rootView = inflater.inflate(R.layout.fragment_division, container,false);
 		TableLayout divisionTable = (TableLayout) rootView.findViewById(R.id.standingsLayout);
-		divisionRecords = new ArrayList<TeamRecordItem>();
-		for(int i=1;i<divisionArray.length();i++){
-			try {
-				TeamRecordItem record = new TeamRecordItem(divisionArray.getJSONArray(i).getString(0),
-						divisionArray.getJSONArray(i).getInt(1),divisionArray.getJSONArray(i).getInt(2));
-				divisionRecords.add(record);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		for(int i=0;i<divisionRecords.size();i++){
-			TeamRecordItem record = divisionRecords.get(i);
+		for(int i=0;i<divisionTeamNames.size();i++){
 			TableRow row = new TableRow(this.getActivity());
 			TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
 			row.setLayoutParams(lp);
-			TextView tv1= new TextView(getActivity());
-			TextView tv2 = new TextView(getActivity());
-			TextView tv3 = new TextView(getActivity());
-			tv1.setText(record.getTeamName());
-			tv2.setText("" + record.getWins());
-			tv3.setText("" + record.getLosses());
-			row.addView(tv1);
-			row.addView(tv2);
-			row.addView(tv3);
+			TextView numTV = new TextView(getActivity());
+			TextView teamTV= new TextView(getActivity());
+			TextView wTV = new TextView(getActivity());
+			TextView lTV = new TextView(getActivity());
+			numTV.setTextSize(getResources().getDimension(R.dimen.rowheight));
+			teamTV.setTextSize(getResources().getDimension(R.dimen.rowheight));
+			wTV.setTextSize(getResources().getDimension(R.dimen.rowheight));
+			lTV.setTextSize(getResources().getDimension(R.dimen.rowheight));
+			numTV.setBackground(getResources().getDrawable(R.drawable.border_cell));
+			teamTV.setBackground(getResources().getDrawable(R.drawable.border_cell));
+			wTV.setBackground(getResources().getDrawable(R.drawable.border_cell));
+			lTV.setBackground(getResources().getDrawable(R.drawable.border_cell));
+			numTV.setBackgroundColor(Color.WHITE);
+			teamTV.setBackgroundColor(Color.WHITE);
+			wTV.setBackgroundColor(Color.WHITE);
+			lTV.setBackgroundColor(Color.WHITE);
+			numTV.setText("" + (i+1));
+			teamTV.setText(divisionTeamNames.get(i));
+			wTV.setText("" + divisionTeamWins.get(i));
+			lTV.setText("" + divisionTeamLosses.get(i));
+			row.addView(numTV);
+			row.addView(teamTV);
+			row.addView(wTV);
+			row.addView(lTV);
+			row.setBackgroundColor(Color.parseColor("#CCC000"));
 			divisionTable.addView(row, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		}
 		return rootView;

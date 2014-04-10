@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import info.androidhive.audlandroid.R;
-import info.androidhive.audlandroid.adapter.DivisionsPagerAdapter;
+import info.androidhive.audlandroid.adapter.StandingsDivisionsPagerAdapter;
 import info.androidhive.audlandroid.adapter.TabsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.TeamRecordItem;
@@ -26,8 +26,10 @@ public class StandingsListFragment extends Fragment {
 	public StandingsListFragment(){}
 	public String TAG = "info.androidhive.audlandroid.ScheduleListFragment";
 	public ViewPager viewPager;
-	public DivisionsPagerAdapter mAdapter;
-	@Override
+	public StandingsDivisionsPagerAdapter mAdapter;
+	private ArrayList<String> divisionNames;
+	private ArrayList<ArrayList<TeamRecordItem>> leagueRecords;
+	@Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
@@ -35,42 +37,25 @@ public class StandingsListFragment extends Fragment {
         startAsyncTask(getActivity());
         return rootView;
     }
-	private void parseJSON(JSONArray array){
-		ArrayList<String> divisionNames = new ArrayList<String>();
+	public ArrayList<ArrayList<TeamRecordItem>> parseJSON(JSONArray array){
+		divisionNames = new ArrayList<String>();
+		leagueRecords = new ArrayList<ArrayList<TeamRecordItem>>();
 		for(int i=0;i<array.length();i++){
 			try {
+				ArrayList<TeamRecordItem> divisionRecords = new ArrayList<TeamRecordItem>();
 				JSONArray array2 = array.getJSONArray(i);
 				divisionNames.add(array2.getString(0));
+				for(int j=1;j<array2.length();j++){
+					JSONArray record = array2.getJSONArray(j);
+					TeamRecordItem recordItem = new TeamRecordItem(record.getString(0),record.getString(1),record.getString(2));
+					divisionRecords.add(recordItem);
+				}
+				leagueRecords.add(divisionRecords);
 			} catch (JSONException e) {
 				Log.i(TAG,"JSON Exception" + e.toString());
 			}
 		}
-		viewPager = (ViewPager) getActivity().findViewById(R.id.standings_pager);
-        mAdapter = new DivisionsPagerAdapter(this.getActivity().getSupportFragmentManager(),divisionNames,array);
- 
-        viewPager.setAdapter(mAdapter);
-        
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-        	 
-            @Override
-            public void onPageSelected(int position) {
-                // on changing the page
-                // make respected tab selected
-               // actionBar.setSelectedNavigationItem(position);
-            }
-         
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            	
-            }
-         
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            
-            }
-        });
-
-		
+		return leagueRecords;
 	}
 	private void startAsyncTask(FragmentActivity activity) {
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
@@ -83,6 +68,31 @@ public class StandingsListFragment extends Fragment {
 					Log.e(TAG,"Response" + response + ". Error creating json " + e.toString());
 				}
 				parseJSON(jsonResult);
+				viewPager = (ViewPager) getActivity().findViewById(R.id.standings_pager);
+		        mAdapter = new StandingsDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueRecords);
+		 
+		        viewPager.setAdapter(mAdapter);
+		        
+		        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+		        	 
+		            @Override
+		            public void onPageSelected(int position) {
+		                // on changing the page
+		                // make respected tab selected
+		               // actionBar.setSelectedNavigationItem(position);
+		            }
+		         
+		            @Override
+		            public void onPageScrolled(int arg0, float arg1, int arg2) {
+		            	
+		            }
+		         
+		            @Override
+		            public void onPageScrollStateChanged(int arg0) {
+		            
+		            }
+		        });
+
 			}
 		});
 		httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Standings");

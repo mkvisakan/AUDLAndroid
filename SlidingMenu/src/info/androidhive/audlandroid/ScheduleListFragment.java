@@ -15,8 +15,6 @@ public class ScheduleListFragment extends Fragment {
 	private ViewPager viewPager;
     private ScheduleListTabsPagerAdapter mAdapter;
     
-    
-	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {

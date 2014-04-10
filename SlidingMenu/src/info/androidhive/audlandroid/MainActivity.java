@@ -6,41 +6,66 @@ import info.androidhive.audlandroid.model.TeamsListItem;
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.TeamsListFragment.OnTeamSelectedListener;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.*;
 
 public class MainActivity extends FragmentActivity implements OnTeamSelectedListener{
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-
+	private GoogleCloudMessaging gcm;
+	private String TAG="info.androidhive.audlandroid.MainActivity";
+	private String SENDER_ID = "447710219727";
+	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	private final static String REG_ID = "registrationID";
+	private String regId;
 	// nav drawer title
 	private CharSequence mDrawerTitle;
-
+	private Context context;
 	// used to store app title
 	private CharSequence mTitle;
-
 	// slide menu items
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
-
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	
@@ -66,7 +91,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
@@ -75,12 +100,22 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		// nav drawer icons from resources
 		navMenuIcons = getResources()
 				.obtainTypedArray(R.array.nav_drawer_icons);
-
+		
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
 		navDrawerItems = new ArrayList<NavDrawerItem>();
-
+		/*if(checkPlayServices()){
+			context = getApplicationContext();
+			gcm = GoogleCloudMessaging.getInstance(this);
+			regId = getRegistrationId(context);
+			if(regId.compareTo("") == 0){
+				registerInBackground();
+			}
+		}
+		else{
+			finish();
+		}*/
 		// adding nav drawer items to array
 		// Home
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
@@ -142,7 +177,90 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 			displayView(0);
 		}
 	}
+	
+	private void registerInBackground() {
+		new RegisterTask().execute(null,null,null);
+	}
 
+	private String getRegistrationId(Context context){
+		final SharedPreferences prefs = getGCMPreferences(context);
+		String registrationId = prefs.getString(REG_ID, null);
+		if(registrationId == null){
+			return "";
+		}
+		return registrationId;
+	}
+	private SharedPreferences getGCMPreferences(Context context) {
+	    return getSharedPreferences(MainActivity.class.getSimpleName(),
+	            Context.MODE_PRIVATE);
+}
+	private boolean checkPlayServices() {
+		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+		if(resultCode != ConnectionResult.SUCCESS){
+			if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)){
+				GooglePlayServicesUtil.getErrorDialog(resultCode,this,PLAY_SERVICES_RESOLUTION_REQUEST);
+			}
+			else{
+				Log.i(TAG,"This device is not supported");
+			}
+			return false;
+		}
+		return true;
+	}
+	private class RegisterTask extends AsyncTask<Void,Void,Void>{
+		protected Void doInBackground(Void... voids){
+			String msg="";
+			try{
+				if(gcm==null){
+					gcm = GoogleCloudMessaging.getInstance(context);
+				}
+				String regid = gcm.register(SENDER_ID);
+				msg = "Device registered! Registration ID=" + regid;
+				Log.i(TAG,msg);
+				sendRegistrationIdToBackend(regId);
+				storeRegistrationId(context,regid);
+			} catch(IOException e){
+				msg = "Error :" + e.getMessage();
+			}
+			return null;
+		}
+	}
+	
+	private void storeRegistrationId(Context context, String regId){
+		SharedPreferences pref = getGCMPreferences(context);
+		Editor editor = pref.edit();
+		editor.putString(REG_ID, regId);
+		editor.commit();
+	}
+	private void sendRegistrationIdToBackend(String regId) {
+		HttpClient httpclient = new DefaultHttpClient();
+		//To be provided
+		HttpPost httppost = new HttpPost("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/");
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+		Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+		Account[] accounts = AccountManager.get(context).getAccounts();
+		for(Account account : accounts){
+			if(emailPattern.matcher(account.name).matches()){
+				nameValuePairs.add(new BasicNameValuePair("regId",regId));
+				nameValuePairs.add(new BasicNameValuePair("email",account.name));
+				break;
+			}
+		}
+		try{
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			HttpResponse response = httpclient.execute(httppost);
+			Log.i(TAG,response.getStatusLine().getReasonPhrase());
+		}
+		catch(UnsupportedEncodingException e){
+			Log.i(TAG,"Unsupported encoding Exception");
+		}
+		catch(ClientProtocolException e){
+			Log.i(TAG,"Client Protocol Exception");
+		}
+		catch(IOException e){
+			Log.i(TAG,"IO Exception");
+		}
+	}
 	/**
 	 * Slide menu item click listener
 	 * */

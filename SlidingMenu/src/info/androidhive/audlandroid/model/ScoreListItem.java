@@ -1,9 +1,5 @@
 package info.androidhive.audlandroid.model;
 
-import java.util.ArrayList;
-
-import com.google.gson.Gson;
-
 public class ScoreListItem {
 	private String homeTeam;
 	private String homeTeamID;
@@ -22,10 +18,6 @@ public class ScoreListItem {
 		this.date = date;
 		this.time = time;
 		this.score = score;
-	}
-	public String toJSON(){
-		Gson gson= new Gson();
-		return gson.toJson(this);
 	}
 	public String getHomeTeam() {
 		return homeTeam;
@@ -69,7 +61,16 @@ public class ScoreListItem {
 	public void setScore(String score) {
 		this.score = score;
 	}
-	
-	
-	
+	public boolean equals(ScoreListItem scoreItem){
+		if(awayTeam.compareTo(scoreItem.getAwayTeam())==0 &&
+				homeTeam.compareTo(scoreItem.getHomeTeam())==0 &&
+				awayTeamID.compareTo(scoreItem.getAwayTeamID())==0 &&
+				homeTeamID.compareTo(scoreItem.getHomeTeamID())==0 &&
+				time.compareTo(scoreItem.getTime())==0 &&
+				date.compareTo(scoreItem.getDate())==0 &&
+				score.compareTo(scoreItem.getScore())==0){
+			return true;
+		}
+		return false;
+	}
 }

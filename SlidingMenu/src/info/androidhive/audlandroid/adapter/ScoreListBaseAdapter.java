@@ -1,7 +1,6 @@
 package info.androidhive.audlandroid.adapter;
 
 import info.androidhive.audlandroid.R;
-import info.androidhive.audlandroid.model.ScoreListItem;
 import info.androidhive.audlandroid.utils.ImageLoader;
 
 import java.util.ArrayList;
@@ -17,11 +16,11 @@ import android.widget.TextView;
 
 public class ScoreListBaseAdapter extends BaseAdapter{
 	private Activity activity;
-    private ArrayList<ScoreListItem> data;
+    private ArrayList<ArrayList<String>> data;
     private LayoutInflater inflater=null;
     public ImageLoader imageLoader;
     
-    public ScoreListBaseAdapter(Activity a, ArrayList<ScoreListItem> d) {
+    public ScoreListBaseAdapter(Activity a, ArrayList<ArrayList<String>> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,16 +47,12 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         TextView title = (TextView)sch.findViewById(R.id.item_score); // title
         ImageView homeTeamImage=(ImageView)sch.findViewById(R.id.hTeamIcon); // home team image
         ImageView awayTeamImage=(ImageView)sch.findViewById(R.id.aTeamIcon); // away team image
-        
-        ScoreListItem scoreItem = data.get(position);
  
         // Setting all values in listview
-        title.setText(scoreItem.getScore() + "\n" + scoreItem.getHomeTeam() + "\nvs.\n" + scoreItem.getAwayTeam() + "\n" + scoreItem.getTime() + " on " + scoreItem.getDate());
-        
-        
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + scoreItem.getHomeTeamID(), homeTeamImage);
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + scoreItem.getAwayTeamID(), awayTeamImage);
-        
+        title.setText(data.get(6).get(position) + "\n" + data.get(0).get(position) + "\nvs.\n" + data.get(2).get(position) + "\n" + data.get(5).get(position) + " on " + data.get(4).get(position));
+      
+        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + data.get(1).get(position), homeTeamImage);
+        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + data.get(3).get(position), awayTeamImage);        
         return sch;
     }
 }
