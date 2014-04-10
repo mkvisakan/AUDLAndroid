@@ -1,42 +1,44 @@
 package info.androidhive.audlandroid.adapter;
  
 import info.androidhive.audlandroid.ScheduleDivisionFragment;
+import info.androidhive.audlandroid.model.ScheduleListItem;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
  
 public class ScheduleListTabsPagerAdapter extends FragmentStatePagerAdapter {
- 
-    public ScheduleListTabsPagerAdapter(FragmentManager fm) {
+    HashMap<String, ArrayList<ScheduleListItem>> schedLists;
+    Object[] pageTitles;
+    public ScheduleListTabsPagerAdapter(FragmentManager fm, HashMap<String, ArrayList<ScheduleListItem>> schLs) {
         super(fm);
+        schedLists = schLs;
+        pageTitles = schLs.keySet().toArray();
     }
     @Override
     public CharSequence getPageTitle(int position) {
-    	if(position == 0){
-    		return "Midwestern";
+    	if(position >=0 && position < pageTitles.length){
+    		return (String)pageTitles[position];
     	}
-    	else{
-    		return "Eastern";
-    	}
+    	
+    	return null;
     }
     @Override
     public Fragment getItem(int index) {
  
-        switch (index) {
-        case 0:
-        	ScheduleDivisionFragment midwesternScheduleList = new ScheduleDivisionFragment();
-        	Bundle midwesternArgs = new Bundle();
-        	midwesternArgs.putString("DIVISION_NAME", "Midwestern");
-        	midwesternScheduleList.setArguments(midwesternArgs);
-            return midwesternScheduleList;
-        case 1:
-        	ScheduleDivisionFragment easternScheduleList = new ScheduleDivisionFragment();
-        	Bundle easternArgs = new Bundle();
-        	easternArgs.putString("DIVISION_NAME", "Eastern");
-        	easternScheduleList.setArguments(easternArgs);
-            return easternScheduleList;
-        }
+    	if(index >=0 && index < pageTitles.length){
+    		ScheduleDivisionFragment divisionScheduleList = new ScheduleDivisionFragment();
+        	Bundle args = new Bundle();
+        	args.putString("DIVISION_NAME", (String)pageTitles[index]);
+        	args.putParcelableArrayList("DIVISION_DATA", schedLists.get((String)pageTitles[index]));
+        	divisionScheduleList.setArguments(args);
+            return divisionScheduleList;
+    	}
+       	
  
         return null;
     }
@@ -44,7 +46,7 @@ public class ScheduleListTabsPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 2;
+        return pageTitles.length;
     }
  
 }

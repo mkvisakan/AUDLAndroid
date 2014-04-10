@@ -1,7 +1,7 @@
 package info.androidhive.audlandroid;
 
+import info.androidhive.audlandroid.adapter.NowListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
-import info.androidhive.audlandroid.model.Tweet;
 import info.androidhive.audlandroid.model.Twitter;
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,11 +52,8 @@ public class NowFragment extends Fragment {
 						Twitter twits = jsonToTwitter(response);
 
 						// send the tweets to the adapter for rendering
-						ArrayAdapter<Tweet> adapter = new ArrayAdapter<Tweet>(
-								getActivity(),
-								android.R.layout.simple_list_item_1, twits);
-
-						listview.setAdapter(adapter);
+						final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
+				        listview.setAdapter(adapter);
 					}
 				});
 		// httpRequester.execute("http://68.190.167.114:4000/News");
@@ -67,12 +63,12 @@ public class NowFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		
 		View rootView = inflater.inflate(R.layout.fragment_list, container,
 				false);
 
 		TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
-		txtView.setText("League News");
+		txtView.setText("AUDL Twitter Feed");
 
 		final ListView listview = (ListView) rootView
 				.findViewById(R.id.listview);

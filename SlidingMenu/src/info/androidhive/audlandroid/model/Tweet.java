@@ -32,11 +32,11 @@ public class Tweet {
 	public String getId() {
 		return Id;
 	}
-
+	//if replying, will have screen name
 	public String getInReplyToScreenName() {
 		return InReplyToScreenName;
 	}
-
+	//if replying, will have status id
 	public String getInReplyToStatusId() {
 		return InReplyToStatusId;
 	}
