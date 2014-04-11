@@ -4,12 +4,15 @@ import info.androidhive.audlandroid.adapter.NowListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.Twitter;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,12 +52,27 @@ public class NowFragment extends Fragment {
 					@Override
 					public void onTaskDone(String response) {
 
-						Twitter twits = jsonToTwitter(response);
+						final Twitter twits = jsonToTwitter(response);
 
 						// send the tweets to the adapter for rendering
 
 						final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
 				        listview.setAdapter(adapter);
+				        
+				        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+				            @Override
+				            public void onItemClick(AdapterView<?> parent, final View view,
+				                int position, long id) {
+				            	String text = twits.get(position).getText();
+				            	int index = text.indexOf(".co");
+				            	if(index != -1){
+				            		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(text.substring(text.lastIndexOf(" ", index) + 1, (text + " ").indexOf(" ", index))));
+				            		startActivity(myIntent);
+				            	}
+				            }
+
+				          });
 					}
 				});
 		// httpRequester.execute("http://68.190.167.114:4000/News");

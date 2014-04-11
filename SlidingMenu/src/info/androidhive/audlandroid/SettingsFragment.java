@@ -41,19 +41,18 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                 int position, long id) {
-            	Intent intent;
-            	Fragment newFragment;
-            	FragmentTransaction transaction;
-            	switch (position) {
-            		case 0:
-		            	intent = new Intent(Intent.ACTION_VIEW);
+            	
+            	
+            	if(position == 0){
+		            	Intent intent = new Intent(Intent.ACTION_VIEW);
 		                intent.setData(Uri.parse("mailto:audlappdevteam@gmail.com"));
 		                startActivity(intent);
-            		case 1:
+            	}
+            	else if(position == 1){
             			// Create new fragment and transaction
-            		     newFragment = new FaqFragment(); 
+            			Fragment newFragment = new FaqFragment(); 
             		    // consider using Java coding conventions (upper first char class names!!!)
-            		    transaction = getFragmentManager().beginTransaction();
+            			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
             		    // Replace whatever is in the fragment_container view with this fragment,
             		    // and add the transaction to the back stack
@@ -62,23 +61,22 @@ public class SettingsFragment extends Fragment {
 
             		    // Commit the transaction
             		    transaction.commit();
-            		    
-            		case 2:
+            	}
+            	else if(position ==2){
 	            		// Create new fragment and transaction
-	           		     newFragment = new ToUFragment(); 
+	           		     Fragment newFragment2 = new ToUFragment(); 
 	           		    // consider using Java coding conventions (upper first char class names!!!)
-	           		    transaction = getFragmentManager().beginTransaction();
+	           		     FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
 	
 	           		    // Replace whatever is in the fragment_container view with this fragment,
 	           		    // and add the transaction to the back stack
-	           		    transaction.replace(R.id.frame_container, newFragment);
-	           		    transaction.addToBackStack(null);
+	           		    transaction2.replace(R.id.frame_container, newFragment2);
+	           		    transaction2.addToBackStack(null);
 	
 	           		    // Commit the transaction
-	           		    transaction.commit();
-            			
-            	
+	           		    transaction2.commit();
             	}
+            
             	
             }
     });

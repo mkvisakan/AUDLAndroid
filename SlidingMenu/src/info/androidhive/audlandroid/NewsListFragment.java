@@ -73,6 +73,7 @@ public class NewsListFragment extends Fragment {
 		            @Override
 		            public void onItemClick(AdapterView<?> parent, final View view,
 		                int position, long id) {
+		            	
 		              Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsList.get(position).getNewsURL()));
 		              startActivity(myIntent);
 		            }
