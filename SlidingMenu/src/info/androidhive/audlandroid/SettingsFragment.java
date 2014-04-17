@@ -42,13 +42,16 @@ public class SettingsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, final View view,
                 int position, long id) {
             	
+            	switch(position) {
             	
-            	if(position == 0){
+            	case 0:
+            	//if(position == 0){
 		            	Intent intent = new Intent(Intent.ACTION_VIEW);
 		                intent.setData(Uri.parse("mailto:audlappdevteam@gmail.com"));
 		                startActivity(intent);
-            	}
-            	else if(position == 1){
+		                break;
+            	//}
+            	case 1://else if(position == 1){
             			// Create new fragment and transaction
             			Fragment newFragment = new FaqFragment(); 
             		    // consider using Java coding conventions (upper first char class names!!!)
@@ -61,8 +64,9 @@ public class SettingsFragment extends Fragment {
 
             		    // Commit the transaction
             		    transaction.commit();
-            	}
-            	else if(position ==2){
+            		    break;
+            	//}
+            	case 2://else if(position ==2){
 	            		// Create new fragment and transaction
 	           		     Fragment newFragment2 = new ToUFragment(); 
 	           		    // consider using Java coding conventions (upper first char class names!!!)
@@ -75,6 +79,7 @@ public class SettingsFragment extends Fragment {
 	
 	           		    // Commit the transaction
 	           		    transaction2.commit();
+	           		    break;
             	}
             
             	

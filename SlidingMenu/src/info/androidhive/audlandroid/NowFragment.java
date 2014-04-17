@@ -8,13 +8,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -25,6 +26,8 @@ public class NowFragment extends Fragment {
 
 	final static String ScreenName = "theaudl";
 	final static String LOG_TAG = "audl";
+	
+	SwipeRefreshLayout swipeLayout;
 
 	// download twitter timeline after first checking to see if there is a
 	// network connection
@@ -58,7 +61,7 @@ public class NowFragment extends Fragment {
 
 						final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
 				        listview.setAdapter(adapter);
-				        
+				        swipeLayout.setRefreshing(false);
 				        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 				            @Override
@@ -83,16 +86,25 @@ public class NowFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View rootView = inflater.inflate(R.layout.fragment_list, container,
+		View rootView = inflater.inflate(R.layout.swipe_refresh_list, container,
 				false);
 
-		TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
-		txtView.setText("AUDL Twitter Feed");
-
-		final ListView listview = (ListView) rootView
-				.findViewById(R.id.listview);
+		//TextView txtView = (TextView) rootView.findViewById(R.id.list_header);
+		//txtView.setText("AUDL Twitter Feed");
+		final ListView listview = (ListView) rootView.findViewById(R.id.listview);
+		swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+		swipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+		swipeLayout.setOnRefreshListener(new OnRefreshListener(){
+			@Override
+			public void onRefresh() {
+			    startAsyncTask(listview, getActivity());
+			}
+		}
+		);	
+		
 
 		startAsyncTask(listview, getActivity());
 		return rootView;
 	}
+	
 }
