@@ -135,15 +135,16 @@ public final class R {
         public static final int news_list_item=0x7f030010;
         public static final int schedule_list_item=0x7f030011;
         public static final int score_list_item=0x7f030012;
-        public static final int stats_list_item=0x7f030013;
-        public static final int swipe_refresh_list=0x7f030014;
-        public static final int switch_item=0x7f030015;
-        public static final int team_roster=0x7f030016;
-        public static final int team_stats_expandable=0x7f030017;
-        public static final int team_stats_list_group=0x7f030018;
-        public static final int team_stats_list_item=0x7f030019;
-        public static final int thumbnail_text_item=0x7f03001a;
-        public static final int twit_list=0x7f03001b;
+        public static final int simple_list_item=0x7f030013;
+        public static final int stats_list_item=0x7f030014;
+        public static final int swipe_refresh_list=0x7f030015;
+        public static final int switch_item=0x7f030016;
+        public static final int team_roster=0x7f030017;
+        public static final int team_stats_expandable=0x7f030018;
+        public static final int team_stats_list_group=0x7f030019;
+        public static final int team_stats_list_item=0x7f03001a;
+        public static final int thumbnail_text_item=0x7f03001b;
+        public static final int twit_list=0x7f03001c;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
@@ -157,7 +158,9 @@ public final class R {
         public static final int labelLosses=0x7f060007;
         public static final int labelWins=0x7f060006;
         public static final int news_header=0x7f060005;
-        public static final int terms_of_use=0x7f060009;
+        public static final int notifications_on_default=0x7f060009;
+        public static final int notifications_on_saved=0x7f06000a;
+        public static final int terms_of_use=0x7f06000b;
     }
     public static final class style {
         /** 

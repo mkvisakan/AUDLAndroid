@@ -24,27 +24,5 @@
         android:textStyle="bold"/>
  
     </LinearLayout>
-    
-    <LinearLayout
-        android:id="@+id/id_con"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dip"
-        android:padding="3dip" 
-        android:layout_centerVertical="true">
-
-        <Switch
-     	android:id="@+id/on_off_switch"
-     	android:layout_width="wrap_content"
-     	android:layout_height="wrap_content"
-     	android:textOff="OFF"
-     	android:textOn="ON"/>
-
-    </LinearLayout>
- 
-    <!-- Title Of Team-->
-    
- 
      
 </RelativeLayout>

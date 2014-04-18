@@ -1,6 +1,7 @@
 package info.androidhive.audlandroid;
 
 import info.androidhive.audlandroid.adapter.ListAdapter;
+import info.androidhive.audlandroid.adapter.SettingsListBaseAdapter;
 
 import java.util.ArrayList;
 
@@ -33,8 +34,9 @@ public class SettingsFragment extends Fragment {
         settings.add("Send Feedback");
         settings.add("FAQ");
         settings.add("Terms of Use");
-        final ListAdapter adapter = new ListAdapter(this.getActivity(), android.R.layout.simple_list_item_1, settings);
-        listview.setAdapter(adapter);
+        settings.add("Notifications");
+        //final ListAdapter adapter = new ListAdapter(this.getActivity(), android.R.layout.simple_list_item_1, settings);
+        listview.setAdapter(new SettingsListBaseAdapter(this.getActivity(), settings));
         
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
