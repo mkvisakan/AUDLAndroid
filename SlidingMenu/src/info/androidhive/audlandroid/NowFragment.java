@@ -4,7 +4,9 @@ import info.androidhive.audlandroid.adapter.NowListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.Twitter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,7 +25,7 @@ public class NowFragment extends Fragment {
 
 	public NowFragment() {
 	}
-
+	SharedPreferences sharedPref;
 	final static String ScreenName = "theaudl";
 	final static String LOG_TAG = "audl";
 	
@@ -48,13 +50,47 @@ public class NowFragment extends Fragment {
 		}
 		return twits;
 	}
+	
+	public void cacheHandler(final ListView listview, final Activity activity, String response) {
+		
+		
+		final Twitter twits = jsonToTwitter(response);
+
+		// send the tweets to the adapter for rendering
+		if(twits != null){
+			final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
+	        listview.setAdapter(adapter);
+	        swipeLayout.setRefreshing(false);
+	        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	
+	            @Override
+	            public void onItemClick(AdapterView<?> parent, final View view,
+	                int position, long id) {
+	            	String text = twits.get(position).getText();
+	            	int index = text.indexOf(".co");
+	            	if(index != -1){
+	            		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(text.substring(text.lastIndexOf(" ", index) + 1, (text + " ").indexOf(" ", index))));
+	            		startActivity(myIntent);
+	            	}
+	            }
+	
+	          });
+		}
+	}
 
 	public void startAsyncTask(final ListView listview, final Activity activity) {
 		final TwitterRequest twitterDownloader = new TwitterRequest(
 				new FragmentCallback() {
 					@Override
 					public void onTaskDone(String response) {
-
+						
+						
+						if (response != null && response.length() > 0){
+							sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+							SharedPreferences.Editor editor = sharedPref.edit();
+			        	    editor.putString(activity.getResources().getString(R.string.NowListCache), response);
+			        	    editor.commit();
+						}
 						final Twitter twits = jsonToTwitter(response);
 
 						// send the tweets to the adapter for rendering
@@ -100,9 +136,12 @@ public class NowFragment extends Fragment {
 			    startAsyncTask(listview, getActivity());
 			}
 		}
-		);	
-		
-
+		);
+		sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+		String response = sharedPref.getString(getActivity().getResources().getString(R.string.NowListCache), null);
+		if(response != null){
+			cacheHandler(listview, getActivity(), response);
+		}
 		startAsyncTask(listview, getActivity());
 		return rootView;
 	}

@@ -147,6 +147,7 @@ public final class R {
         public static final int twit_list=0x7f03001c;
     }
     public static final class string {
+        public static final int NowListCache=0x7f06000c;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         /**  Content Description 
