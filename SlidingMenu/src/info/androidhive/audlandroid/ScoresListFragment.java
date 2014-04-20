@@ -3,6 +3,7 @@ package info.androidhive.audlandroid;
 import info.androidhive.audlandroid.adapter.ScoreDivisionsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.ScoreListItem;
+import info.androidhive.audlandroid.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,10 @@ public class ScoresListFragment extends Fragment {
 		final EmptyRequest emptyRequest = new EmptyRequest(
 				new FragmentCallback() {
 					@Override
+					public void onTaskFailure(){
+						Utils.ServerError(getActivity());
+					}
+					@Override
 					public void onTaskDone(String response) {
 						sharedPrefScores = getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.ScoresListCache), Context.MODE_PRIVATE);
 						String oldResponse = sharedPrefScores.getString(getActivity().getResources().getString(R.string.ScoresListCache), "");
@@ -106,6 +111,10 @@ public class ScoresListFragment extends Fragment {
 	
 	private void startAsyncTask(FragmentActivity activity){
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback(){
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(getActivity());
+			}
 			@Override
 			public void onTaskDone(String response) {
 				sharedPrefScores = getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.ScoresListCache), Context.MODE_PRIVATE);

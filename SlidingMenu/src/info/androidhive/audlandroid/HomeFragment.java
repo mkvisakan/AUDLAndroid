@@ -7,6 +7,7 @@ import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.NewsListItem;
 import info.androidhive.audlandroid.model.ScheduleListItem;
 import info.androidhive.audlandroid.model.VideosListItem;
+import info.androidhive.audlandroid.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +49,10 @@ public class HomeFragment extends Fragment {
 	public void startCacheHandler(final View rootView, final Activity activity) {
 		final EmptyRequest emptyRequest = new EmptyRequest(
 				new FragmentCallback() {
+					@Override
+					public void onTaskFailure(){
+						Utils.ServerError(activity);
+					}
 					@Override
 					public void onTaskDone(String response) {
 						sharedPrefHome = activity.getSharedPreferences(activity.getResources().getString(R.string.HomeListCache), Context.MODE_PRIVATE);
@@ -129,6 +134,10 @@ public class HomeFragment extends Fragment {
 	
 	public void startAsyncTask(final View rootView, final Activity activity){
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(activity);
+			}
 			@Override
 			public void onTaskDone(String response) {
 				sharedPrefHome = activity.getSharedPreferences(activity.getResources().getString(R.string.HomeListCache), Context.MODE_PRIVATE);

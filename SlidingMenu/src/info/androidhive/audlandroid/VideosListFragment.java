@@ -3,6 +3,7 @@ package info.androidhive.audlandroid;
 import info.androidhive.audlandroid.adapter.VideosListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.VideosListItem;
+import info.androidhive.audlandroid.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,10 @@ public class VideosListFragment extends Fragment {
 		final EmptyRequest emptyRequest = new EmptyRequest(
 				new FragmentCallback() {
 					@Override
+					public void onTaskFailure(){
+						Utils.ServerError(activity);
+					}
+					@Override
 					public void onTaskDone(String response) {
 						sharedPrefVideos = activity.getSharedPreferences(activity.getResources().getString(R.string.VideoListCache), Context.MODE_PRIVATE);
 						String oldResponse = sharedPrefVideos.getString(activity.getResources().getString(R.string.VideoListCache), "");
@@ -80,7 +85,11 @@ public class VideosListFragment extends Fragment {
 	}
 	
 	public void startAsyncTask(final ListView listview, final Activity activity){
-		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(activity);
+			}
 			@Override
 			public void onTaskDone(String response) {
 				sharedPrefVideos = activity.getSharedPreferences(activity.getResources().getString(R.string.VideoListCache), Context.MODE_PRIVATE);

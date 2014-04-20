@@ -3,6 +3,7 @@ package info.androidhive.audlandroid;
 import info.androidhive.audlandroid.adapter.ScheduleListTabsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.ScheduleListItem;
+import info.androidhive.audlandroid.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +49,10 @@ public class ScheduleListFragment extends Fragment {
 		final EmptyRequest emptyRequest = new EmptyRequest(
 				new FragmentCallback() {
 					@Override
+					public void onTaskFailure(){
+						Utils.ServerError(frag.getActivity());
+					}
+					@Override
 					public void onTaskDone(String response) {
 						sharedPrefSchedule = frag.getActivity().getSharedPreferences(frag.getActivity().getResources().getString(R.string.ScheduleListCache), Context.MODE_PRIVATE);
 						String oldResponse = sharedPrefSchedule.getString(frag.getActivity().getResources().getString(R.string.ScheduleListCache), "");
@@ -89,7 +94,11 @@ public class ScheduleListFragment extends Fragment {
 	}
 	
 	public void startAsyncTask(final View rootView, final ScheduleListFragment frag){
-		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(frag.getActivity());
+			}
 			@Override
 			public void onTaskDone(String response) {
 				sharedPrefSchedule = frag.getActivity().getSharedPreferences(frag.getActivity().getResources().getString(R.string.ScheduleListCache), Context.MODE_PRIVATE);

@@ -74,8 +74,13 @@ public class AUDLHttpRequest extends AsyncTask<String, Void, String>{
 	}
 	
 	protected void onPostExecute(String result) {
-		mCallback.onTaskDone(result);
-		Log.i("AUDLHttpRequest", result);
+		if (result == null || result.isEmpty()){
+			mCallback.onTaskFailure();
+		}
+		else{
+		    mCallback.onTaskDone(result);
+		    Log.i("TwitterRequest", result);
+		}
     }
 	
 }

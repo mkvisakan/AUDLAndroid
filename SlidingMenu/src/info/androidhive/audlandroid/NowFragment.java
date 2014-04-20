@@ -3,6 +3,7 @@ package info.androidhive.audlandroid;
 import info.androidhive.audlandroid.adapter.NowListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.Twitter;
+import info.androidhive.audlandroid.utils.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -55,6 +56,10 @@ public class NowFragment extends Fragment {
 		final EmptyRequest emptyRequest = new EmptyRequest(
 				new FragmentCallback() {
 					@Override
+					public void onTaskFailure(){
+						Utils.ServerError(activity);
+					}
+					@Override
 					public void onTaskDone(String response) {
 						sharedPrefNow = activity.getSharedPreferences(activity.getResources().getString(R.string.NowListCache), Context.MODE_PRIVATE);
 						String oldResponse = sharedPrefNow.getString(activity.getResources().getString(R.string.NowListCache), "");
@@ -88,6 +93,10 @@ public class NowFragment extends Fragment {
 	public void startAsyncTask(final ListView listview, final Activity activity) {
 		final TwitterRequest twitterDownloader = new TwitterRequest(
 				new FragmentCallback() {
+					@Override
+					public void onTaskFailure(){
+						Utils.ServerError(activity);
+					}
 					@Override
 					public void onTaskDone(String response) {
 						

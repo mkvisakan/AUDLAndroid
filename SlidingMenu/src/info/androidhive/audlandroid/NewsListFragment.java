@@ -3,6 +3,7 @@ package info.androidhive.audlandroid;
 import info.androidhive.audlandroid.adapter.NewsListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.NewsListItem;
+import info.androidhive.audlandroid.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,10 @@ public class NewsListFragment extends Fragment {
 		final EmptyRequest emptyRequest = new EmptyRequest(
 				new FragmentCallback() {
 					@Override
+					public void onTaskFailure(){
+						Utils.ServerError(activity);
+					}
+					@Override
 					public void onTaskDone(String response) {
 						sharedPrefNews = activity.getSharedPreferences(activity.getResources().getString(R.string.NewsListCache), Context.MODE_PRIVATE);
 						String oldResponse = sharedPrefNews.getString(activity.getResources().getString(R.string.NewsListCache), "");
@@ -87,7 +92,11 @@ public class NewsListFragment extends Fragment {
 	}
 	
 	public void startAsyncTask(final ListView listview, final Activity activity){
-		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(activity);
+			}
 			@Override
 			public void onTaskDone(String response) {
 				sharedPrefNews = activity.getSharedPreferences(activity.getResources().getString(R.string.NewsListCache), Context.MODE_PRIVATE);

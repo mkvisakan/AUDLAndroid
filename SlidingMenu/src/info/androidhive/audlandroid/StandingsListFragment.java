@@ -10,6 +10,7 @@ import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.adapter.StandingsDivisionsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.TeamRecordItem;
+import info.androidhive.audlandroid.utils.Utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -58,7 +59,10 @@ public class StandingsListFragment extends Fragment {
 	}
 	private void startAsyncTask(FragmentActivity activity) {
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
-			
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(getActivity());
+			}
 			@Override
 			public void onTaskDone(String response) {
 				try{
