@@ -1,7 +1,6 @@
 package info.androidhive.audlandroid;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +13,7 @@ import info.androidhive.audlandroid.utils.Utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class StandingsListFragment extends Fragment {
-	
 	JSONArray jsonResult = null;
 	public StandingsListFragment(){}
 	public String TAG = "info.androidhive.audlandroid.ScheduleListFragment";
@@ -37,6 +36,7 @@ public class StandingsListFragment extends Fragment {
         startAsyncTask(getActivity());
         return rootView;
     }
+	
 	public ArrayList<ArrayList<TeamRecordItem>> parseJSON(JSONArray array){
 		divisionNames = new ArrayList<String>();
 		leagueRecords = new ArrayList<ArrayList<TeamRecordItem>>();

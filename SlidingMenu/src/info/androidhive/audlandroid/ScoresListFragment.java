@@ -14,6 +14,8 @@ import info.androidhive.audlandroid.utils.Utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,11 +29,14 @@ public class ScoresListFragment extends Fragment {
 	public ScoreDivisionsPagerAdapter mAdapter;
 	private ArrayList<String> divisionNames;
 	private ArrayList<ArrayList<ScoreListItem>> leagueScores;
+	private SharedPreferences sharedPrefScores;
+	private JSONArray jsonResult;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
         View rootView = inflater.inflate(R.layout.fragment_scores, container, false);
+        startCacheHandler(getActivity());
         startAsyncTask(getActivity());
         return rootView;
     }
@@ -58,19 +63,73 @@ public class ScoresListFragment extends Fragment {
 		}
 		return leagueScores;
 	}
+	
+	public void startCacheHandler(FragmentActivity activity){
+		EmptyRequest emptyRequest= new EmptyRequest(new FragmentCallback(){
+			public void onTaskDone(String response){
+				sharedPrefScores = getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.ScoresListCache), Context.MODE_PRIVATE);
+				String oldResponse = sharedPrefScores.getString(getActivity().getResources().getString(R.string.ScoresListCache), "");
+				if(!oldResponse.equals("")){
+					try{
+						jsonResult = new JSONArray(oldResponse);
+					}catch(JSONException e){
+						e.printStackTrace();
+					}
+					parseJSON(jsonResult);
+					viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
+					mAdapter = new ScoreDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
+					viewPager.setAdapter(mAdapter);
+					viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+						
+						@Override
+						public void onPageSelected(int arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void onPageScrolled(int arg0, float arg1, int arg2) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void onPageScrollStateChanged(int arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+					});
+				}
+			}
+
+			@Override
+			public void onTaskFailure() {
+				Utils.ServerError(getActivity());
+			}
+		});
+		emptyRequest.execute("empty");
+	}
+	
 	private void startAsyncTask(FragmentActivity activity){
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback(){
-			JSONArray JSONResult;
 			@Override
 			public void onTaskDone(String response) {
-				try {
-					JSONResult = new JSONArray(response);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				parseJSON(JSONResult);
-				viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
-				mAdapter = new ScoreDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
+				sharedPrefScores = getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.ScoresListCache), Context.MODE_PRIVATE);
+				String oldResponse = sharedPrefScores.getString(getActivity().getResources().getString(R.string.ScoresListCache), "");
+				if(!oldResponse.equals(response)){
+					try{
+						jsonResult = new JSONArray(response);
+					}catch(JSONException e){
+						e.printStackTrace();
+					}
+					if(jsonResult != null && response.length() > 0){
+						SharedPreferences.Editor editor = sharedPrefScores.edit();
+						editor.putString(getActivity().getResources().getString(R.string.ScoresListCache), response);
+						editor.commit();
+					}
+					parseJSON(jsonResult);
+					viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
+					mAdapter = new ScoreDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
 				 
 			        viewPager.setAdapter(mAdapter);
 			        
@@ -91,13 +150,14 @@ public class ScoresListFragment extends Fragment {
 			            
 			            }
 			        });
+				}
 			}
 			@Override
 			public void onTaskFailure() {
 				Utils.ServerError(getActivity());
-				
 			}
 		});
-		httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Scores");
+		String serverURL = getResources().getString(R.string.ServerURL);
+		httpRequester.execute(serverURL + "/Scores");
 	}
 }
