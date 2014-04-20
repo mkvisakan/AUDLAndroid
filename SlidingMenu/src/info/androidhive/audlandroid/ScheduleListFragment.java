@@ -77,7 +77,8 @@ public class ScheduleListFragment extends Fragment {
 			}
 		});
         //httpRequester.execute("http://68.190.167.114:4000/News");
-        httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Schedule");
+		String serverURL = getResources().getString(R.string.ServerURL);
+		httpRequester.execute(serverURL + "/Schedule");
 	}
 	
 	@Override

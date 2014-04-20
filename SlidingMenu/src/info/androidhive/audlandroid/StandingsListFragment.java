@@ -94,6 +94,7 @@ public class StandingsListFragment extends Fragment {
 
 			}
 		});
-		httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Standings");
+		String serverURL = getResources().getString(R.string.ServerURL);
+		httpRequester.execute(serverURL + "/Standings");
 	}
 }
