@@ -47,7 +47,7 @@ public class StandingsListFragment extends Fragment {
 				divisionNames.add(array2.getString(0));
 				for(int j=1;j<array2.length();j++){
 					JSONArray record = array2.getJSONArray(j);
-					TeamRecordItem recordItem = new TeamRecordItem(record.getString(0),record.getString(1),record.getString(2));
+					TeamRecordItem recordItem = new TeamRecordItem(record.getString(0),record.getString(1),record.getString(2),record.getString(3),record.getString(4));
 					divisionRecords.add(recordItem);
 				}
 				leagueRecords.add(divisionRecords);
@@ -59,10 +59,7 @@ public class StandingsListFragment extends Fragment {
 	}
 	private void startAsyncTask(FragmentActivity activity) {
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
-			@Override
-			public void onTaskFailure(){
-				Utils.ServerError(getActivity());
-			}
+			
 			@Override
 			public void onTaskDone(String response) {
 				try{
@@ -97,8 +94,13 @@ public class StandingsListFragment extends Fragment {
 		        });
 
 			}
+
+			@Override
+			public void onTaskFailure() {
+				Utils.ServerError(getActivity());
+				
+			}
 		});
-		String serverURL = getResources().getString(R.string.ServerURL);
-		httpRequester.execute(serverURL + "/Standings");
+		httpRequester.execute("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Standings");
 	}
 }

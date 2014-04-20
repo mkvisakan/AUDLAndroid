@@ -7,17 +7,20 @@ public class ScoreListItem {
 	private String awayTeamID;
 	private String date;
 	private String time;
-	private String score;
-	
+	private String homeTeamScore;
+	private String awayTeamScore;
+	private String gameStatus;
 	public ScoreListItem(String homeTeam,String homeTeamID,String awayTeam,String awayTeamID,String date,
-			String time,String score){
+			String time,String homeTeamScore, String awayTeamScore, String gameStatus){
 		this.homeTeam = homeTeam;
 		this.homeTeamID = homeTeamID;
 		this.awayTeam = awayTeam;
 		this.awayTeamID = awayTeamID;
 		this.date = date;
 		this.time = time;
-		this.score = score;
+		this.homeTeamScore = homeTeamScore;
+		this.awayTeamScore = awayTeamScore;
+		this.gameStatus = gameStatus;
 	}
 	public String getHomeTeam() {
 		return homeTeam;
@@ -47,20 +50,16 @@ public class ScoreListItem {
 		return time;
 	}
 	
-	public String getScore() {
-		return score;
+	public String getHomeTeamScore() {
+		return homeTeamScore;
 	}
 	
-	public boolean equals(ScoreListItem scoreItem){
-		if(awayTeam.compareTo(scoreItem.getAwayTeam())==0 &&
-				homeTeam.compareTo(scoreItem.getHomeTeam())==0 &&
-				awayTeamID.compareTo(scoreItem.getAwayTeamID())==0 &&
-				homeTeamID.compareTo(scoreItem.getHomeTeamID())==0 &&
-				time.compareTo(scoreItem.getTime())==0 &&
-				date.compareTo(scoreItem.getDate())==0 &&
-				score.compareTo(scoreItem.getScore())==0){
-			return true;
-		}
-		return false;
+	public String getAwayTeamScore(){
+		return awayTeamScore;
 	}
+	
+	public String getGameStatus(){
+		return gameStatus;
+	}
+	
 }

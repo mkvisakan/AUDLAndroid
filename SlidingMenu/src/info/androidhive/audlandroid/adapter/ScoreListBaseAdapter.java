@@ -43,14 +43,31 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         View sch =convertView;
         if(convertView==null)
             sch = inflater.inflate(R.layout.score_list_item, null);
- 
-        TextView title = (TextView)sch.findViewById(R.id.item_score); // title
+        TextView homeTeamName = (TextView)sch.findViewById(R.id.homeTeamName);
+        TextView awayTeamName = (TextView)sch.findViewById(R.id.awayTeamName);
+        TextView status = (TextView)sch.findViewById(R.id.game_status); // title
+        TextView homeTeamScore = (TextView)sch.findViewById(R.id.homeTeamScore);
+        TextView awayTeamScore = (TextView)sch.findViewById(R.id.awayTeamScore);
+        TextView gameTime = (TextView)sch.findViewById(R.id.game_time);
         ImageView homeTeamImage=(ImageView)sch.findViewById(R.id.hTeamIcon); // home team image
         ImageView awayTeamImage=(ImageView)sch.findViewById(R.id.aTeamIcon); // away team image
- 
+        
         // Setting all values in listview
-        title.setText(data.get(6).get(position) + "\n" + data.get(0).get(position) + "\nvs.\n" + data.get(2).get(position) + "\n" + data.get(5).get(position) + " on " + data.get(4).get(position));
-      
+        //title.setText(data.get(6).get(position) + "\n" + data.get(0).get(position) + "\nvs.\n" + data.get(2).get(position) + "\n" + data.get(5).get(position) + " on " + data.get(4).get(position));
+        homeTeamName.setText(data.get(0).get(position));
+        awayTeamName.setText(data.get(2).get(position));
+        homeTeamScore.setText(data.get(6).get(position));
+        awayTeamScore.setText(data.get(7).get(position));
+        gameTime.setText(data.get(5).get(position));
+        String gameStatus="";
+        if(data.get(8).get(position).compareTo("0")==0){
+        	gameStatus="Pre Game";
+        }else if(data.get(8).get(position).compareTo("1")==0){
+        	gameStatus="Ongoing";
+        }else{
+        	gameStatus="Full Time";
+        }
+        status.setText("" + gameStatus);
         imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + data.get(1).get(position), homeTeamImage);
         imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + data.get(3).get(position), awayTeamImage);        
         return sch;

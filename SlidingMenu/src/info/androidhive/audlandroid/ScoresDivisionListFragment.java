@@ -30,8 +30,12 @@ public class ScoresDivisionListFragment extends Fragment{
 		list.add(dates);
 		ArrayList<String> times = bundle.getStringArrayList("timeList");
 		list.add(times);
-		ArrayList<String> scores = bundle.getStringArrayList("scoreList");
-		list.add(scores);
+		ArrayList<String> homeTeamScores = bundle.getStringArrayList("homeTeamScoreList");
+		list.add(homeTeamScores);
+		ArrayList<String> awayTeamScores = bundle.getStringArrayList("awayTeamScoreList");
+		list.add(awayTeamScores);
+		ArrayList<String> gameStatus = bundle.getStringArrayList("gameScoreList");
+		list.add(gameStatus);
 		View rootView = inflater.inflate(R.layout.fragment_list, container,false);
 		ListView listView = (ListView) rootView.findViewById(R.id.listview);
 		TextView textView = (TextView) rootView.findViewById(R.id.list_header);

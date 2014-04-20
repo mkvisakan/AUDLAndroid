@@ -15,6 +15,10 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:background="#b0b0b0" />
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="#b0b0b0" />
     	 <TextView
         	  android:layout_width="match_parent" android:layout_height="wrap_content"
           	  android:background="#b0b0b0"
@@ -26,6 +30,10 @@
     	 <TextView
         	  android:layout_width="match_parent" android:layout_height="wrap_content"
           	  android:text="@string/labelLosses" android:background="#b0b0b0"
+         	  android:textColor="#000" />
+    	 <TextView
+        	  android:layout_width="match_parent" android:layout_height="wrap_content"
+          	  android:text="@string/labelPointsDiff" android:background="#b0b0b0"
          	  android:textColor="#000" />
 	</TableRow>
          

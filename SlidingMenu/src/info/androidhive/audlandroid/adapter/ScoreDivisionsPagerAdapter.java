@@ -20,7 +20,9 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 	private ArrayList<String> awayTeamIDs;
 	private ArrayList<String> dates;
 	private ArrayList<String> times;
-	private ArrayList<String> scores;
+	private ArrayList<String> homeTeamScores;
+	private ArrayList<String> awayTeamScores;
+	private ArrayList<String> gameStatus;
 	
 	private String TAG = "info.androidhive.audlandroid.adapter";
 	public ScoreDivisionsPagerAdapter(FragmentManager fm,ArrayList<String> divisionNames,ArrayList<ArrayList<ScoreListItem>> leagueScores) {
@@ -41,7 +43,10 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 		awayTeamIDs = new ArrayList<String>();
 		dates = new ArrayList<String>();
 		times = new ArrayList<String>();
-		scores = new ArrayList<String>();
+		homeTeamScores = new ArrayList<String>();
+		awayTeamScores = new ArrayList<String>();
+		gameStatus = new ArrayList<String>();
+		
 		Bundle bundle = new Bundle();
 		for(int i=0;i<leagueScores.get(position).size();i++){
 			homeTeams.add(leagueScores.get(position).get(i).getHomeTeam());
@@ -50,7 +55,9 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 			awayTeamIDs.add(leagueScores.get(position).get(i).getAwayTeamID());
 			dates.add(leagueScores.get(position).get(i).getDate());
 			times.add(leagueScores.get(position).get(i).getTime());
-			scores.add(leagueScores.get(position).get(i).getScore());
+			homeTeamScores.add(leagueScores.get(position).get(i).getHomeTeamScore());
+			awayTeamScores.add(leagueScores.get(position).get(i).getAwayTeamScore());
+			gameStatus.add(leagueScores.get(position).get(i).getGameStatus());
 		}
 		bundle.putStringArrayList("homeTeamList", homeTeams);
 		bundle.putStringArrayList("homeTeamIDList", homeTeamIDs);
@@ -58,7 +65,9 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 		bundle.putStringArrayList("awayTeamIDList", awayTeamIDs);
 		bundle.putStringArrayList("dateList", dates);
 		bundle.putStringArrayList("timeList", times);
-		bundle.putStringArrayList("scoreList", scores);
+		bundle.putStringArrayList("homeTeamScoreList", homeTeamScores);
+		bundle.putStringArrayList("awayTeamScoreList", awayTeamScores);
+		bundle.putStringArrayList("gameScoreList", gameStatus);
 		bundle.putString("divisionName", divisionNames.get(position));
 		fragment.setArguments(bundle);
 		return fragment;
