@@ -57,7 +57,7 @@ public class NewsListFragment extends Fragment {
 							try{
 					            jsonResult = new JSONArray(oldResponse);
 					        } catch (Exception e) {
-					        	Log.e("NewsListFragment", "Response: " + response + ". Error creating json " + e.toString());
+					        	Log.e("NewsListFragment", "Response: " + oldResponse + ". Error creating json " + e.toString());
 					        }
 							newsList = parseJSON(jsonResult);
 							

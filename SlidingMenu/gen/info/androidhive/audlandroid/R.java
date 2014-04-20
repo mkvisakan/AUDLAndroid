@@ -152,6 +152,7 @@ public final class R {
         public static final int NowListCache=0x7f06000d;
         public static final int ServerURL=0x7f060008;
         public static final int UltimateTeamStatsURL=0x7f060009;
+        public static final int VideoListCache=0x7f06000f;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         /**  Content Description 
@@ -163,8 +164,8 @@ public final class R {
         public static final int labelLosses=0x7f060007;
         public static final int labelWins=0x7f060006;
         public static final int news_header=0x7f060005;
-        public static final int notifications_on_saved=0x7f06000b;
-        public static final int terms_of_use=0x7f06000c;
+        public static final int notifications_on_saved=0x7f06000c;
+        public static final int terms_of_use=0x7f06000b;
     }
     public static final class style {
         /** 
