@@ -1,36 +1,40 @@
 package info.androidhive.audlandroid;
 
+import info.androidhive.audlandroid.adapter.ScoreDivisionsPagerAdapter;
+import info.androidhive.audlandroid.interfaces.FragmentCallback;
+import info.androidhive.audlandroid.model.ScoreListItem;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import info.androidhive.audlandroid.R;
-import info.androidhive.audlandroid.adapter.ScoreDivisionsPagerAdapter;
-import info.androidhive.audlandroid.interfaces.FragmentCallback;
-import info.androidhive.audlandroid.model.ScoreListItem;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 public class ScoresListFragment extends Fragment {
+	SharedPreferences sharedPrefScores;
 	private String TAG = "info.androidhive.audlandroid.model.ScoresListFragment";
 	public ScoresListFragment(){}
 	public ViewPager viewPager;
 	public ScoreDivisionsPagerAdapter mAdapter;
 	private ArrayList<String> divisionNames;
 	private ArrayList<ArrayList<ScoreListItem>> leagueScores;
+	JSONArray JSONResult;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
         View rootView = inflater.inflate(R.layout.fragment_scores, container, false);
+        startCacheHandler(getActivity());
         startAsyncTask(getActivity());
         return rootView;
     }
@@ -56,39 +60,93 @@ public class ScoresListFragment extends Fragment {
 		}
 		return leagueScores;
 	}
+	
+	public void startCacheHandler(FragmentActivity activity) {
+		final EmptyRequest emptyRequest = new EmptyRequest(
+				new FragmentCallback() {
+					@Override
+					public void onTaskDone(String response) {
+						sharedPrefScores = getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.ScoresListCache), Context.MODE_PRIVATE);
+						String oldResponse = sharedPrefScores.getString(getActivity().getResources().getString(R.string.ScoresListCache), "");
+						
+						if(!oldResponse.equals("")){
+							try {
+								JSONResult = new JSONArray(oldResponse);
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+							parseJSON(JSONResult);
+							viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
+							mAdapter = new ScoreDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
+							 
+						        viewPager.setAdapter(mAdapter);
+						        
+						        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+						        	 
+						            @Override
+						            public void onPageSelected(int position) {
+						              
+						            }
+						         
+						            @Override
+						            public void onPageScrolled(int arg0, float arg1, int arg2) {
+						            	
+						            }
+						         
+						            @Override
+						            public void onPageScrollStateChanged(int arg0) {
+						            
+						            }
+						        });
+						}
+					}
+				});
+			emptyRequest.execute("empty");
+	}
+	
 	private void startAsyncTask(FragmentActivity activity){
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback(){
-			JSONArray JSONResult;
 			@Override
 			public void onTaskDone(String response) {
-				try {
-					JSONResult = new JSONArray(response);
-				} catch (JSONException e) {
-					e.printStackTrace();
+				sharedPrefScores = getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.ScoresListCache), Context.MODE_PRIVATE);
+				String oldResponse = sharedPrefScores.getString(getActivity().getResources().getString(R.string.ScoresListCache), "");
+				if(!oldResponse.equals(response)){
+					try {
+						JSONResult = new JSONArray(response);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					
+					if(JSONResult != null && response.length() > 0){
+						SharedPreferences.Editor editor = sharedPrefScores.edit();
+		        	    editor.putString(getActivity().getResources().getString(R.string.ScoresListCache), response);
+		        	    editor.commit();
+			        }
+					
+					parseJSON(JSONResult);
+					viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
+					mAdapter = new ScoreDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
+					 
+				        viewPager.setAdapter(mAdapter);
+				        
+				        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+				        	 
+				            @Override
+				            public void onPageSelected(int position) {
+				              
+				            }
+				         
+				            @Override
+				            public void onPageScrolled(int arg0, float arg1, int arg2) {
+				            	
+				            }
+				         
+				            @Override
+				            public void onPageScrollStateChanged(int arg0) {
+				            
+				            }
+				        });
 				}
-				parseJSON(JSONResult);
-				viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
-				mAdapter = new ScoreDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
-				 
-			        viewPager.setAdapter(mAdapter);
-			        
-			        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-			        	 
-			            @Override
-			            public void onPageSelected(int position) {
-			              
-			            }
-			         
-			            @Override
-			            public void onPageScrolled(int arg0, float arg1, int arg2) {
-			            	
-			            }
-			         
-			            @Override
-			            public void onPageScrollStateChanged(int arg0) {
-			            
-			            }
-			        });
 			}
 		});
 		String serverURL = getResources().getString(R.string.ServerURL);

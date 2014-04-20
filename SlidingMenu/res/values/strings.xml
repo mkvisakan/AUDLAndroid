@@ -176,6 +176,7 @@ Please report any violations of this Agreement to audlappdevteam@gmail.com.
     <string name="VideoListCache">info_androidhive_audlandroid_VideoListCache</string>
     <string name="StatsListCache">info_androidhive_audlandroid_StatsListCache</string>
     <string name="ScheduleListCache">info_androidhive_audlandroid_ScheduleListCache</string>
+    <string name="ScoresListCache">info_androidhive_audlandroid_ScoresListCache</string>
     
     
     
