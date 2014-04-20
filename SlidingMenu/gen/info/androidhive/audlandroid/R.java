@@ -151,6 +151,7 @@ public final class R {
         public static final int NewsListCache=0x7f06000e;
         public static final int NowListCache=0x7f06000d;
         public static final int ServerURL=0x7f060008;
+        public static final int StatsListCache=0x7f060010;
         public static final int UltimateTeamStatsURL=0x7f060009;
         public static final int VideoListCache=0x7f06000f;
         public static final int action_settings=0x7f060001;
