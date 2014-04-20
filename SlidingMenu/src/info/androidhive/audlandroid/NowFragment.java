@@ -25,7 +25,7 @@ public class NowFragment extends Fragment {
 
 	public NowFragment() {
 	}
-	SharedPreferences sharedPref;
+	SharedPreferences sharedPrefNow;
 	final static String ScreenName = "theaudl";
 	final static String LOG_TAG = "audl";
 	
@@ -56,8 +56,8 @@ public class NowFragment extends Fragment {
 				new FragmentCallback() {
 					@Override
 					public void onTaskDone(String response) {
-						sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-						String oldResponse = sharedPref.getString(activity.getResources().getString(R.string.NowListCache), "");
+						sharedPrefNow = activity.getSharedPreferences(activity.getResources().getString(R.string.NowListCache), Context.MODE_PRIVATE);
+						String oldResponse = sharedPrefNow.getString(activity.getResources().getString(R.string.NowListCache), "");
 						final Twitter twits = jsonToTwitter(oldResponse);
 				
 						// send the tweets to the adapter for rendering
@@ -83,7 +83,7 @@ public class NowFragment extends Fragment {
 					}
 				});
 			emptyRequest.execute("empty");
-		}
+	}
 
 	public void startAsyncTask(final ListView listview, final Activity activity) {
 		final TwitterRequest twitterDownloader = new TwitterRequest(
@@ -91,14 +91,13 @@ public class NowFragment extends Fragment {
 					@Override
 					public void onTaskDone(String response) {
 						
-						sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-						String oldResponse = sharedPref.getString(activity.getResources().getString(R.string.NowListCache), "");
+						sharedPrefNow = activity.getSharedPreferences(activity.getResources().getString(R.string.NowListCache), Context.MODE_PRIVATE);
+						String oldResponse = sharedPrefNow.getString(activity.getResources().getString(R.string.NowListCache), "");
 						if(!oldResponse.equals(response)){
 							
 						
 							if (response != null && response.length() > 0){
-								sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-								SharedPreferences.Editor editor = sharedPref.edit();
+								SharedPreferences.Editor editor = sharedPrefNow.edit();
 				        	    editor.putString(activity.getResources().getString(R.string.NowListCache), response);
 				        	    editor.commit();
 							}

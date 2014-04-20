@@ -53,9 +53,8 @@ public class SettingsListBaseAdapter extends BaseAdapter {
             name.setText(data.get(position));
             
         	Switch onOffSwitch = (Switch)vi.findViewById(R.id.on_off_switch);
-        	final SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        	boolean defaultValue = Boolean.valueOf(activity.getResources().getString(R.string.notifications_on_default));
-        	boolean currentValue = sharedPref.getBoolean(activity.getResources().getString(R.string.notifications_on_saved), defaultValue);
+        	final SharedPreferences sharedPref = activity.getSharedPreferences(activity.getResources().getString(R.string.notifications_on_saved), Context.MODE_PRIVATE);
+        	boolean currentValue = sharedPref.getBoolean(activity.getResources().getString(R.string.notifications_on_saved), false);
         	onOffSwitch.setChecked(currentValue);
         	onOffSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
