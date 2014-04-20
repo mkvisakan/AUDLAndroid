@@ -12,6 +12,7 @@ import info.androidhive.audlandroid.AUDLHttpRequest;
 import info.androidhive.audlandroid.adapter.NewsListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.NewsListItem;
+import info.androidhive.audlandroid.utils.Utils;
 import android.support.v4.app.Fragment;
 import android.app.Activity;
 import android.content.Context;
@@ -49,7 +50,11 @@ public class NewsListFragment extends Fragment {
 	
 	
 	public void startAsyncTask(final ListView listview, final Activity activity){
-		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(activity);
+			}
 			@Override
 			public void onTaskDone(String response) {
 		        try{

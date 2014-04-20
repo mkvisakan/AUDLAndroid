@@ -10,6 +10,7 @@ import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.adapter.ScoreDivisionsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.ScoreListItem;
+import info.androidhive.audlandroid.utils.Utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -59,6 +60,10 @@ public class ScoresListFragment extends Fragment {
 	private void startAsyncTask(FragmentActivity activity){
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback(){
 			JSONArray JSONResult;
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(getActivity());
+			}
 			@Override
 			public void onTaskDone(String response) {
 				try {

@@ -3,6 +3,7 @@ package info.androidhive.audlandroid;
 import info.androidhive.audlandroid.adapter.StatsListTabsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.StatsListItem;
+import info.androidhive.audlandroid.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +49,11 @@ public class StatsListFragment extends Fragment {
 	}
 	
 	public void startAsyncTask(final View rootView, final StatsListFragment frag){
-		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(getActivity());
+			}
 			@Override
 			public void onTaskDone(String response) {
 		        try{

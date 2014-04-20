@@ -7,6 +7,7 @@ import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.adapter.TeamInfoTabsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.TeamsListItem;
+import info.androidhive.audlandroid.utils.Utils;
 
 import org.json.JSONArray;
 
@@ -71,7 +72,11 @@ public class TeamsInfoFragment extends Fragment {
 		final String team_id = getArguments().getString("TEAM_ID");
 		final String team_name = getArguments().getString("TEAM_NAME");
 		
-		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(getActivity());
+			}
 			@Override
 			public void onTaskDone(String response) {
 		        Log.i("TeamsInfoFragment", "response : " + response);

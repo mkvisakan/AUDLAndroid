@@ -11,6 +11,7 @@ import info.androidhive.audlandroid.adapter.TeamsListBaseAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
 import info.androidhive.audlandroid.model.TeamsListItem;
 import info.androidhive.audlandroid.utils.ImageLoader;
+import info.androidhive.audlandroid.utils.Utils;
 
 
 import org.json.JSONArray;
@@ -70,7 +71,11 @@ public class TeamsListFragment extends Fragment {
 		return teamsList;
 	}
 	public void startAsyncTask(final ListView listview, final Activity activity){
-		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {			
+		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
+			@Override
+			public void onTaskFailure(){
+				Utils.ServerError(activity);
+			}
 			@Override
 			public void onTaskDone(String response) {
 		        try{
