@@ -52,32 +52,39 @@ public class NowFragment extends Fragment {
 		return twits;
 	}
 	
-	public void cacheHandler(final ListView listview, final Activity activity, String response) {
-		
-		
-		final Twitter twits = jsonToTwitter(response);
-
-		// send the tweets to the adapter for rendering
-		if(twits != null){
-			final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
-	        listview.setAdapter(adapter);
-	        swipeLayout.setRefreshing(false);
-	        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-	
-	            @Override
-	            public void onItemClick(AdapterView<?> parent, final View view,
-	                int position, long id) {
-	            	String text = twits.get(position).getText();
-	            	int index = text.indexOf(".co");
-	            	if(index != -1){
-	            		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(text.substring(text.lastIndexOf(" ", index) + 1, (text + " ").indexOf(" ", index))));
-	            		startActivity(myIntent);
-	            	}
-	            }
-	
-	          });
+	public void startCacheHandler(final ListView listview, final Activity activity) {
+		final EmptyRequest emptyRequest = new EmptyRequest(
+				new FragmentCallback() {
+					@Override
+					public void onTaskDone(String response) {
+						sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+						String oldResponse = sharedPref.getString(activity.getResources().getString(R.string.NowListCache), "");
+						final Twitter twits = jsonToTwitter(oldResponse);
+				
+						// send the tweets to the adapter for rendering
+						if(twits != null){
+							final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
+					        listview.setAdapter(adapter);
+					        swipeLayout.setRefreshing(false);
+					        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					
+					            @Override
+					            public void onItemClick(AdapterView<?> parent, final View view,
+					                int position, long id) {
+					            	String text = twits.get(position).getText();
+					            	int index = text.indexOf(".co");
+					            	if(index != -1){
+					            		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(text.substring(text.lastIndexOf(" ", index) + 1, (text + " ").indexOf(" ", index))));
+					            		startActivity(myIntent);
+					            	}
+					            }
+					
+					          });
+						}
+					}
+				});
+			emptyRequest.execute("empty");
 		}
-	}
 
 	public void startAsyncTask(final ListView listview, final Activity activity) {
 		final TwitterRequest twitterDownloader = new TwitterRequest(
@@ -89,37 +96,41 @@ public class NowFragment extends Fragment {
 					@Override
 					public void onTaskDone(String response) {
 						
+						sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+						String oldResponse = sharedPref.getString(activity.getResources().getString(R.string.NowListCache), "");
+						if(!oldResponse.equals(response)){
+							
 						
-						if (response != null && response.length() > 0){
-							sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-							SharedPreferences.Editor editor = sharedPref.edit();
-			        	    editor.putString(activity.getResources().getString(R.string.NowListCache), response);
-			        	    editor.commit();
+							if (response != null && response.length() > 0){
+								sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+								SharedPreferences.Editor editor = sharedPref.edit();
+				        	    editor.putString(activity.getResources().getString(R.string.NowListCache), response);
+				        	    editor.commit();
+							}
+							final Twitter twits = jsonToTwitter(response);
+	
+							// send the tweets to the adapter for rendering
+	
+							final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
+					        listview.setAdapter(adapter);
+					        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	
+					            @Override
+					            public void onItemClick(AdapterView<?> parent, final View view,
+					                int position, long id) {
+					            	String text = twits.get(position).getText();
+					            	int index = text.indexOf(".co");
+					            	if(index != -1){
+					            		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(text.substring(text.lastIndexOf(" ", index) + 1, (text + " ").indexOf(" ", index))));
+					            		startActivity(myIntent);
+					            	}
+					            }
+	
+					          });
 						}
-						final Twitter twits = jsonToTwitter(response);
-
-						// send the tweets to the adapter for rendering
-
-						final NowListBaseAdapter adapter = new NowListBaseAdapter(activity, twits);
-				        listview.setAdapter(adapter);
 				        swipeLayout.setRefreshing(false);
-				        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-				            @Override
-				            public void onItemClick(AdapterView<?> parent, final View view,
-				                int position, long id) {
-				            	String text = twits.get(position).getText();
-				            	int index = text.indexOf(".co");
-				            	if(index != -1){
-				            		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(text.substring(text.lastIndexOf(" ", index) + 1, (text + " ").indexOf(" ", index))));
-				            		startActivity(myIntent);
-				            	}
-				            }
-
-				          });
 					}
 				});
-		// httpRequester.execute("http://68.190.167.114:4000/News");
 		twitterDownloader.execute(ScreenName);
 	}
 
@@ -142,11 +153,9 @@ public class NowFragment extends Fragment {
 			}
 		}
 		);
-		sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-		String response = sharedPref.getString(getActivity().getResources().getString(R.string.NowListCache), null);
-		if(response != null){
-			cacheHandler(listview, getActivity(), response);
-		}
+		
+		startCacheHandler(listview, getActivity());
+		
 		startAsyncTask(listview, getActivity());
 		return rootView;
 	}

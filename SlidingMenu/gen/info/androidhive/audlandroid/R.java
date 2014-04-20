@@ -83,14 +83,15 @@ public final class R {
         public static final int icon=0x7f090003;
         public static final int id_con=0x7f090024;
         public static final int item_score=0x7f090023;
-        public static final int lblListHeader=0x7f09002b;
-        public static final int lblListItem=0x7f09002c;
-        public static final int lblListItemVal=0x7f09002d;
+        public static final int lblListHeader=0x7f09002c;
+        public static final int lblListItem=0x7f09002d;
+        public static final int lblListItemVal=0x7f09002e;
         public static final int list_header=0x7f09000c;
         public static final int list_slidermenu=0x7f090002;
         public static final int listview=0x7f09000d;
         public static final int lvExp=0x7f09002a;
-        public static final int message=0x7f09002e;
+        public static final int message=0x7f09002f;
+        public static final int more=0x7f09002b;
         public static final int name=0x7f090018;
         public static final int news_list_container=0x7f09000b;
         public static final int news_list_header=0x7f090011;
@@ -147,21 +148,23 @@ public final class R {
         public static final int twit_list=0x7f03001c;
     }
     public static final class string {
-        public static final int NowListCache=0x7f06000c;
+        public static final int NowListCache=0x7f06000e;
+        public static final int ServerURL=0x7f060008;
+        public static final int UltimateTeamStatsURL=0x7f060009;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         /**  Content Description 
          */
-        public static final int desc_list_item_icon=0x7f060008;
+        public static final int desc_list_item_icon=0x7f06000a;
         public static final int drawer_close=0x7f060004;
         public static final int drawer_open=0x7f060003;
         public static final int hello_world=0x7f060002;
         public static final int labelLosses=0x7f060007;
         public static final int labelWins=0x7f060006;
         public static final int news_header=0x7f060005;
-        public static final int notifications_on_default=0x7f060009;
-        public static final int notifications_on_saved=0x7f06000a;
-        public static final int terms_of_use=0x7f06000b;
+        public static final int notifications_on_default=0x7f06000b;
+        public static final int notifications_on_saved=0x7f06000c;
+        public static final int terms_of_use=0x7f06000d;
     }
     public static final class style {
         /** 
