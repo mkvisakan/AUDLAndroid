@@ -10,8 +10,6 @@ import java.util.HashMap;
 
 import org.json.JSONArray;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -24,7 +22,6 @@ public class ScheduleListFragment extends Fragment {
 	
 	public ScheduleListFragment(){}
     
-	SharedPreferences sharedPrefSchedule;
     HashMap<String, ArrayList<ScheduleListItem>> schedLists = new HashMap<String, ArrayList<ScheduleListItem>>();
 	JSONArray jsonResult = null;
     String response = null;
@@ -45,53 +42,6 @@ public class ScheduleListFragment extends Fragment {
 		return schedLists;
 	}
 	
-	public void startCacheHandler(final View rootView, final ScheduleListFragment frag) {
-		final EmptyRequest emptyRequest = new EmptyRequest(
-				new FragmentCallback() {
-					@Override
-					public void onTaskFailure(){
-						Utils.ServerError(frag.getActivity());
-					}
-					@Override
-					public void onTaskDone(String response) {
-						sharedPrefSchedule = frag.getActivity().getSharedPreferences(frag.getActivity().getResources().getString(R.string.ScheduleListCache), Context.MODE_PRIVATE);
-						String oldResponse = sharedPrefSchedule.getString(frag.getActivity().getResources().getString(R.string.ScheduleListCache), "");
-						
-						if(!oldResponse.equals("")){
-							try{
-					            jsonResult = new JSONArray(oldResponse);
-					        } catch (Exception e) {
-					        	Log.e("ScheduleListFragment", "Response: " + oldResponse + ". Error creating json " + e.toString());
-					        }
-					        
-					        schedLists = parseJSON(jsonResult);
-					        
-					        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.pager);
-					        final ScheduleListTabsPagerAdapter adapter = new ScheduleListTabsPagerAdapter(frag.getActivity().getSupportFragmentManager(), schedLists);        
-					        viewPager.setAdapter(adapter);
-					        
-					        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-					        	 
-					            @Override
-					            public void onPageSelected(int position) {
-					                // on changing the page
-					                // make respected tab selected
-					               // actionBar.setSelectedNavigationItem(position);
-					            }
-					         
-					            @Override
-					            public void onPageScrolled(int arg0, float arg1, int arg2) {
-					            }
-					         
-					            @Override
-					            public void onPageScrollStateChanged(int arg0) {
-					            }
-					        });
-						}
-					}
-				});
-			emptyRequest.execute("empty");
-	}
 	
 	public void startAsyncTask(final View rootView, final ScheduleListFragment frag){
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback() {
@@ -101,20 +51,12 @@ public class ScheduleListFragment extends Fragment {
 			}
 			@Override
 			public void onTaskDone(String response) {
-				sharedPrefSchedule = frag.getActivity().getSharedPreferences(frag.getActivity().getResources().getString(R.string.ScheduleListCache), Context.MODE_PRIVATE);
-				String oldResponse = sharedPrefSchedule.getString(frag.getActivity().getResources().getString(R.string.ScheduleListCache), "");
-				if(!oldResponse.equals(response)){
 			        try{
 			            jsonResult = new JSONArray(response);
 			        } catch (Exception e) {
 			        	Log.e("ScheduleListFragment", "Response: " + response + ". Error creating json " + e.toString());
 			        }
 			        
-			        if(jsonResult != null && response.length() > 0){
-						SharedPreferences.Editor editor = sharedPrefSchedule.edit();
-		        	    editor.putString(frag.getActivity().getResources().getString(R.string.ScheduleListCache), response);
-		        	    editor.commit();
-			        }
 			        
 			        schedLists = parseJSON(jsonResult);
 			        
@@ -139,7 +81,6 @@ public class ScheduleListFragment extends Fragment {
 			            public void onPageScrollStateChanged(int arg0) {
 			            }
 			        });
-				}
 			}
 		});
         //httpRequester.execute("http://68.190.167.114:4000/News");
@@ -155,7 +96,6 @@ public class ScheduleListFragment extends Fragment {
         
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         startAsyncTask(rootView, this);
-        startCacheHandler(rootView, this);
          
         return rootView;
     }
