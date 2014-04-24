@@ -1,5 +1,7 @@
 package info.androidhive.audlandroid.model;
 
+import info.androidhive.audlandroid.ScoresListFragment;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,6 +18,7 @@ public class TeamsListItem {
 	private ArrayList<String> schedTimes;
 	private HashMap<String, ArrayList<StatsListItem>> statsList;
 	private ArrayList<String> statsKeys;
+	private ArrayList<ScoreListItem> scoresList;
 	
 	public TeamsListItem(String name, String id){
 		this.teamName = name;
@@ -28,6 +31,7 @@ public class TeamsListItem {
 		this.schedTeamIds = new ArrayList<String>();
 		this.statsList = new HashMap<String, ArrayList<StatsListItem>>();
 		this.statsKeys = new ArrayList<String>();
+		this.scoresList = new ArrayList<ScoreListItem>();
 	}
 	
 	public String getTeamName(){
@@ -95,4 +99,11 @@ public class TeamsListItem {
 		return statsList.get(key);
 	}
 	
+	public void addScores(ScoreListItem score){
+		this.scoresList.add(score);
+	}
+	
+	public ArrayList<ScoreListItem> getScores(){
+		return this.scoresList;
+	}
 }
