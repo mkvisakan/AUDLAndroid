@@ -80,6 +80,8 @@ public class ScoreInfoPagerAdapter extends FragmentStatePagerAdapter{
 			Bundle bundle = new Bundle();
 			bundle.putString("HOMEID",score.getHomeTeamID());
 			bundle.putString("DATE", score.getDate());
+			bundle.putString("HOMETEAM", score.getHomeTeam());
+			bundle.putString("AWAYTEAM", score.getAwayTeam());
 			mfragment.setArguments(bundle);
 			return mfragment;
 		}

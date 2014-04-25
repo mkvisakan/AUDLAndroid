@@ -40,9 +40,12 @@ public class ScoreListBaseAdapter extends BaseAdapter{
     }
     
     public View getView(int position, View convertView, ViewGroup parent) {
-        View sch =convertView;
+        View sch;
         if(convertView==null)
             sch = inflater.inflate(R.layout.score_list_item, null);
+        else{
+        	sch=convertView;
+        }
         TextView homeTeamName = (TextView)sch.findViewById(R.id.homeTeamName);
         TextView awayTeamName = (TextView)sch.findViewById(R.id.awayTeamName);
         TextView status = (TextView)sch.findViewById(R.id.game_status); // title
@@ -59,6 +62,10 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         if(data.get(8).get(position).compareTo("0")!=0){
         	homeTeamScore.setText(data.get(6).get(position));
         	awayTeamScore.setText(data.get(7).get(position));
+        }
+        else{
+        	homeTeamScore.setText("");
+        	awayTeamScore.setText("");
         }
         gameTime.setText(data.get(5).get(position));
         String gameStatus="";

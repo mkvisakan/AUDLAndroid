@@ -4,6 +4,11 @@ import info.androidhive.audlandroid.utils.ImageLoader;
 
 import java.util.ArrayList;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.LineGraphView;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +30,7 @@ public class ScoreStatFragment extends Fragment{
 	            Bundle savedInstanceState) {
 		 
 		 View rootView = inflater.inflate(R.layout.fragment_score_stat,container,false);
+		 
 		 Bundle args = this.getArguments();
 		 TextView homeGoal = (TextView) rootView.findViewById(R.id.homeGoal);
 		 TextView awayGoal = (TextView) rootView.findViewById(R.id.awayGoal);
