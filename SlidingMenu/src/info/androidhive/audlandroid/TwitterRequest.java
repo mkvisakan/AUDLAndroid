@@ -106,14 +106,13 @@ import com.google.gson.Gson;
 				// URL encode the consumer key and secret
 				String urlApiKey = URLEncoder.encode(CONSUMER_KEY, "UTF-8");
 				String urlApiSecret = URLEncoder.encode(CONSUMER_SECRET, "UTF-8");
+				
 
 				// Concatenate the encoded consumer key, a colon character, and the
 				// encoded consumer secret
 				String combined = urlApiKey + ":" + urlApiSecret;
-
 				// Base64 encode the string
 				String base64Encoded = Base64.encodeToString(combined.getBytes(), Base64.NO_WRAP);
-
 				// Step 2: Obtain a bearer token
 				HttpPost httpPost = new HttpPost(TwitterTokenURL);
 				httpPost.setHeader("Authorization", "Basic " + base64Encoded);
