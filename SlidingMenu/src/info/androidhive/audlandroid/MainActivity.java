@@ -2,9 +2,11 @@ package info.androidhive.audlandroid;
 
 import info.androidhive.audlandroid.adapter.NavDrawerListAdapter;
 import info.androidhive.audlandroid.model.NavDrawerItem;
+import info.androidhive.audlandroid.model.ScoreListItem;
 import info.androidhive.audlandroid.model.TeamsListItem;
 import info.androidhive.audlandroid.utils.ConnectionDetector;
 import info.androidhive.audlandroid.R;
+import info.androidhive.audlandroid.ScoresDivisionListFragment.OnScoreSelectedListener;
 import info.androidhive.audlandroid.TeamsListFragment.OnTeamSelectedListener;
 
 import java.io.IOException;
@@ -53,7 +55,7 @@ import android.widget.Toast;
 //import com.google.android.gms.common.GooglePlayServicesUtil;
 //import com.google.android.gms.gcm.*;
 
-public class MainActivity extends FragmentActivity implements OnTeamSelectedListener{
+public class MainActivity extends FragmentActivity implements OnTeamSelectedListener,OnScoreSelectedListener{
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -115,7 +117,39 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
         // Commit the transaction
         transaction.commit();
 	}
-
+	public void onScoreSelected(ScoreListItem item){
+		ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+		boolean isInternetConnected = cd.isConnectingToInternet();
+		
+		if (!isInternetConnected) {
+			internetError();
+			return;
+		}
+		ScoresInfoFragment scoreFrag = new ScoresInfoFragment();
+		Bundle args = new Bundle();
+		args.putString("HOMETEAM", item.getHomeTeam());
+		args.putString("HOMETEAMID", item.getHomeTeamID());
+		args.putString("AWAYTEAM", item.getAwayTeam());
+		args.putString("AWAYTEAMID", item.getAwayTeamID());
+		args.putString("DATE",item.getDate());
+		args.putString("TIME", item.getTime());
+		args.putString("HOMETEAMSCORE", item.getHomeTeamScore());
+		args.putString("AWAYTEAMSCORE",item.getAwayTeamScore());
+		args.putString("STATUS", item.getGameStatus());
+		if(item.getGameStatus().compareTo("0")!=0){
+			scoreFrag.setArguments(args);
+		
+			//savedState = getSupportFragmentManager().saveFragmentInstanceState(getSupportFragmentManager().findFragmentById(R.id.frame_container));
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		
+			transaction.addToBackStack(null);
+			transaction.hide(getSupportFragmentManager().findFragmentById(R.id.frame_container));
+			transaction.add(R.id.frame_container, scoreFrag);
+			transaction.commit();
+		}else{
+			Toast.makeText(getApplicationContext(), "Not yet started", Toast.LENGTH_SHORT).show();
+		}
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

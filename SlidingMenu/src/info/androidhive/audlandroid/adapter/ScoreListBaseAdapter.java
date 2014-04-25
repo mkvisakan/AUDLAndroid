@@ -56,16 +56,18 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         //title.setText(data.get(6).get(position) + "\n" + data.get(0).get(position) + "\nvs.\n" + data.get(2).get(position) + "\n" + data.get(5).get(position) + " on " + data.get(4).get(position));
         homeTeamName.setText(data.get(0).get(position));
         awayTeamName.setText(data.get(2).get(position));
-        homeTeamScore.setText(data.get(6).get(position));
-        awayTeamScore.setText(data.get(7).get(position));
+        if(data.get(8).get(position).compareTo("0")!=0){
+        	homeTeamScore.setText(data.get(6).get(position));
+        	awayTeamScore.setText(data.get(7).get(position));
+        }
         gameTime.setText(data.get(5).get(position));
         String gameStatus="";
         if(data.get(8).get(position).compareTo("0")==0){
-        	gameStatus="Pre Game";
+        	gameStatus="Upcoming";
         }else if(data.get(8).get(position).compareTo("1")==0){
         	gameStatus="Ongoing";
         }else{
-        	gameStatus="Full Time";
+        	gameStatus="Final";
         }
         status.setText("" + gameStatus);
         imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + data.get(1).get(position), homeTeamImage);
