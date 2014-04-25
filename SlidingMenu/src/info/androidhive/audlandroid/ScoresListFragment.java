@@ -1,19 +1,19 @@
 package info.androidhive.audlandroid;
 
-import info.androidhive.audlandroid.adapter.ScoreDivisionsPagerAdapter;
-import info.androidhive.audlandroid.interfaces.FragmentCallback;
-import info.androidhive.audlandroid.model.ScoreListItem;
-import info.androidhive.audlandroid.utils.Utils;
-
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.os.Bundle;
+import info.androidhive.audlandroid.R;
+import info.androidhive.audlandroid.adapter.ScoreDivisionsPagerAdapter;
+import info.androidhive.audlandroid.interfaces.FragmentCallback;
+import info.androidhive.audlandroid.model.ScoreListItem;
+import info.androidhive.audlandroid.utils.Utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +32,7 @@ public class ScoresListFragment extends Fragment {
             Bundle savedInstanceState) {
  
         View rootView = inflater.inflate(R.layout.fragment_scores, container, false);
-        startAsyncTask(getActivity());
+        startAsyncTask(getActivity(),rootView);
         return rootView;
     }
 	
@@ -58,24 +58,22 @@ public class ScoresListFragment extends Fragment {
 		}
 		return leagueScores;
 	}
-	
-		private void startAsyncTask(FragmentActivity activity){
+		
+	private void startAsyncTask(final FragmentActivity activity,final View rootView){
 		final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback(){
 			@Override
 			public void onTaskDone(String response) {
-				
 					try{
 						jsonResult = new JSONArray(response);
 					}catch(JSONException e){
 						e.printStackTrace();
 					}
-					
+
 					parseJSON(jsonResult);
-					viewPager = (ViewPager) getActivity().findViewById(R.id.scores_pager);
-					mAdapter = new ScoreDivisionsPagerAdapter(getActivity().getSupportFragmentManager(),divisionNames,leagueScores);
+					viewPager = (ViewPager) rootView.findViewById(R.id.scores_pager);
+					mAdapter = new ScoreDivisionsPagerAdapter(activity.getSupportFragmentManager(),divisionNames,leagueScores);
 				 
 			        viewPager.setAdapter(mAdapter);
-			        
 			        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			        	 
 			            @Override
@@ -93,7 +91,6 @@ public class ScoresListFragment extends Fragment {
 			            
 			            }
 			        });
-				
 			}
 			@Override
 			public void onTaskFailure() {
@@ -103,4 +100,5 @@ public class ScoresListFragment extends Fragment {
 		String serverURL = getResources().getString(R.string.ServerURL);
 		httpRequester.execute(serverURL + "/Scores");
 	}
+	
 }

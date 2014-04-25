@@ -6,6 +6,7 @@ import info.androidhive.audlandroid.R;
 
 import info.androidhive.audlandroid.adapter.TeamInfoTabsPagerAdapter;
 import info.androidhive.audlandroid.interfaces.FragmentCallback;
+import info.androidhive.audlandroid.model.ScoreListItem;
 import info.androidhive.audlandroid.model.TeamsListItem;
 import info.androidhive.audlandroid.utils.Utils;
 
@@ -41,6 +42,8 @@ public class TeamsInfoFragment extends Fragment {
 			JSONArray playersList = jsonResult.getJSONArray(0);
 			JSONArray scheduleList = jsonResult.getJSONArray(1);
 			JSONArray statsList = jsonResult.getJSONArray(2);
+			JSONArray gamesList = jsonResult.getJSONArray(3);
+			
 			//add players
 			Log.i("TeamsInfoFragment", "adding players...");
 			for (int i=1; i<playersList.length(); i++){
@@ -59,6 +62,14 @@ public class TeamsInfoFragment extends Fragment {
 				for (int j=0; j<statsData.length(); j++){
 					team.addStats(statsType, statsData.getJSONArray(j).getString(0), statsData.getJSONArray(j).getString(1));
 				}
+			}
+			
+			//add games
+			for (int j=0; j<gamesList.length(); j++) {
+				ScoreListItem scoreItem = new ScoreListItem(gamesList.getJSONArray(j).getString(0),gamesList.getJSONArray(j).getString(1),gamesList.getJSONArray(j).getString(2),
+						gamesList.getJSONArray(j).getString(3),gamesList.getJSONArray(j).getString(4),gamesList.getJSONArray(j).getString(5),gamesList.getJSONArray(j).getString(6),
+						gamesList.getJSONArray(j).getString(7),gamesList.getJSONArray(j).getString(8));
+				team.addScores(scoreItem);
 			}
 			
 		} catch (Exception e) {

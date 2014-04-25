@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
 public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 	private ArrayList<String> divisionNames;
@@ -24,7 +23,6 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 	private ArrayList<String> awayTeamScores;
 	private ArrayList<String> gameStatus;
 	
-	private String TAG = "info.androidhive.audlandroid.adapter";
 	public ScoreDivisionsPagerAdapter(FragmentManager fm,ArrayList<String> divisionNames,ArrayList<ArrayList<ScoreListItem>> leagueScores) {
 		super(fm);
 		this.divisionNames = divisionNames;

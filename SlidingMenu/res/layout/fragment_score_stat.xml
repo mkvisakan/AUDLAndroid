@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    
+     <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="@string/goals" 
+        android:textStyle="bold"/>
+        
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="35dp"
+        android:text="@string/assists" 
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="35dp"
+        android:text="@string/drops" 
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:text="@string/throwaways" 
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="35dp"
+        android:text="@string/Ds"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="55dp"
+        android:text="@string/topPlayers" 
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/homeIcon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/awayIcon"
+        android:layout_marginLeft="30dp" />
+
+    <ImageView
+        android:id="@+id/awayIcon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp" 
+        />
+
+    <TextView
+        android:id="@+id/homeGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp" />
+
+    <TextView
+        android:id="@+id/homeAssist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_alignLeft="@+id/homeGoal" />
+
+    <TextView
+        android:id="@+id/homeDrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView4"
+        android:layout_alignLeft="@+id/homeAssist" />
+
+    <TextView
+        android:id="@+id/awayAssist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_alignRight="@+id/awayGoal" />
+
+    <TextView
+        android:id="@+id/awayD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView5"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignRight="@+id/awayTA" />
+
+    <TextView
+        android:id="@+id/homeTA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView5"
+        android:layout_alignLeft="@+id/homeDrop" />
+
+    <TextView
+        android:id="@+id/homeD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView5"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignLeft="@+id/homeTA" />
+
+    <TextView
+        android:id="@+id/awayTA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView5"
+        android:layout_alignLeft="@+id/awayAssist" />
+
+    <TextView
+        android:id="@+id/awayDrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView4"
+        android:layout_alignLeft="@+id/awayAssist"/>
+
+    <TextView
+        android:id="@+id/awayGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2" 
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/awayIcon"
+        android:layout_centerHorizontal="true"
+        android:text="@string/finals" 
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/homeScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/homeIcon"
+        android:layout_toLeftOf="@+id/textView4"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/awayScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/awayIcon"
+        android:layout_toRightOf="@+id/textView5"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>
