@@ -78,8 +78,13 @@ public class NowFragment extends Fragment {
 					            	String text = twits.get(position).getText();
 					            	int index = text.indexOf(".co");
 					            	if(index != -1){
+					            		try{
 					            		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(text.substring(text.lastIndexOf(" ", index) + 1, (text + " ").indexOf(" ", index))));
 					            		startActivity(myIntent);
+					            		}
+					            		catch(Exception e){
+					            			
+					            		}
 					            	}
 					            }
 					
