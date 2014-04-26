@@ -1,19 +1,41 @@
 package info.androidhive.audlandroid;
 
 import info.androidhive.audlandroid.adapter.ScoreListBaseAdapter;
+import info.androidhive.audlandroid.interfaces.OnScoreSelectedListener;
+import info.androidhive.audlandroid.model.ScoreListItem;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class TeamsScoreFragment extends Fragment{
 	private String TAG = "info.androidhive.audlandroid.TeamsScoreFragment";
 	private ArrayList<ArrayList<String>> list;
+	public OnScoreSelectedListener mCallback;
+	
+	@Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnScoreSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnScoreSelectedListener");
+        }
+    }
+	
+	
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		Bundle bundle = this.getArguments();
 		list = new ArrayList<ArrayList<String>>();
@@ -39,6 +61,17 @@ public class TeamsScoreFragment extends Fragment{
 		ListView listView = (ListView) rootView.findViewById(R.id.listview);
 		final ScoreListBaseAdapter adapter = new ScoreListBaseAdapter(getActivity(),list);
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mCallback.onScoreSelected(new ScoreListItem(list.get(0).get(position),list.get(1).get(position),list.get(2).get(position),
+						list.get(3).get(position),list.get(4).get(position),list.get(5).get(position),list.get(6).get(position),
+						list.get(7).get(position),list.get(8).get(position)));
+			}
+			
+		});
 		return rootView;
 	}
 

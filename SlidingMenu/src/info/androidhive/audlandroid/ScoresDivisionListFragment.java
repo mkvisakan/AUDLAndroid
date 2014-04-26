@@ -1,6 +1,7 @@
 package info.androidhive.audlandroid;
 
 import info.androidhive.audlandroid.adapter.ScoreListBaseAdapter;
+import info.androidhive.audlandroid.interfaces.OnScoreSelectedListener;
 import info.androidhive.audlandroid.model.ScoreListItem;
 import java.util.ArrayList;
 
@@ -18,9 +19,6 @@ import android.widget.TextView;
 public class ScoresDivisionListFragment extends Fragment{
 	private ArrayList<ArrayList<String>> list;
 	public OnScoreSelectedListener mCallback;
-	public interface OnScoreSelectedListener {
-        public void onScoreSelected(ScoreListItem team);
-    }
 	
 	
 	@Override
