@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class ScoresDivisionListFragment extends Fragment{
 		Bundle bundle = this.getArguments();
 		list = new ArrayList<ArrayList<String>>();
 		ArrayList<String> homeTeams = bundle.getStringArrayList("homeTeamList");
+		Log.i("","homeTeam's size:" + homeTeams.size());
 		list.add(homeTeams);
 		ArrayList<String> homeTeamIDs = bundle.getStringArrayList("homeTeamIDList");
 		list.add(homeTeamIDs);

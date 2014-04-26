@@ -45,6 +45,7 @@ public class ScoresListFragment extends Fragment {
 				JSONArray array2 = array.getJSONArray(i);
 				divisionNames.add(array2.getString(0));
 				JSONArray array3 = array2.getJSONArray(1);
+				Log.i(TAG,"Array Length:" + array3.length());
 				for(int j=0;j<array3.length();j++){
 					ScoreListItem scoreItem = new ScoreListItem(array3.getJSONArray(j).getString(0),array3.getJSONArray(j).getString(1),array3.getJSONArray(j).getString(2),
 							array3.getJSONArray(j).getString(3),array3.getJSONArray(j).getString(4),array3.getJSONArray(j).getString(5),array3.getJSONArray(j).getString(6),
