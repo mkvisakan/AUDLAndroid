@@ -1,12 +1,12 @@
 package info.androidhive.audlandroid;
 
 import info.androidhive.audlandroid.adapter.NavDrawerListAdapter;
+import info.androidhive.audlandroid.interfaces.OnScoreSelectedListener;
 import info.androidhive.audlandroid.model.NavDrawerItem;
 import info.androidhive.audlandroid.model.ScoreListItem;
 import info.androidhive.audlandroid.model.TeamsListItem;
 import info.androidhive.audlandroid.utils.ConnectionDetector;
 import info.androidhive.audlandroid.R;
-import info.androidhive.audlandroid.ScoresDivisionListFragment.OnScoreSelectedListener;
 import info.androidhive.audlandroid.TeamsListFragment.OnTeamSelectedListener;
 
 import java.io.IOException;
