@@ -22,15 +22,11 @@ import android.widget.TextView;
 public class ScoreStatFragment extends Fragment{
 	
 	private ImageLoader imageLoader;
-	public ScoreStatFragment(Activity a){
-		imageLoader=new ImageLoader(a.getApplicationContext());
-	}
+	public ScoreStatFragment(){}
 	@Override 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	            Bundle savedInstanceState) {
-		 
 		 View rootView = inflater.inflate(R.layout.fragment_score_stat,container,false);
-		 
 		 Bundle args = this.getArguments();
 		 TextView homeGoal = (TextView) rootView.findViewById(R.id.homeGoal);
 		 TextView awayGoal = (TextView) rootView.findViewById(R.id.awayGoal);
@@ -67,6 +63,7 @@ public class ScoreStatFragment extends Fragment{
 		 homeScore.setText(homeScoreString);
 		 awayScore.setText(awayScoreString);
 		 String serverURL = getResources().getString(R.string.ServerURL);
+		 imageLoader=new ImageLoader(getActivity());
 		 imageLoader.DisplayImage(serverURL + "/Icons/" + homeID, homeIcon);
 		 imageLoader.DisplayImage(serverURL + "/Icons/" + awayID, awayIcon);
 		 return rootView;

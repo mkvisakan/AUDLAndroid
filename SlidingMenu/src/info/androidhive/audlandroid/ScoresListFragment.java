@@ -30,7 +30,6 @@ public class ScoresListFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
- 
         View rootView = inflater.inflate(R.layout.fragment_scores, container, false);
         startAsyncTask(getActivity(),rootView);
         return rootView;
@@ -72,8 +71,7 @@ public class ScoresListFragment extends Fragment {
 					parseJSON(jsonResult);
 					viewPager = (ViewPager) rootView.findViewById(R.id.scores_pager);
 					mAdapter = new ScoreDivisionsPagerAdapter(activity.getSupportFragmentManager(),divisionNames,leagueScores);
-				 
-			        viewPager.setAdapter(mAdapter);
+					viewPager.setAdapter(mAdapter);
 			        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			        	 
 			            @Override

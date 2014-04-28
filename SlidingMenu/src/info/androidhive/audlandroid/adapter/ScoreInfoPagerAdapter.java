@@ -18,13 +18,11 @@ import android.util.Log;
 public class ScoreInfoPagerAdapter extends FragmentStatePagerAdapter{
 	private ArrayList<TopStatsItem> list;
 	private ScoreListItem score;
-	private Activity a;
 	public ScoreInfoPagerAdapter(FragmentManager fm,ArrayList<TopStatsItem> list,ScoreListItem item,Activity activity) {
 		super(fm);
 		Log.i("","Constructor called");
 		this.list=list;
 		this.score=item;
-		this.a = activity;
 	}
 	@Override
     public CharSequence getPageTitle(int position) {
@@ -39,7 +37,7 @@ public class ScoreInfoPagerAdapter extends FragmentStatePagerAdapter{
 	public Fragment getItem(int index) {
 		switch(index){
 		case 0:
-			ScoreStatFragment fragment = new ScoreStatFragment(a);
+			ScoreStatFragment fragment = new ScoreStatFragment();
 			Bundle args = new Bundle();
 			ArrayList<String> tempList0 = new ArrayList<String>();
 			tempList0.add(list.get(0).getTopGoals());
@@ -76,7 +74,7 @@ public class ScoreInfoPagerAdapter extends FragmentStatePagerAdapter{
 			fragment.setArguments(args);
 			return fragment;
 		case 1:
-			ScoreGraphFragment mfragment = new ScoreGraphFragment(a);
+			ScoreGraphFragment mfragment = new ScoreGraphFragment();
 			Bundle bundle = new Bundle();
 			bundle.putString("HOMEID",score.getHomeTeamID());
 			bundle.putString("DATE", score.getDate());

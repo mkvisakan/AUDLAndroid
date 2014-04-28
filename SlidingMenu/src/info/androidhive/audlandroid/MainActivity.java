@@ -138,10 +138,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		args.putString("STATUS", item.getGameStatus());
 		if(item.getGameStatus().compareTo("0")!=0){
 			scoreFrag.setArguments(args);
-		
-			//savedState = getSupportFragmentManager().saveFragmentInstanceState(getSupportFragmentManager().findFragmentById(R.id.frame_container));
 			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		
 			transaction.addToBackStack(null);
 			transaction.hide(getSupportFragmentManager().findFragmentById(R.id.frame_container));
 			transaction.add(R.id.frame_container, scoreFrag);

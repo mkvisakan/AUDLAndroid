@@ -120,7 +120,6 @@ public class ScoresInfoFragment extends Fragment{
     	String serverURL = getResources().getString(R.string.ServerURL);
 		httpRequester.execute(serverURL + "/Game/" + homeTeamID + "/" + date);
     }
-    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {

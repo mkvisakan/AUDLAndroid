@@ -21,13 +21,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ScoreGraphFragment extends Fragment{
 	
-	private Activity activity;
 	private JSONArray jsonResult;
-	public ScoreGraphFragment(Activity a){
-		activity = a;
+	public ScoreGraphFragment(){
+		
 	}
 	private class Point{
 		private double x;
@@ -81,6 +81,8 @@ public class ScoreGraphFragment extends Fragment{
 			pointListList.add(awayPointList);
 		}catch(JSONException e){
 			e.printStackTrace();
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return pointListList;
 	}
@@ -90,7 +92,7 @@ public class ScoreGraphFragment extends Fragment{
 
 			@Override
 			public void onTaskFailure() {
-				Utils.ServerError(activity);
+				Utils.ServerError(getActivity());
 			}
 
 			@Override
@@ -100,8 +102,13 @@ public class ScoreGraphFragment extends Fragment{
 				}catch(JSONException e){
 					e.printStackTrace();
 				}
-				ArrayList<ArrayList<Point>> list = parseJSON(jsonResult);
-				populateGraphView(rootView,list,homeTeam,awayTeam);
+				try{
+					ArrayList<ArrayList<Point>> list = parseJSON(jsonResult);
+					populateGraphView(rootView,list,homeTeam,awayTeam);
+				}catch(Exception e){
+					TextView status = (TextView) rootView.findViewById(R.id.graphStatus);
+					status.setVisibility(View.VISIBLE);
+				}
 			}
 			
 		});
@@ -111,26 +118,34 @@ public class ScoreGraphFragment extends Fragment{
 	
 	private void populateGraphView(View view,ArrayList<ArrayList<Point>> pointsList,
 			String homeTeam,String awayTeam){
-		int maxValue = 40;
-		
-		GraphViewData[] pointsArray = new GraphViewData[pointsList.get(0).size()];
+		int maxValue,intervals,remainder;
+		int homePointsSize = pointsList.get(0).size();
+		int awayPointsSize = pointsList.get(1).size();
+		if(pointsList.get(0).get(homePointsSize-1).getY() >= pointsList.get(1).get(awayPointsSize-1).getY()){
+			maxValue = pointsList.get(0).get(homePointsSize-1).getY();
+		}
+		else{
+			maxValue = pointsList.get(1).get(awayPointsSize-1).getY();
+		}
+		remainder = maxValue % 5;
+		intervals = (maxValue + (5 - remainder)) / 5;
+		GraphViewData[] pointsArray = new GraphViewData[homePointsSize];
 		for(int i=0;i<pointsList.get(0).size();i++){
 			pointsArray[i] = new GraphViewData(pointsList.get(0).get(i).getX(),pointsList.get(0).get(i).getY());
-			Log.i("","x:" + pointsList.get(0).get(i).getX() + "y:" + pointsList.get(0).get(i).getY());
 		}
 		GraphViewSeriesStyle homeSeriesStyle = new GraphViewSeriesStyle();
 		GraphViewSeries homeSeries = new GraphViewSeries(homeTeam,homeSeriesStyle,pointsArray);
-		GraphViewData[] awayPointsArray = new GraphViewData[pointsList.get(1).size()];
+		GraphViewData[] awayPointsArray = new GraphViewData[awayPointsSize];
 		for(int i=0;i<pointsList.get(1).size();i++){
 			awayPointsArray[i] = new GraphViewData(pointsList.get(1).get(i).getX(),pointsList.get(1).get(i).getY());
 		}
 		GraphViewSeriesStyle awaySeriesStyle = new GraphViewSeriesStyle();
 		awaySeriesStyle.color=0xffff0000;
 		GraphViewSeries awaySeries = new GraphViewSeries(awayTeam,awaySeriesStyle,awayPointsArray);
-		LineGraphView graphView = new LineGraphView(activity,homeTeam  + " vs "  + awayTeam);
-		graphView.setManualYAxisBounds(maxValue, 0);
+		LineGraphView graphView = new LineGraphView(getActivity(),homeTeam  + " vs "  + awayTeam);
+		graphView.setManualYAxisBounds(maxValue + (5-remainder), 0);
 		graphView.getGraphViewStyle().setNumHorizontalLabels(1);
-		graphView.getGraphViewStyle().setNumVerticalLabels(11);
+		graphView.getGraphViewStyle().setNumVerticalLabels(intervals + 1);
 		graphView.addSeries(homeSeries);
 		graphView.addSeries(awaySeries);
 		graphView.setLegendAlign(GraphView.LegendAlign.BOTTOM);
