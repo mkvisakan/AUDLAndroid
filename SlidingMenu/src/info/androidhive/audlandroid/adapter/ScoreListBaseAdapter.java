@@ -68,7 +68,7 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         // Code to convert to local time
         DateTimeFormatter parser = ISODateTimeFormat.dateTimeNoMillis();
         String time = data.get(9).get(position);
-        DateFormat formatter = new SimpleDateFormat("KK:mm a");
+        DateFormat formatter = new SimpleDateFormat("hh:mm a");
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(parser.parseDateTime(time).getMillis());
         String timeString = formatter.format(calendar.getTime());
