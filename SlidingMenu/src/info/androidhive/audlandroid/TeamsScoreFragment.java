@@ -57,6 +57,8 @@ public class TeamsScoreFragment extends Fragment{
 		list.add(awayTeamScores);
 		ArrayList<String> gameStatus = bundle.getStringArrayList("gameScoreList");
 		list.add(gameStatus);
+		ArrayList<String> ISOTimeList = bundle.getStringArrayList("ISOTimeList");
+		list.add(ISOTimeList);
 		View rootView = inflater.inflate(R.layout.fragment_list, container,false);
 		ListView listView = (ListView) rootView.findViewById(R.id.listview);
 		final ScoreListBaseAdapter adapter = new ScoreListBaseAdapter(getActivity(),list);

@@ -78,6 +78,7 @@ public class TeamInfoTabsPagerAdapter extends FragmentStatePagerAdapter {
         	ArrayList<String> homeTeamScores = new ArrayList<String>();
         	ArrayList<String> awayTeamScores = new ArrayList<String>();
         	ArrayList<String> gameStatus = new ArrayList<String>();
+        	ArrayList<String> ISOTimeList = new ArrayList<String>();
         	ArrayList<ScoreListItem> scoresList = team.getScores();
         	for (int i=0; i<scoresList.size(); i++){
         		homeTeams.add(scoresList.get(i).getHomeTeam());
@@ -89,6 +90,7 @@ public class TeamInfoTabsPagerAdapter extends FragmentStatePagerAdapter {
         		homeTeamScores.add(scoresList.get(i).getHomeTeamScore());
         		awayTeamScores.add(scoresList.get(i).getAwayTeamScore());
         		gameStatus.add(scoresList.get(i).getGameStatus());
+        		ISOTimeList.add(scoresList.get(i).getISOTime());
         	}
         	scoresArgs.putStringArrayList("homeTeamList", homeTeams);
     		scoresArgs.putStringArrayList("homeTeamIDList", homeTeamIDs);
@@ -99,6 +101,7 @@ public class TeamInfoTabsPagerAdapter extends FragmentStatePagerAdapter {
     		scoresArgs.putStringArrayList("homeTeamScoreList", homeTeamScores);
     		scoresArgs.putStringArrayList("awayTeamScoreList", awayTeamScores);
     		scoresArgs.putStringArrayList("gameScoreList", gameStatus);
+    		scoresArgs.putStringArrayList("ISOTimeList", ISOTimeList);
     		scoresFrag.setArguments(scoresArgs);
         	return scoresFrag;
         case 3:
