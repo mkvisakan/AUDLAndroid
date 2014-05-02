@@ -77,6 +77,7 @@ public class ScoresInfoFragment extends Fragment{
     	final String homeTeamScore = getArguments().getString("HOMETEAMSCORE");
     	final String awayTeamScore = getArguments().getString("AWAYTEAMSCORE");
     	final String gameStatus = getArguments().getString("GAMESTATUS");
+    	final String ISOTime = getArguments().getString("ISOTIME");
     	final AUDLHttpRequest httpRequester = new AUDLHttpRequest(new FragmentCallback(){
 			@Override
 			public void onTaskFailure() {
@@ -93,7 +94,7 @@ public class ScoresInfoFragment extends Fragment{
 				}
 				viewPager = (ViewPager) rootView.findViewById(R.id.detailed_scores_pager);
 				ScoreListItem item = new ScoreListItem(homeTeamName,homeTeamID,awayTeamName,awayTeamID,date,time,
-						homeTeamScore,awayTeamScore,gameStatus);
+						homeTeamScore,awayTeamScore,gameStatus,ISOTime);
 				mAdapter = new ScoreInfoPagerAdapter(frag.getActivity().getSupportFragmentManager(),topStats,item,frag.getActivity());
 				viewPager.setAdapter(mAdapter);
 				viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

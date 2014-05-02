@@ -68,7 +68,7 @@ public class TeamsScoreFragment extends Fragment{
 					int position, long id) {
 				mCallback.onScoreSelected(new ScoreListItem(list.get(0).get(position),list.get(1).get(position),list.get(2).get(position),
 						list.get(3).get(position),list.get(4).get(position),list.get(5).get(position),list.get(6).get(position),
-						list.get(7).get(position),list.get(8).get(position)));
+						list.get(7).get(position),list.get(8).get(position),list.get(9).get(position)));
 			}
 			
 		});

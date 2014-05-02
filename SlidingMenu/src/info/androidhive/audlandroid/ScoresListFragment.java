@@ -47,7 +47,7 @@ public class ScoresListFragment extends Fragment {
 				for(int j=0;j<array3.length();j++){
 					ScoreListItem scoreItem = new ScoreListItem(array3.getJSONArray(j).getString(0),array3.getJSONArray(j).getString(1),array3.getJSONArray(j).getString(2),
 							array3.getJSONArray(j).getString(3),array3.getJSONArray(j).getString(4),array3.getJSONArray(j).getString(5),array3.getJSONArray(j).getString(6),
-							array3.getJSONArray(j).getString(7),array3.getJSONArray(j).getString(8));
+							array3.getJSONArray(j).getString(7),array3.getJSONArray(j).getString(8),array3.getJSONArray(j).getString(9));
 					divisionScores.add(scoreItem);
 				}
 				leagueScores.add(divisionScores);

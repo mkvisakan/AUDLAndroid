@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import org.apache.http.HttpResponse;
@@ -51,9 +52,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-//import com.google.android.gms.common.ConnectionResult;
-//import com.google.android.gms.common.GooglePlayServicesUtil;
-//import com.google.android.gms.gcm.*;
+/*import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.*;*/
 
 public class MainActivity extends FragmentActivity implements OnTeamSelectedListener,OnScoreSelectedListener{
 	private DrawerLayout mDrawerLayout;
@@ -136,6 +137,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		args.putString("HOMETEAMSCORE", item.getHomeTeamScore());
 		args.putString("AWAYTEAMSCORE",item.getAwayTeamScore());
 		args.putString("STATUS", item.getGameStatus());
+		args.putString("ISOTIME", item.getISOTime());
 		if(item.getGameStatus().compareTo("0")!=0){
 			scoreFrag.setArguments(args);
 			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -252,8 +254,8 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	private SharedPreferences getGCMPreferences(Context context) {
 	    return getSharedPreferences(MainActivity.class.getSimpleName(),
 	            Context.MODE_PRIVATE);
-}
-	private boolean checkPlayServices() {
+	}*/
+	/*private boolean checkPlayServices() {
 		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 		if(resultCode != ConnectionResult.SUCCESS){
 			if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)){
@@ -276,7 +278,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 				String regid = gcm.register(SENDER_ID);
 				msg = "Device registered! Registration ID=" + regid;
 				Log.i(TAG,msg);
-				sendRegistrationIdToBackend(regId);
+				sendRegistrationIdToBackend(regid);
 				storeRegistrationId(context,regid);
 			} catch(IOException e){
 				msg = "Error :" + e.getMessage();
@@ -294,13 +296,15 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 	private void sendRegistrationIdToBackend(String regId) {
 		HttpClient httpclient = new DefaultHttpClient();
 		//To be provided
-		HttpPost httppost = new HttpPost("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/");
+		String serverURL = getResources().getString(R.string.ServerURL);
+		HttpPost httppost = new HttpPost(serverURL);
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 		Pattern emailPattern = Patterns.EMAIL_ADDRESS;
 		Account[] accounts = AccountManager.get(context).getAccounts();
 		for(Account account : accounts){
 			if(emailPattern.matcher(account.name).matches()){
-				nameValuePairs.add(new BasicNameValuePair("regId",regId));
+				Log.i(TAG,"regID is" + regId);
+				nameValuePairs.add(new BasicNameValuePair("regID",regId));
 				nameValuePairs.add(new BasicNameValuePair("email",account.name));
 				break;
 			}
@@ -308,7 +312,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		try{
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
-			Log.i(TAG,response.getStatusLine().getReasonPhrase());
+			Log.i(TAG,"Response is" + response.getStatusLine().getReasonPhrase());
 		}
 		catch(UnsupportedEncodingException e){
 			Log.i(TAG,"Unsupported encoding Exception");
@@ -319,7 +323,7 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		catch(IOException e){
 			Log.i(TAG,"IO Exception");
 		}
-	}*/
+	}**/
 	/**
 	 * Slide menu item click listener
 	 * */

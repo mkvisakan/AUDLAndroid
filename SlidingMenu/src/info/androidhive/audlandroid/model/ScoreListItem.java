@@ -10,8 +10,9 @@ public class ScoreListItem {
 	private String homeTeamScore;
 	private String awayTeamScore;
 	private String gameStatus;
+	private String ISOTime;
 	public ScoreListItem(String homeTeam,String homeTeamID,String awayTeam,String awayTeamID,String date,
-			String time,String homeTeamScore, String awayTeamScore, String gameStatus){
+			String time,String homeTeamScore, String awayTeamScore, String gameStatus,String ISOTime){
 		this.homeTeam = homeTeam;
 		this.homeTeamID = homeTeamID;
 		this.awayTeam = awayTeam;
@@ -21,6 +22,7 @@ public class ScoreListItem {
 		this.homeTeamScore = homeTeamScore;
 		this.awayTeamScore = awayTeamScore;
 		this.gameStatus = gameStatus;
+		this.ISOTime = ISOTime;
 	}
 	public String getHomeTeam() {
 		return homeTeam;
@@ -62,4 +64,7 @@ public class ScoreListItem {
 		return gameStatus;
 	}
 	
+	public String getISOTime(){
+		return ISOTime;
+	}
 }

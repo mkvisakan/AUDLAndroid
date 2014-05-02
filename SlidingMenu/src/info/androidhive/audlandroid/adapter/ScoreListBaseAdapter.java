@@ -3,7 +3,14 @@ package info.androidhive.audlandroid.adapter;
 import info.androidhive.audlandroid.R;
 import info.androidhive.audlandroid.utils.ImageLoader;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -58,6 +65,14 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         TextView gameTime = (TextView)sch.findViewById(R.id.game_time);
         ImageView homeTeamImage=(ImageView)sch.findViewById(R.id.hTeamIcon); // home team image
         ImageView awayTeamImage=(ImageView)sch.findViewById(R.id.aTeamIcon); // away team image
+        // Code to convert to local time
+        DateTimeFormatter parser = ISODateTimeFormat.dateTimeNoMillis();
+        String time = data.get(9).get(position);
+        DateFormat formatter = new SimpleDateFormat("KK:mm a");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(parser.parseDateTime(time).getMillis());
+        String timeString = formatter.format(calendar.getTime());
+        
         if(position == 0){
         	separator.setVisibility(View.VISIBLE);
         	separator.setText(data.get(4).get(position));
@@ -68,8 +83,6 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         			separator.setText(data.get(4).get(position));
         	}
         }
-        // Setting all values in listview
-        //title.setText(data.get(6).get(position) + "\n" + data.get(0).get(position) + "\nvs.\n" + data.get(2).get(position) + "\n" + data.get(5).get(position) + " on " + data.get(4).get(position));
         homeTeamName.setText(data.get(0).get(position));
         awayTeamName.setText(data.get(2).get(position));
         if(data.get(8).get(position).compareTo("0")!=0){
@@ -80,7 +93,7 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         	homeTeamScore.setText("");
         	awayTeamScore.setText("");
         }
-        gameTime.setText(data.get(5).get(position));
+        gameTime.setText(timeString);
         String gameStatus="";
         if(data.get(8).get(position).compareTo("0")==0){
         	gameStatus="Upcoming";

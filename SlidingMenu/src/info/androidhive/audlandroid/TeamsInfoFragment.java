@@ -68,7 +68,7 @@ public class TeamsInfoFragment extends Fragment {
 			for (int j=0; j<gamesList.length(); j++) {
 				ScoreListItem scoreItem = new ScoreListItem(gamesList.getJSONArray(j).getString(0),gamesList.getJSONArray(j).getString(1),gamesList.getJSONArray(j).getString(2),
 						gamesList.getJSONArray(j).getString(3),gamesList.getJSONArray(j).getString(4),gamesList.getJSONArray(j).getString(5),gamesList.getJSONArray(j).getString(6),
-						gamesList.getJSONArray(j).getString(7),gamesList.getJSONArray(j).getString(8));
+						gamesList.getJSONArray(j).getString(7),gamesList.getJSONArray(j).getString(8),gamesList.getJSONArray(j).getString(9));
 				team.addScores(scoreItem);
 			}
 			

@@ -23,6 +23,7 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 	private ArrayList<String> homeTeamScores;
 	private ArrayList<String> awayTeamScores;
 	private ArrayList<String> gameStatus;
+	private ArrayList<String> ISOTimeList;
 	
 	public ScoreDivisionsPagerAdapter(FragmentManager fm,ArrayList<String> divisionNames,ArrayList<ArrayList<ScoreListItem>> leagueScores) {
 		super(fm);
@@ -45,7 +46,7 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 		homeTeamScores = new ArrayList<String>();
 		awayTeamScores = new ArrayList<String>();
 		gameStatus = new ArrayList<String>();
-		
+		ISOTimeList = new ArrayList<String>();
 		Bundle bundle = new Bundle();
 		for(int i=0;i<leagueScores.get(position).size();i++){
 			homeTeams.add(leagueScores.get(position).get(i).getHomeTeam());
@@ -57,6 +58,7 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 			homeTeamScores.add(leagueScores.get(position).get(i).getHomeTeamScore());
 			awayTeamScores.add(leagueScores.get(position).get(i).getAwayTeamScore());
 			gameStatus.add(leagueScores.get(position).get(i).getGameStatus());
+			ISOTimeList.add(leagueScores.get(position).get(i).getISOTime());
 		}
 		bundle.putStringArrayList("homeTeamList", homeTeams);
 		bundle.putStringArrayList("homeTeamIDList", homeTeamIDs);
@@ -67,6 +69,7 @@ public class ScoreDivisionsPagerAdapter extends FragmentStatePagerAdapter{
 		bundle.putStringArrayList("homeTeamScoreList", homeTeamScores);
 		bundle.putStringArrayList("awayTeamScoreList", awayTeamScores);
 		bundle.putStringArrayList("gameScoreList", gameStatus);
+		bundle.putStringArrayList("ISOTimeList", ISOTimeList);
 		bundle.putString("divisionName", divisionNames.get(position));
 		fragment.setArguments(bundle);
 		return fragment;
