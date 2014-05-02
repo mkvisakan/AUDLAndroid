@@ -13,12 +13,12 @@
     <string name="labelPointsDiff">PD</string>
     <string name="ServerURL">http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000</string>
     <string name="UltimateTeamStatsURL">http://www.ultimate-numbers.com/team/</string>
-    <string name="topPlayers">TOP PLAYERS</string>
-    <string name="goals">MOST GOALS</string>
-    <string name="assists">MOST ASSISTS </string>
-    <string name="drops">MOST DROPS</string>
-    <string name="throwaways">MOST TAs</string>
-    <string name="Ds">MOST Ds</string>
+    <string name="topPlayers">TEAM LEADERS</string>
+    <string name="goals">GOALS</string>
+    <string name="assists">ASSISTS </string>
+    <string name="drops">DROPS</string>
+    <string name="throwaways">TAs</string>
+    <string name="Ds">Ds</string>
     <string name="finals">FINAL</string>
     <string name="graphUnavalaible">Graph is currently unavailable</string>
     <!-- Nav Drawer Menu Items -->
