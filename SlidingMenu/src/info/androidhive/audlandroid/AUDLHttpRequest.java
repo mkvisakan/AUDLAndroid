@@ -60,16 +60,23 @@ public class AUDLHttpRequest extends AsyncTask<String, Void, String>{
         HttpGet httpget = new HttpGet(url[0]);
 		
 		HttpResponse response;
-	    try {
-	    	response = httpClient.execute(httpget);
-	        HttpEntity entity = response.getEntity();
-	        InputStream instream = entity.getContent();
-            stringResult= convertStreamToString(instream);
-            // now you have the string representation of the HTML request
-            instream.close();
-	    } catch (Exception e) {
-	    	Log.e("AUDLHttpRequest", "Error fetching data " + e.toString());
-	    }
+		int count = 0;
+		while(count < 3) {
+			count++ ;
+			if (stringResult != null){
+				break;
+			}
+	        try {
+	    	    response = httpClient.execute(httpget);
+	            HttpEntity entity = response.getEntity();
+	            InputStream instream = entity.getContent();
+                stringResult= convertStreamToString(instream);
+                // now you have the string representation of the HTML request
+                instream.close();
+	        } catch (Exception e) {
+	    	    Log.e("AUDLHttpRequest", "Trial : "+ count + "Error fetching data " + e.toString());
+	        }
+		}
 	    return stringResult;
 	}
 	
