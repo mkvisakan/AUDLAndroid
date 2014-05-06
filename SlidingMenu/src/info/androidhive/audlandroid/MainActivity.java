@@ -359,6 +359,16 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	@Override
+	public void onBackPressed(){
+		String currentTitle = (String) getActionBar().getTitle();
+		if (currentTitle.equalsIgnoreCase(navMenuTitles[0])){
+			finish();
+		} else {
+			displayView(0);
+		}
+	}
 
 	/* *
 	 * Called when invalidateOptionsMenu() is triggered
