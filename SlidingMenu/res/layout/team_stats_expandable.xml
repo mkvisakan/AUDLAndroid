@@ -13,15 +13,16 @@
                <Button
                    android:id="@+id/more"
                    android:layout_width="fill_parent"
-                   android:layout_height="49dp"
+                   android:layout_height="30dp"
                    android:layout_below="@+id/lvExp"
                    android:textColor="#040404"
                    android:textSize="20dip"
                    android:textStyle="bold"
-                   android:background="#2E64FE"
+                   android:background="#585858"
                    android:layout_marginLeft="15dip"
                    android:layout_marginRight="15dip"
                    android:layout_marginTop="10dip"
+                   android:layout_marginBottom="10dip"
                    android:typeface="sans" 
                    android:layout_weight="1"/>
  
