@@ -195,8 +195,9 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
 		// Videos
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+		/*Arjun: Temporarily removing stats because it is not populating with the correct data from the server*/
 		// Stats
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
+		//navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
 		// Settings
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[9], navMenuIcons.getResourceId(9, -1)));
 		
@@ -421,10 +422,12 @@ public class MainActivity extends FragmentActivity implements OnTeamSelectedList
 		case 7:
 			fragment = new VideosListFragment();
 			break;
-		case 8:
+		/*Arjun: Temporarily removing stats because it is not populating with the correct data from the server*/	
+		/*case 8:
 			fragment = new StatsListFragment();
-			break;
-		case 9:
+			break;*/
+		//case 9:
+		case 8:
 			fragment = new SettingsFragment();
 			break;
 
