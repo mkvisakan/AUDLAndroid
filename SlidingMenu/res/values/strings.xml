@@ -39,15 +39,15 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_home</item>
+        <item>@drawable/news</item>
+        <item>@drawable/teams</item>
+        <item>@drawable/now</item>
+        <item>@drawable/standings</item>
+        <item>@drawable/scores</item>
+        <item>@drawable/schedule</item>
+        <item>@drawable/videos</item>
         <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_pages</item>
+        <item>@drawable/setting</item>
     </array>
     
     <!-- Content Description -->
