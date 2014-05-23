@@ -20,12 +20,14 @@ public class ScheduleListBaseAdapter extends BaseAdapter {
     private ArrayList<ScheduleListItem> data;
     private LayoutInflater inflater=null;
     public ImageLoader imageLoader;
+    String serverURL;
     
     public ScheduleListBaseAdapter(Activity a, ArrayList<ScheduleListItem> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
+        serverURL = a.getResources().getString(R.string.ServerURL);
     }
     
     public int getCount() {
@@ -53,10 +55,10 @@ public class ScheduleListBaseAdapter extends BaseAdapter {
  
         // Setting all values in listview
         title.setText(scheduleEntry.getHomeTeam() + "\nvs.\n" + scheduleEntry.getAwayTeam() + "\n" + scheduleEntry.getTime() + " on " + scheduleEntry.getDate());
+       
         
-        
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + scheduleEntry.getHomeTeamID(), homeTeamImage);
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + scheduleEntry.getAwayTeamID(), awayTeamImage);
+        imageLoader.DisplayImage(serverURL + "/Icons/" + scheduleEntry.getHomeTeamID(), homeTeamImage);
+        imageLoader.DisplayImage(serverURL + "/Icons/" + scheduleEntry.getAwayTeamID(), awayTeamImage);
         
         
         return sch;

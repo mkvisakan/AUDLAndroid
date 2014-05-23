@@ -20,12 +20,14 @@ public class StatsListBaseAdapter extends BaseAdapter {
     private ArrayList<StatsListItem> data;
     private LayoutInflater inflater=null;
     public ImageLoader imageLoader;
+    String serverURL;
     
     public StatsListBaseAdapter(Activity a, ArrayList<StatsListItem> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
+        serverURL = a.getResources().getString(R.string.ServerURL);
     }
     
     public int getCount() {
@@ -55,7 +57,7 @@ public class StatsListBaseAdapter extends BaseAdapter {
         name.setText(statistic.getPlayerName());
         statVal.setText(statistic.getStatValue());
         
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + statistic.getPlayerTeamID(), playerTeamImage);
+        imageLoader.DisplayImage(serverURL + "/Icons/" + statistic.getPlayerTeamID(), playerTeamImage);
         
         
         return stat;

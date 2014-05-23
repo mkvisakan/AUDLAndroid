@@ -37,6 +37,7 @@ public class DivisionListFragment extends Fragment{
 	public DivisionListFragment(){}
 	
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
+		String serverURL = getResources().getString(R.string.ServerURL);
 		Bundle bundle = this.getArguments();
 		imageLoader = new ImageLoader(getActivity());
 		divisionTeamNames = bundle.getStringArrayList("divisionTeamNames");
@@ -66,7 +67,7 @@ public class DivisionListFragment extends Fragment{
 			lTV.setHeight(pixels);
 			pdTV.setHeight(pixels);
 			numTV.setText("" + (i+1));
-			imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + divisionTeamIDs.get(i), teamIV);
+			imageLoader.DisplayImage(serverURL + "/Icons/" + divisionTeamIDs.get(i), teamIV);
 			teamTV.setText(divisionTeamNames.get(i));
 			wTV.setText("" + divisionTeamWins.get(i));
 			lTV.setText("" + divisionTeamLosses.get(i));

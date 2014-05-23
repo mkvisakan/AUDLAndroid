@@ -28,12 +28,14 @@ public class ScoreListBaseAdapter extends BaseAdapter{
     private ArrayList<ArrayList<String>> data;
     private LayoutInflater inflater=null;
     public ImageLoader imageLoader;
+    String serverURL;
     
     public ScoreListBaseAdapter(Activity a, ArrayList<ArrayList<String>> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
+        serverURL = a.getResources().getString(R.string.ServerURL);
     }
     
     public int getCount() {
@@ -103,8 +105,8 @@ public class ScoreListBaseAdapter extends BaseAdapter{
         	gameStatus="Final";
         }
         status.setText("" + gameStatus);
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + data.get(1).get(position), homeTeamImage);
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + data.get(3).get(position), awayTeamImage);        
+        imageLoader.DisplayImage(serverURL + "/Icons/" + data.get(1).get(position), homeTeamImage);
+        imageLoader.DisplayImage(serverURL + "/Icons/" + data.get(3).get(position), awayTeamImage);        
         return sch;
     }
 }

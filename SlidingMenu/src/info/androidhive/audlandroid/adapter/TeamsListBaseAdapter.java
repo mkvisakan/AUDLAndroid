@@ -20,12 +20,14 @@ public class TeamsListBaseAdapter extends BaseAdapter {
     private ArrayList<TeamsListItem> data;
     private LayoutInflater inflater=null;
     public ImageLoader imageLoader;
+    String serverURL;
     
     public TeamsListBaseAdapter(Activity a, ArrayList<TeamsListItem> d) {
         activity = a;
         data=d;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
+        serverURL = a.getResources().getString(R.string.ServerURL);
     }
     
     public int getCount() {
@@ -52,7 +54,7 @@ public class TeamsListBaseAdapter extends BaseAdapter {
  
         // Setting all values in listview
         title.setText(team.getTeamName());
-        imageLoader.DisplayImage("http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000/Icons/" + team.getTeamId(), thumb_image);
+        imageLoader.DisplayImage(serverURL + "/Icons/" + team.getTeamId(), thumb_image);
         return vi;
     }
 }

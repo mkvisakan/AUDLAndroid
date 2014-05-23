@@ -227,7 +227,7 @@ public class HomeFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		
+		getActivity().getActionBar().setTitle("Home");
 		View rootView = inflater.inflate(R.layout.home_section, container, false);
 		startCacheHandler(rootView, getActivity());
         startAsyncTask(rootView, getActivity());         	
