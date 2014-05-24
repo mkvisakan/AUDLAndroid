@@ -11,7 +11,7 @@
     <string name="labelWins">W</string>
     <string name="labelLosses">L</string>
     <string name="labelPointsDiff">PD</string>
-    <string name="ServerURL">http://ec2-54-186-184-48.us-west-2.compute.amazonaws.com:4000</string>
+    <string name="ServerURL">http://ec2-54-86-111-95.compute-1.amazonaws.com:4000</string>
     <string name="UltimateTeamStatsURL">http://www.ultimate-numbers.com/team/</string>
     <string name="topPlayers">TEAM LEADERS</string>
     <string name="goals">GOALS</string>

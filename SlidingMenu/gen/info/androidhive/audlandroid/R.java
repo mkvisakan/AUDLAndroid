@@ -61,11 +61,19 @@ public final class R {
         public static final int list_item_bg_normal=0x7f02000b;
         public static final int list_item_bg_pressed=0x7f02000c;
         public static final int list_selector=0x7f02000d;
-        public static final int news_icon=0x7f02000e;
-        public static final int no_image=0x7f02000f;
-        public static final int rounded_corners=0x7f020010;
-        public static final int twitter_icon=0x7f020011;
-        public static final int twitter_retweet=0x7f020012;
+        public static final int news=0x7f02000e;
+        public static final int news_icon=0x7f02000f;
+        public static final int no_image=0x7f020010;
+        public static final int now=0x7f020011;
+        public static final int rounded_corners=0x7f020012;
+        public static final int schedule=0x7f020013;
+        public static final int scores=0x7f020014;
+        public static final int setting=0x7f020015;
+        public static final int standings=0x7f020016;
+        public static final int teams=0x7f020017;
+        public static final int twitter_icon=0x7f020018;
+        public static final int twitter_retweet=0x7f020019;
+        public static final int videos=0x7f02001a;
     }
     public static final class id {
         public static final int aTeamIcon=0x7f090038;
